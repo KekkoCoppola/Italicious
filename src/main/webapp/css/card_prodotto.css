@@ -1,0 +1,231 @@
+/* From Uiverse.io by vinodjangid07 */ 
+body {
+  background-color: rgb(192, 192, 192); /* Cambia il colore di sfondo del body */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.catalogo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* o center, space-between, ecc. */
+  gap: 20px; /* spazio tra le card */
+  padding: 20px;
+}
+.card {
+  width: 190px;
+  height: 254px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s;
+  position: relative;
+}
+.wrapper {
+  height: fit-content;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+.card-image {
+  width: 100%;
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5em;
+  font-weight: 900;
+  transition: all 0.3s;
+}
+.content {
+  height: fit-content;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.title {
+  font-size: 0.72em;
+  text-decoration: bold;
+  justify-content:left;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #4d4d4d;
+}
+.price {
+	justify-content:right;
+  font-size: 1em;
+  font-weight: 700;
+}
+.old-price {
+  font-size: 0.7em;
+  text-decoration: line-through;
+  color: #adadad;
+}
+.card-btn {
+  margin-top: 20px;
+  width: 100%;
+  height: 40px;
+  background-color: rgb(24, 24, 24);
+  border: none;
+  border-radius: 40px;
+  color: white;
+  transition: all 0.3s;
+  cursor: pointer;
+  font-weight: 500;
+}
+.card:hover .card-image {
+  height: 120px;
+}
+.card:hover .card-btn {
+  margin-top: 0;
+}
+.card-btn:hover {
+  background-color: greenyellow;
+  color: rgb(35, 35, 35);
+}
+.card:hover {
+  background-color: white;
+}
+
+.tag {
+  position: absolute;
+  background-color: greenyellow;
+  color: rgb(0, 0, 0);
+  left: 12px;
+  top: 12px;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 0.75em;
+  font-weight: 500;
+}
+
+/*.card {
+  position: relative;
+  top: 2em;
+  width: 12.5em;
+  height: 7.5em;
+  background: white;
+  transition: .4s ease-in-out;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+  overflow: hidden;
+}
+
+.heading {
+	  user-select: none;   
+  cursor: default;     
+  position: relative;
+  color: black;
+  justify-content:center;
+  font-weight: bold;
+  font-size: 1.1em;
+  padding-top: 1em;
+  padding-left: 1em;
+  transition: .4s ease-in-out;
+}
+
+.details {
+	  user-select: none;   
+  cursor: default;     
+  position: relative;
+  color: black;
+  font-size: 0.6em;
+  padding-top: 1.5em;
+  padding-left: 2em;
+  transition: .4s ease-in-out;
+}
+
+.price {
+	  user-select: none;   
+  cursor: default;  
+  position: relative;
+  color: black;
+  font-weight: bold;
+  font-size: 0.8em;
+  padding-top: 1.5em;
+  padding-left: 1.5em;
+  top: 9.6em;
+  left: 5em;
+  transition: .4s ease-in-out;
+}
+
+.btn1 {
+  position: relative;
+  border: none;
+  outline: none;
+  background-color: black;
+  color: white;
+  font-size: 0.6em;
+  padding-left: 6.9em;
+  padding-right: 6.9em;
+  padding-top: 0.8em;
+  padding-bottom: 0.85em;
+  border-radius: 10px;
+  left: 2.6em;
+  top: 14.8em;
+  transition: .4s ease-in-out;
+  font-weight: bold;
+}
+
+.btn1:hover {
+  background-color: limegreen;
+  cursor: pointer;
+}
+
+.btn2 {
+  position: relative;
+  border: none;
+  outline: none;
+  background-color: black;
+  color: white;
+  font-size: 0.6em;
+  padding-left: 5.1em;
+  padding-right: 5.1em;
+  padding-top: 0.8em;
+  padding-bottom: 0.85em;
+  border-radius: 10px;
+  left: 2.6em;
+  top: 15.5em;
+  transition: .4s ease-in-out;
+  font-weight: bold;
+}
+
+.btn2:hover {
+  background-color: limegreen;
+  cursor: pointer;
+}
+
+.glasses {
+  position: relative;
+  top: -4em;
+  left: 9.5em;
+  width: 70px;
+  height: 70px;
+  transition: .4s ease-in-out;
+}
+
+.card:hover {
+  width: 12.5em;
+  height: 23em;
+  transform: translateY(1.25em);
+}
+
+.card:hover + .glasses {
+  transform: rotateX(360deg);
+  height: 100px;
+  width: 100px;
+  left: 3em;
+  top: -18em;
+}
+
+.card:hover .heading {
+  transform: translateY(7em) translateX(2.3em);
+}
+
+.card:hover .details {
+  transform: translateY(13em) translateX(3.5em);
+}*/
