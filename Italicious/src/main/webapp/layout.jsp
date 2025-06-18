@@ -1,0 +1,24 @@
+<!-- layout.jsp -->
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title><c:out value="${pageTitle}" /></title>
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body>
+
+<jsp:include page="parziali/navbar.jsp" />
+
+<div class="container mx-auto px-4 py-6">
+   <c:import url="${body}" />
+
+</div>
+
+<jsp:include page="parziali/footer.jsp" />
+
+</body>
+</html>
