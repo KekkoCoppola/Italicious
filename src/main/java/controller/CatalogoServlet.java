@@ -21,7 +21,10 @@ public class CatalogoServlet extends HttpServlet {
         System.out.println("👉 [DEBUG] Numero prodotti trovati: " + (prodotti != null ? prodotti.size() : "null"));
 
         request.setAttribute("prodotti", prodotti); 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/catalogo.jsp");
-        dispatcher.forward(request, response);
+        request.setAttribute("pageTitle", "Catalogo Prodotti");
+    	request.setAttribute("contentPage", "catalogo.jsp"); // <-- Qui lo imposti
+
+        request.getRequestDispatcher("/layout.jsp").forward(request, response);
+        
     }
 }

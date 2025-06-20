@@ -44,18 +44,7 @@
             background-position: center;
             animation: fadeIn 1s ease-out;
         }
-        .flag-stripe {
-            height: 8px;
-        }
-        .flag-stripe.green {
-            background-color: #008C45;
-        }
-        .flag-stripe.white {
-            background-color: #F4F5F0;
-        }
-        .flag-stripe.red {
-            background-color: #CD212A;
-        }
+        
         .review-card {
             transition: all 0.3s ease;
         }
@@ -89,40 +78,40 @@
             
             <div class="relative max-w-4xl mx-auto">
                 <!-- Mappa SVG dell'Italia con regioni cliccabili -->
-                <svg viewBox="0 0 800 1000" class="w-full h-auto">
-                    <!-- Nord Italia -->
-                    <path id="piemonte" class="region fill-green-100 hover:fill-green-300 stroke-white stroke-1" d="M200,100 L250,120 L270,150 L240,180 L220,160 L200,170 L180,150 Z" onclick="showRegion('Piemonte')"/>
-                    <path id="valle-aosta" class="region fill-green-200 hover:fill-green-400 stroke-white stroke-1" d="M180,80 L200,100 L180,150 L160,130 Z" onclick="showRegion('Valle d\'Aosta')"/>
-                    <path id="lombardia" class="region fill-green-300 hover:fill-green-500 stroke-white stroke-1" d="M240,180 L270,150 L300,180 L320,200 L300,220 L280,210 L260,230 L240,200 Z" onclick="showRegion('Lombardia')"/>
-                    <path id="trentino" class="region fill-green-400 hover:fill-green-600 stroke-white stroke-1" d="M260,230 L280,210 L300,220 L320,240 L300,260 L280,250 Z" onclick="showRegion('Trentino-Alto Adige')"/>
-                    <path id="veneto" class="region fill-green-500 hover:fill-green-700 stroke-white stroke-1" d="M300,260 L320,240 L340,260 L360,280 L340,300 L320,290 L300,280 Z" onclick="showRegion('Veneto')"/>
-                    <path id="friuli" class="region fill-green-600 hover:fill-green-800 stroke-white stroke-1" d="M360,280 L380,300 L360,320 L340,300 Z" onclick="showRegion('Friuli-Venezia Giulia')"/>
-                    <path id="liguria" class="region fill-green-700 hover:fill-green-900 stroke-white stroke-1" d="M200,170 L220,160 L240,180 L260,230 L240,250 L220,230 L200,250 L180,220 L160,200 L180,180 Z" onclick="showRegion('Liguria')"/>
-                    <path id="emilia" class="region region fill-red-100 hover:fill-red-300 stroke-white stroke-1" d="M240,250 L260,230 L280,250 L300,260 L320,290 L340,300 L360,320 L340,340 L320,330 L300,350 L280,330 L260,350 L240,330 L220,310 L240,290 Z" onclick="showRegion('Emilia-Romagna')"/>
-                    
-                    <!-- Centro Italia -->
-                    <path id="toscana" class="region fill-red-200 hover:fill-red-400 stroke-white stroke-1" d="M240,290 L220,310 L240,330 L260,350 L240,370 L220,350 L200,370 L180,350 L160,330 L180,310 L200,330 L220,310 L240,290 Z" onclick="showRegion('Toscana')"/>
-                    <path id="marche" class="region fill-red-300 hover:fill-red-500 stroke-white stroke-1" d="M280,330 L300,350 L320,330 L340,340 L360,360 L340,380 L320,370 L300,390 L280,370 L260,350 Z" onclick="showRegion('Marche')"/>
-                    <path id="umbria" class="region fill-red-400 hover:fill-red-600 stroke-white stroke-1" d="M260,350 L280,370 L300,390 L280,410 L260,390 L240,370 Z" onclick="showRegion('Umbria')"/>
-                    <path id="lazio" class="region fill-red-500 hover:fill-red-700 stroke-white stroke-1" d="M240,370 L260,390 L280,410 L260,430 L240,410 L220,390 L200,410 L180,390 L200,370 L220,350 Z" onclick="showRegion('Lazio')"/>
-                    <path id="abruzzo" class="region fill-red-600 hover:fill-red-800 stroke-white stroke-1" d="M280,410 L300,390 L320,370 L340,380 L360,400 L340,420 L320,410 L300,430 L280,410 Z" onclick="showRegion('Abruzzo')"/>
-                    <path id="molise" class="region fill-red-700 hover:fill-red-900 stroke-white stroke-1" d="M300,430 L320,410 L340,420 L360,440 L340,460 L320,450 L300,470 Z" onclick="showRegion('Molise')"/>
-                    
-                    <!-- Sud Italia -->
-                    <path id="campania" class="region fill-white hover:fill-gray-200 stroke-gray-400 stroke-1" d="M240,410 L260,430 L280,410 L300,430 L320,450 L340,460 L320,480 L300,460 L280,480 L260,460 L240,480 L220,460 L200,440 L220,420 Z" onclick="showRegion('Campania')"/>
-                    <path id="puglia" class="region fill-white hover:fill-gray-300 stroke-gray-400 stroke-1" d="M320,450 L340,460 L360,440 L380,460 L360,480 L340,470 L320,490 L300,510 L280,490 L300,470 Z" onclick="showRegion('Puglia')"/>
-                    <path id="basilicata" class="region fill-gray-100 hover:fill-gray-400 stroke-gray-400 stroke-1" d="M300,460 L320,480 L340,470 L360,480 L340,500 L320,490 L300,510 L280,490 Z" onclick="showRegion('Basilicata')"/>
-                    <path id="calabria" class="region fill-gray-200 hover:fill-gray-500 stroke-gray-400 stroke-1" d="M280,490 L300,510 L280,530 L260,510 L240,530 L220,510 L240,490 Z" onclick="showRegion('Calabria')"/>
-                    
-                    <!-- Isole -->
-                    <path id="sicilia" class="region fill-gray-300 hover:fill-gray-600 stroke-gray-400 stroke-1" d="M200,560 L220,540 L240,560 L260,540 L280,560 L260,580 L240,560 L220,580 L200,560 Z" onclick="showRegion('Sicilia')"/>
-                    <path id="sardegna" class="region fill-gray-400 hover:fill-gray-700 stroke-gray-400 stroke-1" d="M100,400 L120,380 L140,400 L160,380 L180,400 L160,420 L140,400 L120,420 L100,400 Z" onclick="showRegion('Sardegna')"/>
-                    
-                    <!-- Tooltip placeholder -->
-                    <foreignObject x="0" y="0" width="100%" height="100%">
-                        <div class="region-tooltip" id="region-tooltip"></div>
-                    </foreignObject>
-                </svg>
+                <svg viewBox="0 0 800 1000" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+		  <!-- Nord Italia -->
+		  <path id="piemonte" class="region fill-green-100 hover:fill-green-300 stroke-white stroke-1" d="M200,100 L250,120 L270,150 L240,180 L220,160 L200,170 L180,150 Z" onclick="showRegion('Piemonte')" />
+		  <path id="valle-aosta" class="region fill-green-200 hover:fill-green-400 stroke-white stroke-1" d="M180,80 L200,100 L180,150 L160,130 Z" onclick="showRegion('Valle d&apos;Aosta')" />
+		  <path id="lombardia" class="region fill-green-300 hover:fill-green-500 stroke-white stroke-1" d="M240,180 L270,150 L300,180 L320,200 L300,220 L280,210 L260,230 L240,200 Z" onclick="showRegion('Lombardia')" />
+		  <path id="trentino" class="region fill-green-400 hover:fill-green-600 stroke-white stroke-1" d="M260,230 L280,210 L300,220 L320,240 L300,260 L280,250 Z" onclick="showRegion('Trentino-Alto Adige')" />
+		  <path id="veneto" class="region fill-green-500 hover:fill-green-700 stroke-white stroke-1" d="M300,260 L320,240 L340,260 L360,280 L340,300 L320,290 L300,280 Z" onclick="showRegion('Veneto')" />
+		  <path id="friuli" class="region fill-green-600 hover:fill-green-800 stroke-white stroke-1" d="M360,280 L380,300 L360,320 L340,300 Z" onclick="showRegion('Friuli-Venezia Giulia')" />
+		  <path id="liguria" class="region fill-green-700 hover:fill-green-900 stroke-white stroke-1" d="M200,170 L220,160 L240,180 L260,230 L240,250 L220,230 L200,250 L180,220 L160,200 L180,180 Z" onclick="showRegion('Liguria')" />
+		  <path id="emilia" class="region fill-red-100 hover:fill-red-300 stroke-white stroke-1" d="M240,250 L260,230 L280,250 L300,260 L320,290 L340,300 L360,320 L340,340 L320,330 L300,350 L280,330 L260,350 L240,330 L220,310 L240,290 Z" onclick="showRegion('Emilia-Romagna')" />
+		
+		  <!-- Centro Italia -->
+		  <path id="toscana" class="region fill-red-200 hover:fill-red-400 stroke-white stroke-1" d="M240,290 L220,310 L240,330 L260,350 L240,370 L220,350 L200,370 L180,350 L160,330 L180,310 L200,330 L220,310 L240,290 Z" onclick="showRegion('Toscana')" />
+		  <path id="marche" class="region fill-red-300 hover:fill-red-500 stroke-white stroke-1" d="M280,330 L300,350 L320,330 L340,340 L360,360 L340,380 L320,370 L300,390 L280,370 L260,350 Z" onclick="showRegion('Marche')" />
+		  <path id="umbria" class="region fill-red-400 hover:fill-red-600 stroke-white stroke-1" d="M260,350 L280,370 L300,390 L280,410 L260,390 L240,370 Z" onclick="showRegion('Umbria')" />
+		  <path id="lazio" class="region fill-red-500 hover:fill-red-700 stroke-white stroke-1" d="M240,370 L260,390 L280,410 L260,430 L240,410 L220,390 L200,410 L180,390 L200,370 L220,350 Z" onclick="showRegion('Lazio')" />
+		  <path id="abruzzo" class="region fill-red-600 hover:fill-red-800 stroke-white stroke-1" d="M280,410 L300,390 L320,370 L340,380 L360,400 L340,420 L320,410 L300,430 L280,410 Z" onclick="showRegion('Abruzzo')" />
+		  <path id="molise" class="region fill-red-700 hover:fill-red-900 stroke-white stroke-1" d="M300,430 L320,410 L340,420 L360,440 L340,460 L320,450 L300,470 Z" onclick="showRegion('Molise')" />
+		
+		  <!-- Sud Italia -->
+		  <path id="campania" class="region fill-white hover:fill-gray-200 stroke-gray-400 stroke-1" d="M240,410 L260,430 L280,410 L300,430 L320,450 L340,460 L320,480 L300,460 L280,480 L260,460 L240,480 L220,460 L200,440 L220,420 Z" onclick="showRegion('Campania')" />
+		  <path id="puglia" class="region fill-white hover:fill-gray-300 stroke-gray-400 stroke-1" d="M320,450 L340,460 L360,440 L380,460 L360,480 L340,470 L320,490 L300,510 L280,490 L300,470 Z" onclick="showRegion('Puglia')" />
+		  <path id="basilicata" class="region fill-gray-100 hover:fill-gray-400 stroke-gray-400 stroke-1" d="M300,460 L320,480 L340,470 L360,480 L340,500 L320,490 L300,510 L280,490 Z" onclick="showRegion('Basilicata')" />
+		  <path id="calabria" class="region fill-gray-200 hover:fill-gray-500 stroke-gray-400 stroke-1" d="M280,490 L300,510 L280,530 L260,510 L240,530 L220,510 L240,490 Z" onclick="showRegion('Calabria')" />
+		
+		  <!-- Isole -->
+		  <path id="sicilia" class="region fill-gray-300 hover:fill-gray-600 stroke-gray-400 stroke-1" d="M200,560 L220,540 L240,560 L260,540 L280,560 L260,580 L240,560 L220,580 L200,560 Z" onclick="showRegion('Sicilia')" />
+		  <path id="sardegna" class="region fill-gray-400 hover:fill-gray-700 stroke-gray-400 stroke-1" d="M100,400 L120,380 L140,400 L160,380 L180,400 L160,420 L140,400 L120,420 L100,400 Z" onclick="showRegion('Sardegna')" />
+		
+		  <!-- Tooltip placeholder -->
+		  <foreignObject x="0" y="0" width="100%" height="100%">
+    <div class="region-tooltip" id="region-tooltip"></div>
+  </foreignObject>
+</svg>
                 
                 <!-- Info regione selezionata -->
                 <div id="region-info" class="hidden mt-8 p-6 bg-gray-50 rounded-lg shadow-md">
@@ -284,23 +273,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Newsletter -->
-    <section class="py-16 bg-gradient-to-r from-green-600 to-red-600 text-white">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-6">Rimani Aggiornato</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto">Iscriviti alla nostra newsletter per ricevere offerte esclusive e scoprire nuovi prodotti regionali</p>
-            
-            <form class="max-w-md mx-auto flex">
-                <input type="email" placeholder="La tua email" class="flex-grow px-4 py-3 rounded-l-full focus:outline-none text-gray-800">
-                <button type="submit" class="bg-white text-green-600 hover:bg-gray-100 font-bold px-6 py-3 rounded-r-full transition">
-                    Iscriviti
-                </button>
-            </form>
-        </div>
-    </section>
-
-
 
     <script>
         // Menu mobile toggle

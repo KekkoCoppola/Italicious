@@ -1,10 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="Model.Prodotto" %>
 <%@ page import="java.util.List" %>
-
-<html>
+<!DOCTYPE html>
+<html lang="it">
 <head>
-    <title>Catalogo Prodotti</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italicious - Catalogo Prodotti Tipici Italiani</title>
     <%
     String username = (String) session.getAttribute("username");
     if (username != null) {
@@ -21,64 +23,151 @@
 <%
     }
 %>
-  <link rel="stylesheet" href="css/card_prodotto.css" />
-</head>
-<body>
-    <h1>Catalogo Prodotti Tipici</h1>
-<div class="catalogo">
-    <%
-    System.out.println("\n==================== INIZIO DEBUG ====================\n");
-        List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
-        System.out.println("PRODOTTI: "+prodotti);
-        if (prodotti != null && !prodotti.isEmpty()) {
-            for (Prodotto p : prodotti) {
-    %>
-                <!-- From Uiverse.io by Praashoo7 --> 
-                <div class="card">
-				  <div class="wrapper">
-				    <div class="card-image"><img src="<%= p.getImmagine() %>" height=150rem width=150rem/></div>
-				    <div class="content">
-				      <p class="title"><%= p.getNome() %></p>
-				      <p class="title price">€<%= p.getPrezzo() %></p>
-				      <!--  <p class="title price old-price">&nbsp;<%= p.getPrezzo() %></p>-->
-				      <p></p>
-				    </div>
-				    <button class="card-btn">Aggiungi al carrello</button>
-				  </div>
-				  <p class="tag">-50%</p>
-				</div>
-		<!--<div class="main">
-		<div class="card">
-		  <div class="heading"><%= p.getNome() %></div>
-		  <div class="details"><%= p.getDescrizione() %></div>
-		  <div class="price"><%= p.getPrezzo() %></div>
-		  <button class="btn1">Compra</button>
-		  <button class="btn2">Aggiungi al carrello</button>
-		</div>
-		
-		<svg class="glasses" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" xml:space="preserve">  <image id="image0" width="100" height="100" x="0" y="0" href="<%= p.getImmagine() %>"></image>
-		</svg>
-		</div>
-                <div style="border:1px solid #ccc; padding:10px; margin:10px;">
-                    <h3><%= p.getNome() %></h3>
-                    <p><%= p.getDescrizione() %></p>
-                    <p>Prezzo: €<%= p.getPrezzo() %> + IVA: <%= p.getIva() %>%</p>
-                    <img src="<%= p.getImmagine() %>" alt="immagine prodotto" width="150"/><br/>
-                    <form action="addToCart" method="post">
-                        <input type="hidden" name="idProdotto" value="<%= p.getId() %>" />
-                        <button type="submit">Aggiungi al carrello</button>
-                    </form>
-                </div>-->
-    <%
-            }
-        } else {
-    %>
-            <p>Nessun prodotto disponibile.</p>
-    <%
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+       
+        body {
+            
+            background-color: #f9f5f0;
         }
-    %></div>
-    <a href="<%= request.getContextPath() %>/logout">Logout</a>
-    
+        
+        .title-font {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        
+        .region-filter.active {
+            background-color: #e11d48;
+            color: white;
+        }
+        
+        .cart-preview {
+            transition: all 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+        }
+        
+        .cart-preview.open {
+            max-height: 500px;
+        }
+        
+        /* Animazione pulsante carrello */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .cart-pulse {
+            animation: pulse 0.5s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-red-50 to-amber-50 py-12">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl title-font text-gray-800 mb-4">Scopri l'autentico gusto italiano</h1>
+                <p class="text-lg text-gray-600 mb-8">Prodotti selezionati direttamente dalle migliori regioni d'Italia, consegnati a casa tua con amore e tradizione.</p>
+                <div class="relative max-w-md mx-auto">
+                    <input type="text" placeholder="Cerca prodotti..." class="w-full py-3 px-5 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <!-- Filters -->
+        <div class="mb-12">
+            <h2 class="text-2xl title-font text-gray-800 mb-6">Filtra per categoria</h2>
+            <div class="flex flex-wrap gap-3 mb-8">
+                <button class="region-filter active px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition" data-region="all">Tutti</button>
+                <button class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition" data-region="pasta">Pasta</button>
+                <button class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition" data-region="formaggi">Formaggi</button>
+                <button class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition" data-region="salumi">Salumi</button>
+                <button class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition" data-region="olio">Olio e Aceti</button>
+                <button class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition" data-region="dolci">Dolci</button>
+                <button class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition" data-region="vini">Vini</button>
+            </div>
+            
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl title-font text-gray-800">I nostri prodotti</h2>
+                <div class="flex items-center">
+                    <span class="text-gray-600 mr-2">Ordina per:</span>
+                    <select class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <option>Più popolari</option>
+                        <option>Prezzo: dal più basso</option>
+                        <option>Prezzo: dal più alto</option>
+                        <option>Nome A-Z</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Product 1 -->
+            <%
+			    	System.out.println("\n==================== INIZIO DEBUG ====================\n");
+			        List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
+			        System.out.println("PRODOTTI: "+prodotti);
+			        if (prodotti != null && !prodotti.isEmpty()) {
+			            for (Prodotto p : prodotti) {
+   			%>
+                 <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
+                    <img src="<%= p.getImmagine() %>" alt="<%= p.getNome() %>" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold mb-2"><%= p.getNome() %></h3>
+                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded"><%= p.getRegione() %></span>
+                        </div>
+                        <p class="text-gray-600 mb-4"><%= p.getDescrizione() %></p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold">&euro;<%= p.getPrezzo() %></span>
+                            <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
+                                <i class="fas fa-cart-plus mr-2"></i>Aggiungi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        <%
+	           }
+	        } else {
+	    %>
+	            <p>Nessun prodotto disponibile.</p>
+	    <%
+	        }
+	    %></div>
+        
+        
+        <!-- Pagination -->
+        <div class="mt-12 flex justify-center">
+            <nav class="flex items-center space-x-2">
+                <button class="px-3 py-1 rounded border border-gray-300 text-gray-600 hover:bg-gray-100">&laquo;</button>
+                <button class="px-3 py-1 rounded bg-red-600 text-white">1</button>
+                <button class="px-3 py-1 rounded border border-gray-300 text-gray-600 hover:bg-gray-100">2</button>
+                <button class="px-3 py-1 rounded border border-gray-300 text-gray-600 hover:bg-gray-100">3</button>
+                <button class="px-3 py-1 rounded border border-gray-300 text-gray-600 hover:bg-gray-100">&raquo;</button>
+            </nav>
+        </div>
+    </main>
+
+    <script>
+        
+    </script>
 </body>
 </html>
