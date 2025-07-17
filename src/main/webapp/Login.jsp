@@ -131,6 +131,11 @@
    <p style="text-align: center;">
     Non hai un account? <a href="register">Registrati qui</a>
   </p>
+  <p style="text-align: center;">
+  <a href="home">
+    <button type="button" class="submit" style="margin-top: 10px;">Torna alla Home</button>
+  </a>
+  </p>
 </div>
    
 

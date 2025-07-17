@@ -137,6 +137,12 @@
    <p style="text-align: center;">
     Hai già un account? <a href="login">Effettua L'accesso</a>
   </p>
+  <p style="text-align: center;">
+  <a href="home">
+    <button type="button" class="submit" style="margin-top: 10px;">Torna alla Home</button>
+  </a>
+  </p>
+  
 </div>
    
 
