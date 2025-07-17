@@ -88,7 +88,7 @@ public class ProdottoDAO {
       
     }
     
-    public Prodotto getProdottoById(int id) {
+    public static Prodotto getProdottoById(int id) {
         Prodotto prodotto = null;
         String query = "SELECT * FROM Prodotto WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();

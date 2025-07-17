@@ -5,6 +5,18 @@
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
 	version="5.0">
 
+    <!-- CARRELLO -->
+	<servlet>
+		<servlet-name>VaiAlCarrelloServlet</servlet-name>
+		<servlet-class>controller.VaiAlCarrelloServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>VaiAlCarrelloServlet</servlet-name>
+		<url-pattern>/carrello</url-pattern>
+
+
+	</servlet-mapping>
 
 	<!-- SCHEDA PRODOTTO -->
 	<servlet>

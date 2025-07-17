@@ -88,6 +88,7 @@
                     <a href="/Italicious/home" class="text-gray-800 hover:text-green-600 font-medium transition">Home</a>
                     <a href="#" class="text-gray-800 hover:text-green-600 font-medium transition">Chi Siamo</a>
                     <a href="/Italicious/catalogo" class="text-gray-800 hover:text-green-600 font-medium transition">Catalogo</a>
+<<<<<<< Updated upstream
                     <!--  <a href="#" class="text-gray-800 hover:text-green-600 font-medium transition">Cerca</a>-->
                         <%
 					
@@ -121,6 +122,18 @@
                     <a href="" class="text-gray-800 hover:text-green-600 transition profile-link" id="profileBtn" >
                         <i class="fas fa-user text-xl"></i>
                     </a>
+=======
+                    <a href="#" class="text-gray-800 hover:text-green-600 font-medium transition">Cerca</a>
+                    <a href="/Italicious/login" class="text-gray-800 hover:text-green-600 font-medium transition">Accedi</a>
+                </div>
+                
+                <!-- Icona carrello -->
+                <div class="flex items-center space-x-4">
+                   <a href="/Italicious/carrello" class="text-gray-800 hover:text-green-600 transition">
+    				<i class="fas fa-shopping-cart text-xl"></i>
+				   </a>
+                   
+>>>>>>> Stashed changes
                     
                     <div class="popup-menu" id="profileMenu">
                     <%
@@ -150,11 +163,15 @@
                 <a href="/Italicious/home" class="block py-2 text-gray-800 hover:text-green-600 transition">Home</a>
                 <a href="#" class="block py-2 text-gray-800 hover:text-green-600 transition">Chi Siamo</a>
                 <a href="/Italicious/catalogo" class="block py-2 text-gray-800 hover:text-green-600 transition">Catalogo</a>
+<<<<<<< Updated upstream
                 <!-- <a href="#" class="block py-2 text-gray-800 hover:text-green-600 transition">Cerca</a> -->
               
 					
 					  <%if (!isLoggedIn) {
 					%>
+=======
+                <a href="#" class="block py-2 text-gray-800 hover:text-green-600 transition">Cerca</a>
+>>>>>>> Stashed changes
                 <a href="/Italicious/login" class="block py-2 text-gray-800 hover:text-green-600 transition">Accedi</a>
             	<%
 					    }
