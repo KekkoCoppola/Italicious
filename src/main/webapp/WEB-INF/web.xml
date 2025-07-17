@@ -7,12 +7,12 @@
 
     <!-- CARRELLO -->
 	<servlet>
-		<servlet-name>VaiAlCarrelloServlet</servlet-name>
-		<servlet-class>controller.VaiAlCarrelloServlet</servlet-class>
+		<servlet-name>CarrelloServlet</servlet-name>
+		<servlet-class>controller.CarrelloServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>VaiAlCarrelloServlet</servlet-name>
+		<servlet-name>CarrelloServlet</servlet-name>
 		<url-pattern>/carrello</url-pattern>
 
 

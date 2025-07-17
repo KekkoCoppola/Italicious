@@ -130,9 +130,14 @@
                         <p class="text-gray-600 mb-4"><%= p.getDescrizione() %></p>
                         <div class="flex justify-between items-center">
                             <span class="text-xl font-bold">&euro;<%= p.getPrezzo() %></span>
-                            <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
+                            <form method="post" action="<%= request.getContextPath() %>/carrello">
+						    <input type="hidden" name="azione" value="aggiungi">
+						    <input type="hidden" name="id_prodotto" value="<%= p.getId() %>">
+						    <input type="hidden" name="quantita" value="1">
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
                                 <i class="fas fa-cart-plus mr-2"></i>Aggiungi
                             </button>
+                            </form>
                         </div>
                     </div>
                 </div>

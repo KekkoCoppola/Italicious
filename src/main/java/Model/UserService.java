@@ -42,7 +42,7 @@ public class UserService {
        
  
             // Registrazione per utente normale nella tabella user
-            return registerUser(nome,email, password, conn);
+            return registerNormalUser(nome,email, password, conn);
 
        
     }

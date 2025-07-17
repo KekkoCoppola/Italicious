@@ -18,7 +18,7 @@ public class DBConnection {
 
         String url = "jdbc:mysql://localhost:3306/italiciousdb";
         String user = "root";
-        String password = "Benedetta28"; 
+        String password = "1234"; 
         return DriverManager.getConnection(url, user, password);
     }
 }

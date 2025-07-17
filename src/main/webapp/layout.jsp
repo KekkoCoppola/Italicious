@@ -7,8 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>${pageTitle}</title>
-    <link href="/css/styles.css" rel="stylesheet" />
-</head>
+    </head>
 <body>
 
 <jsp:include page="parziali/navbar.jsp" />

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ page import="Model.Prodotto" %>
+<%@ page import="java.util.List" %>
 
 
 <!DOCTYPE html>
@@ -138,58 +139,38 @@
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Prodotto 1 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
-                    <img src="https://images.unsplash.com/photo-1603569283847-aa6f53b5a7d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Parmigiano Reggiano" class="w-full h-48 object-cover">
+                <%
+			    	System.out.println("\n==================== INIZIO DEBUG ====================\n");
+			        List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodottiTop3");
+			        System.out.println("PRODOTTI: "+prodotti);
+			        if (prodotti != null && !prodotti.isEmpty()) {
+			            for (Prodotto p2 : prodotti) {
+   			%>
+                 <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
+                    <img src="<%= p2.getImmagine() %>" alt="<%= p2.getNome() %>" class="w-full h-48 object-cover" onclick="window.location.href='schedaprodotto?id=<%=p2.getId()%>'">
                     <div class="p-6">
                         <div class="flex justify-between items-start">
-                            <h3 class="text-xl font-bold mb-2">Parmigiano Reggiano</h3>
-                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Emilia-Romagna</span>
+                            <h3 class="text-xl font-bold mb-2"><%= p2.getNome() %></h3>
+                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded"><%= p2.getRegione() %></span>
                         </div>
-                        <p class="text-gray-600 mb-4">Formaggio stagionato 24 mesi, prodotto con latte crudo di vacche alimentate con foraggi locali.</p>
+                        <p class="text-gray-600 mb-4"><%= p2.getDescrizione() %></p>
                         <div class="flex justify-between items-center">
-                            <span class="text-xl font-bold">&euro;12,90</span>
+                            <span class="text-xl font-bold">&euro;<%= p2.getPrezzo() %></span>
                             <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
                                 <i class="fas fa-cart-plus mr-2"></i>Aggiungi
                             </button>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Prodotto 2 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
-                    <img src="https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Olio Extra Vergine di Oliva" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start">
-                            <h3 class="text-xl font-bold mb-2">Olio EVO Toscano</h3>
-                            <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">Toscana</span>
-                        </div>
-                        <p class="text-gray-600 mb-4">Olio extra vergine di oliva DOP, fruttato medio con sentori di carciofo e mandorla.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xl font-bold">€9,50</span>
-                            <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
-                                <i class="fas fa-cart-plus mr-2"></i>Aggiungi
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Prodotto 3 -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
-                    <img src="https://images.unsplash.com/photo-1611270634121-85658e60e122?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Prosciutto di Parma" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start">
-                            <h3 class="text-xl font-bold mb-2">Prosciutto di Parma</h3>
-                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Emilia-Romagna</span>
-                        </div>
-                        <p class="text-gray-600 mb-4">Prosciutto crudo stagionato 24 meses, dolce e profumato, tagliato a mano al momento.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xl font-bold">€18,50</span>
-                            <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
-                                <i class="fas fa-cart-plus mr-2"></i>Aggiungi
-                            </button>
-                        </div>
-                    </div>
-                </div>
+        <%
+	           }
+	        } else {
+	    %>
+	            <p>Nessun prodotto disponibile.</p>
+	    <%
+	        }
+	    %>
+              
             </div>
             
             <div class="text-center mt-10">

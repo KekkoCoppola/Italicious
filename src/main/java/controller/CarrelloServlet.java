@@ -15,9 +15,21 @@ import java.util.List;
 /**
  * Servlet per gestire il carrello dell’utente, sia in sessione che nel DB.
  */
-@WebServlet("/CarrelloServlet")
-public class CarrelloServlet extends HttpServlet {
 
+public class CarrelloServlet extends HttpServlet {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        
+
+       /* if (session.getAttribute("username") == null) {
+        	response.sendRedirect("login");
+        	return;
+        } */
+        request.setAttribute("pageTitle", "Carrello - Italicious");
+    	request.setAttribute("contentPage", "carrello.jsp");
+
+        request.getRequestDispatcher("/layout.jsp").forward(request, response);
+    }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
@@ -74,10 +86,9 @@ public class CarrelloServlet extends HttpServlet {
 
         // Aggiorna il carrello in sessione
         session.setAttribute("carrello", carrello);
-
+        response.sendRedirect("catalogo");
+    	return;
         // Reindirizza a layout.jsp con contentPage impostato
-        request.setAttribute("pageTitle", "Carrello - Italicious");
-        request.setAttribute("contentPage", "/carrello.jsp");
-        request.getRequestDispatcher("/layout.jsp").forward(request, response);
+     
     }
 }
