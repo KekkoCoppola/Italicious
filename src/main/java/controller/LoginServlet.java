@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 
                 // Redirigi alla pagina corretta in base al ruolo
                 if ("admin".equals(role)) {
-                    response.sendRedirect("admin"); // Dashboard admin
+                    response.sendRedirect("catalogo"); // Dashboard admin
                 } else {
                     response.sendRedirect("catalogo"); // Dashboard utente
                 }

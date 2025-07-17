@@ -7,14 +7,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Italicious - Catalogo Prodotti Tipici Italiani</title>
-    <%
-    String username = (String) session.getAttribute("username");
-    if (username != null) {
-%>
-    <p>Benvenuto, <strong><%= username %></strong>!</p>
-<%
-    }
-%>
 <%
     String ruolo = (String) session.getAttribute("role");
     if ("admin".equals(ruolo)) {

@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* From Uiverse.io by ilkhoeri */
+
 
 body {
 	margin: 0;
@@ -49,6 +49,7 @@ body {
 
 
 .avatar {
+	pointer-events: none;
 	--sz-avatar: 166px;
 	order: 0;
 	width: var(--sz-avatar);

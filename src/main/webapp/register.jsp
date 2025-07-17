@@ -17,10 +17,9 @@
     name="blindcheck"
     hidden=""
   />
-
+	<input type="checkbox" id="blind-check" class="blind-check" hidden>
   <label for="blind-input" class="blind_input">
-    <span class="hide">Nascondi</span>
-    <span class="show">Mostra</span>
+    <button id="showbtn" class="" onclick="hide()">Mostra</button>
   </label>
 
   <form class="form" action="register" method="POST">
@@ -50,7 +49,7 @@
     <input
       spellcheck="false"
       class="input"
-      type="text"
+      type="password"
       name="password"
       id="password"
     />
@@ -150,4 +149,33 @@
   <!-- Registrazione -->
 
 </body>
+<script>
+var card = document.getElementById("card");
+var passInput = document.getElementById("password");
+var showbtn = document.getElementById("showbtn");
+var occhi =document.getElementById("blind-check");
+
+passInput.addEventListener("focus", () => {
+	  if (passInput.type === "password") {
+	    document.getElementById("blind-check").checked = true;
+	  }
+	});
+passInput.addEventListener("blur", () => {
+	  if (passInput.type === "password") {
+	    document.getElementById("blind-check").checked = false;
+	  }
+	});
+
+function hide(){
+	if (passInput.type === "password") {
+		passInput.type = "text";
+		showbtn.textContent = "Nascondi";
+		occhi.checked=false;
+	    } else {
+	    	passInput.type = "password";
+	    	showbtn.textContent = "Mostra";
+	    	occhi.checked=true;
+	    }
+}
+</script>
 </html>
