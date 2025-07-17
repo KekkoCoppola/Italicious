@@ -81,9 +81,13 @@
                         <div class="absolute top-4 left-4">
                             <span class="bg-green-500 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full">DOP</span>
                         </div>
-                        <button class="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100">
-                            <i class="far fa-heart text-gray-600 text-xl"></i>
-                        </button>
+                        <form action="lista-preferiti" method="post">
+							    <input type="hidden" name="action" value="add">
+							    <input type="hidden" name="id_prodotto" value="42">
+                        		<button type="submit" class="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100">
+                            		<i class="far fa-heart text-gray-600 text-xl"></i>
+                       			</button>
+                        </form>
                     </div>
                     <!--  <div class="grid grid-cols-4 gap-2">
                         <img src="<%=p.getImmagine() %>" 
