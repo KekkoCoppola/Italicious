@@ -40,7 +40,7 @@
                         <li><a href="/Italicious/home" class="text-gray-400 hover:text-white transition">Home</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white transition">Chi Siamo</a></li>
                         <li><a href="/Italicious/catalogo" class="text-gray-400 hover:text-white transition">Catalogo</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Cerca</a></li>
+                        <!--<li><a href="#" class="text-gray-400 hover:text-white transition">Cerca</a></li>  -->
                         <li><a href="/Italicious/login" class="text-gray-400 hover:text-white transition">Accedi</a></li>
                     </ul>
                 </div>

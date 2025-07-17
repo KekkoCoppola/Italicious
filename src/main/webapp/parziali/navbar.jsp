@@ -33,14 +33,17 @@
                     <a href="/Italicious/home" class="text-gray-800 hover:text-green-600 font-medium transition">Home</a>
                     <a href="#" class="text-gray-800 hover:text-green-600 font-medium transition">Chi Siamo</a>
                     <a href="/Italicious/catalogo" class="text-gray-800 hover:text-green-600 font-medium transition">Catalogo</a>
-                    <a href="#" class="text-gray-800 hover:text-green-600 font-medium transition">Cerca</a>
+                    <!--  <a href="#" class="text-gray-800 hover:text-green-600 font-medium transition">Cerca</a>-->
                     <a href="/Italicious/login" class="text-gray-800 hover:text-green-600 font-medium transition">Accedi</a>
                 </div>
                 
                 <!-- Icona carrello -->
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-7">
                     <a href="#" class="text-gray-800 hover:text-green-600 transition">
                         <i class="fas fa-shopping-cart text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-800 hover:text-green-600 transition">
+                        <i class="fas fa-user text-xl"></i>
                     </a>
                     
                     <!-- Hamburger menu per mobile -->
@@ -55,7 +58,7 @@
                 <a href="/Italicious/home" class="block py-2 text-gray-800 hover:text-green-600 transition">Home</a>
                 <a href="#" class="block py-2 text-gray-800 hover:text-green-600 transition">Chi Siamo</a>
                 <a href="/Italicious/catalogo" class="block py-2 text-gray-800 hover:text-green-600 transition">Catalogo</a>
-                <a href="#" class="block py-2 text-gray-800 hover:text-green-600 transition">Cerca</a>
+                <!-- <a href="#" class="block py-2 text-gray-800 hover:text-green-600 transition">Cerca</a> -->
                 <a href="/Italicious/login" class="block py-2 text-gray-800 hover:text-green-600 transition">Accedi</a>
             </div>
         </div>

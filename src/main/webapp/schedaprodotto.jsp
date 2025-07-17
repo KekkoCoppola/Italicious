@@ -64,7 +64,7 @@
 
         <div class="bg-white rounded-xl shadow-lg overflow-hidden">
             <div class="md:flex">
-                <!-- Gallery -->
+                <!-- IMMAGINE -->
                 <div class="md:w-1/2 p-0">
                     <div class="relative mb-4">
                         <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1 ">
@@ -101,7 +101,7 @@
                     </div>-->
                 </div>
 		
-                <!-- Product Info -->
+                <!-- INFO PRODOTTO -->
                 <div class="md:w-1/2 p-6">
                     <div class="mb-4">
                         <div class="flex items-center justify-between">
@@ -138,14 +138,7 @@
                     </div>
 
                     <div class="mb-6">
-                        <h3 class="text-lg font-semibold mb-2">Origine</h3>
-                        <div class="flex items-center">
-                            <div class="origin-map w-16 h-16 mr-4"></div>
-                            <div>
-                                <p class="font-medium">Prodotto in <%=p.getRegione() %></p>
-                                <p class="text-sm text-gray-600">Da una piccola azienda familiare con tradizione secolare</p>
-                            </div>
-                        </div>
+                        
                     </div>
 
                     <div class="mb-6">
@@ -211,44 +204,41 @@
         <div class="mt-8 bg-white rounded-xl shadow-lg overflow-hidden">
             <div class="border-b border-gray-200">
                 <nav class="flex -mb-px">
-                    <button class="tab-button active py-4 px-6 text-center border-b-2 font-medium text-sm border-green-500 text-green-600">
-                        <i class="fas fa-info-circle mr-2"></i>Dettagli
-                    </button>
-                    <button class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                        <i class="fas fa-list-ul mr-2"></i>Specifiche
-                    </button>
-                    <button class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                    
+                    <button class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm border-transparent text-green-500 hover:text-green-700 hover:border-green-300">
                         <i class="fas fa-star mr-2"></i>Recensioni
                     </button>
-                    <button class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                        <i class="fas fa-question-circle mr-2"></i>Domande
-                    </button>
+                    
                 </nav>
             </div>
             <div class="p-6">
-                <div class="tab-content active">
-                    <h3 class="text-lg font-semibold mb-4">La tradizione dell'Aceto Balsamico di Modena</h3>
-                    <p class="mb-4 text-gray-700">L'Aceto Balsamico di Modena DOP Ã¨ un prodotto unico al mondo, frutto di una tradizione secolare che si tramanda di generazione in generazione nelle acetaie della provincia di Modena. Questo aceto nasce dalla sapiente combinazione di mosto d'uva cotto e aceto di vino, che viene poi fatto invecchiare in una serie di botti di legni diversi (rovere, castagno, ciliegio, gelso e ginepro) per un periodo minimo di 12 anni.</p>
-                    <p class="mb-4 text-gray-700">Il processo di produzione Ã¨ rigorosamente regolamentato dal disciplinare DOP e ogni fase, dalla selezione delle uve all'invecchiamento, avviene esclusivamente nella zona geografica delimitata. Il risultato Ã¨ un condimento pregiato dal sapore inconfondibile, perfetto per esaltare piatti di carne, formaggi stagionati, fragole e persino gelato.</p>
-                    <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i class="fas fa-lightbulb text-green-400"></i>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-sm text-green-700">
-                                    <strong>Consiglio dello chef:</strong> Per apprezzare al meglio l'Aceto Balsamico di Modena DOP, versane qualche goccia su un cucchiaino di parmigiano reggiano stagionato 36 mesi. L'abbinamento perfetto tra due eccellenze dell'Emilia-Romagna!
-                                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Recensione 1 -->
+                <div class="review-card bg-gray-50 p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <img class="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/women/32.jpg" alt="Maria Rossi">
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-900">Maria Rossi</p>
+                            <div class="flex">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
                             </div>
                         </div>
                     </div>
+                    <p class="text-gray-600 italic">"Ho ricevuto il pacco con i prodotti della Toscana e sono rimasta stupita dalla qualità. L'olio EVO ha un profumo incredibile e il pecorino è perfetto. Consiglio Italicious a tutti gli amanti della vera cucina italiana!"</p>
+                </div>
                 </div>
             </div>
         </div>
 
         <!-- Related Products -->
         <div class="mt-12">
-            <h2 class="text-2xl font-bold mb-6">Altri prodotti della regione</h2>
+            <h2 class="text-2xl font-bold mb-6">Altri prodotti della regione <%=p.getRegione() %></h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 
 			
@@ -288,57 +278,6 @@
         </div>
     </div>
 
-    <script>
-        // Tab functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // Remove active class from all buttons and contents
-                    tabButtons.forEach(btn => btn.classList.remove('active', 'border-green-500', 'text-green-600'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Add active class to clicked button and corresponding content
-                    button.classList.add('active', 'border-green-500', 'text-green-600');
-                    const tabId = button.getAttribute('data-tab');
-                    if (tabId) {
-                        document.getElementById(tabId).classList.add('active');
-                    }
-                });
-            });
 
-            // Quantity buttons
-            const minusBtn = document.querySelector('.fa-minus').parentNode;
-            const plusBtn = document.querySelector('.fa-plus').parentNode;
-            const quantityInput = document.querySelector('input[type="number"]');
-            
-            minusBtn.addEventListener('click', () => {
-                let value = parseInt(quantityInput.value);
-                if (value > 1) {
-                    quantityInput.value = value - 1;
-                }
-            });
-            
-            plusBtn.addEventListener('click', () => {
-                let value = parseInt(quantityInput.value);
-                quantityInput.value = value + 1;
-            });
-
-            // Wishlist button
-            const wishlistBtn = document.querySelector('.fa-heart').parentNode;
-            wishlistBtn.addEventListener('click', function() {
-                const icon = this.querySelector('i');
-                if (icon.classList.contains('far')) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas', 'text-red-500');
-                } else {
-                    icon.classList.remove('fas', 'text-red-500');
-                    icon.classList.add('far');
-                }
-            });
-        });
-    </script>
 </body>
 </html>
