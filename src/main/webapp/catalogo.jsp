@@ -129,7 +129,7 @@
 			            for (Prodotto p : prodotti) {
    			%>
                  <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
-                    <img src="<%= p.getImmagine() %>" alt="<%= p.getNome() %>" class="w-full h-48 object-cover">
+                    <img src="<%= p.getImmagine() %>" alt="<%= p.getNome() %>" class="w-full h-48 object-cover" onclick="window.location.href='schedaProdotto.jsp?id=<%=p.getId()%>'">
                     <div class="p-6">
                         <div class="flex justify-between items-start">
                             <h3 class="text-xl font-bold mb-2"><%= p.getNome() %></h3>
