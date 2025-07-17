@@ -38,6 +38,39 @@ public class ProdottoDAO {
         return prodotti;
     }
     
+    public static List<Prodotto> getProdottiByRegione(String regione) {
+        List<Prodotto> prodotti = new ArrayList<>();
+
+        String query = "SELECT * FROM Prodotto WHERE regione = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, regione); // Imposta il valore della regione nel placeholder
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Prodotto p = new Prodotto();
+                    p.setId(rs.getInt("id"));
+                    p.setNome(rs.getString("nome"));
+                    p.setDescrizione(rs.getString("descrizione"));
+                    p.setPrezzo(rs.getDouble("prezzo"));
+                    p.setIva(rs.getDouble("iva"));
+                    p.setDisponibilita(rs.getInt("disponibilita"));
+                    p.setImmagine(rs.getString("immagine"));
+                    p.setRegione(rs.getString("regione"));
+                    prodotti.add(p);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return prodotti;
+    }
+
+    
     public void addProdotto(Prodotto prodotto) {
         String query = "INSERT INTO Prodotto (nome, descrizione, prezzo, immagine, regione) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();

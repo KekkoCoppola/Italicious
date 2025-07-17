@@ -22,7 +22,7 @@ public class CatalogoServlet extends HttpServlet {
 
         request.setAttribute("prodotti", prodotti); 
         request.setAttribute("pageTitle", "Catalogo Prodotti");
-    	request.setAttribute("contentPage", "catalogo.jsp"); // <-- Qui lo imposti
+    	request.setAttribute("contentPage", "catalogo.jsp"); 
 
         request.getRequestDispatcher("/layout.jsp").forward(request, response);
         

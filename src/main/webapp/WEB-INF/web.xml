@@ -5,6 +5,20 @@
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
 	version="5.0">
 
+
+	<!-- SCHEDA PRODOTTO -->
+	<servlet>
+		<servlet-name>SchedaProdottoServlet</servlet-name>
+		<servlet-class>controller.SchedaProdottoServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SchedaProdottoServlet</servlet-name>
+		<url-pattern>/schedaprodotto</url-pattern>
+
+
+	</servlet-mapping>
+
 	<!-- CATALOGO -->
 	<servlet>
 		<servlet-name>CatalogoServlet</servlet-name>
