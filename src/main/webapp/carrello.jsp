@@ -43,7 +43,7 @@
                         <th class="py-3 px-6 text-center">Totale</th>
                     </tr>
                 </thead>
-                <tbody id="carrello-body">
+                <tbody>
                     <%
                         for (ElementoCarrello item : carrello.getProdotti()) {
                             int idProdotto = item.getIdProdotto();
@@ -57,20 +57,23 @@
                     %>
                     <tr class="border-b hover:bg-gray-50">
                         <td class="py-4 px-6 font-semibold"><%= prodotto.getNome() %></td>
-                        <td class="py-4 px-6 text-center"><%= df.format(prezzoUnitario) %> €</td>
+                        <td class="py-4 px-6 text-center" id="prezzo-<%= idProdotto %>"><%= df.format(prezzoUnitario) %></td>
                         <td class="py-4 px-6 text-center">
                             <div class="flex justify-center items-center gap-2">
-                                <button onclick="aggiornaQuantita(<%= idProdotto %>, <%= quantita - 1 %>)"
+                                <button onclick="aggiornaQuantitaDinamica(<%= idProdotto %>, -1)"
                                     class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700"
-                                    <%= (quantita <= 1) ? "disabled" : "" %>>-</button>
+                                    id="btn-meno-<%= idProdotto %>"
+                                    <%= (quantita <= 1) ? "disabled" : "" %>>−</button>
 
-                                <span class="font-medium"><%= quantita %></span>
+                                <span class="font-medium" id="quantita-<%= idProdotto %>"><%= quantita %></span>
 
-                                <button onclick="aggiornaQuantita(<%= idProdotto %>, <%= quantita + 1 %>)"
+                                <button onclick="aggiornaQuantitaDinamica(<%= idProdotto %>, 1)"
                                     class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700">+</button>
                             </div>
                         </td>
-                        <td class="py-4 px-6 text-center font-semibold"><%= df.format(subtotale) %> €</td>
+                        <td class="py-4 px-6 text-center font-semibold" id="subtotale-<%= idProdotto %>">
+                            <%= df.format(subtotale) %> €
+                        </td>
                     </tr>
                     <%
                             }
@@ -78,14 +81,14 @@
                     %>
                     <tr class="bg-red-100 font-bold">
                         <td colspan="3" class="py-4 px-6 text-right">Totale:</td>
-                        <td class="py-4 px-6 text-center"><%= df.format(totale) %> €</td>
+                        <td class="py-4 px-6 text-center" id="totale-generale"><%= df.format(totale) %> €</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="flex justify-center mt-8 gap-4">
-            <form action="<%= request.getContextPath() %>/carrello" method="post">
+            <form action="carrello" method="post">
                 <input type="hidden" name="azione" value="svuota"/>
                 <input type="hidden" name="id_prodotto" value="0"/>
                 <input type="hidden" name="quantita" value="0"/>
@@ -105,32 +108,68 @@
     %>
 </div>
 
+<!-- Notifica -->
+<div id="notifica" class="fixed top-5 right-5 bg-gray-800 text-white px-4 py-2 rounded-lg shadow z-50 hidden"></div>
+
 <script>
-function aggiornaQuantita(idProdotto, nuovaQuantita) {
+function aggiornaQuantitaDinamica(idProdotto, variazione) {
+    const span = document.getElementById("quantita-" + idProdotto);
+    const attuale = parseInt(span.innerText);
+    const nuovaQuantita = attuale + variazione;
     if (nuovaQuantita < 1) return;
+    aggiornaQuantita(idProdotto, nuovaQuantita);
+}
 
-    const formData = new FormData();
-    formData.append("azione", "aggiorna");
-    formData.append("id_prodotto", idProdotto);
-    formData.append("quantita", nuovaQuantita);
-
-    fetch("<%= request.getContextPath() %>/carrello", {
-        method: "POST",
+function aggiornaQuantita(idProdotto, nuovaQuantita) {
+    fetch('carrello', {
+        method: 'POST',
         headers: {
-            "X-Requested-With": "XMLHttpRequest"
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
         },
-        body: formData
+        body: JSON.stringify({
+            azione: 'aggiorna',
+            id_prodotto: idProdotto,
+            quantita: nuovaQuantita
+        })
     })
-    .then(res => res.text())
-    .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const nuovoBody = doc.querySelector("#carrello-body");
-        const vecchioBody = document.querySelector("#carrello-body");
-        if (nuovoBody && vecchioBody) {
-            vecchioBody.innerHTML = nuovoBody.innerHTML;
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("quantita-" + idProdotto).innerText = data.nuovaQuantita;
+            const btnMeno = document.getElementById("btn-meno-" + idProdotto);
+            if (data.nuovaQuantita <= 1) btnMeno.setAttribute("disabled", "disabled");
+            else btnMeno.removeAttribute("disabled");
+
+            const prezzo = parseFloat(document.getElementById("prezzo-" + idProdotto).innerText.replace(",", "."));
+            const nuovoSubtotale = prezzo * data.nuovaQuantita;
+            document.getElementById("subtotale-" + idProdotto).innerText =
+                nuovoSubtotale.toFixed(2).replace(".", ",") + " €";
+            aggiornaTotaleGenerale();
+
+            mostraNotifica("Quantità aggiornata ✅", "green");
+        } else {
+            mostraNotifica("Errore aggiornamento", "red");
         }
+    })
+    .catch(() => mostraNotifica("Errore nella richiesta", "red"));
+}
+
+function aggiornaTotaleGenerale() {
+    let total = 0.0;
+    document.querySelectorAll("[id^='subtotale-']").forEach(el => {
+        const valore = parseFloat(el.innerText.replace(",", "."));
+        if (!isNaN(valore)) total += valore;
     });
+    document.getElementById("totale-generale").innerText = total.toFixed(2).replace(".", ",") + " €";
+}
+
+function mostraNotifica(msg, colore) {
+    const box = document.getElementById("notifica");
+    box.innerText = msg;
+    box.style.backgroundColor = (colore === "green") ? "#16a34a" : "#dc2626";
+    box.classList.remove("hidden");
+    setTimeout(() => box.classList.add("hidden"), 3000);
 }
 </script>
 

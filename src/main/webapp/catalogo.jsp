@@ -7,16 +7,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Italicious - Catalogo Prodotti Tipici Italiani</title>
-<%
-    String ruolo = (String) session.getAttribute("role");
-    if ("admin".equals(ruolo)) {
-%>
-    <button onclick="location.href='admin'">Gestisci Prodotti</button>
-<%
-    }
-%>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
        
         body {
@@ -62,9 +56,34 @@
         .cart-pulse {
             animation: pulse 0.5s ease;
         }
+        
+        #notifica {
+		  position: fixed;
+		  top: 20px;
+		  right: 20px;
+		  background-color: #333;
+		  color: #fff;
+		  padding: 12px 20px;
+		  border-radius: 8px;
+		  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+		  font-family: sans-serif;
+		  display: none;
+		  z-index: 9999;
+		  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+		}
+		
+		@keyframes fadein {
+		  from { opacity: 0; top: 0px; }
+		  to { opacity: 1; top: 20px; }
+		}
+		@keyframes fadeout {
+		  from { opacity: 1; top: 20px; }
+		  to { opacity: 0; top: 0px; }
+		}
     </style>
 </head>
 <body class="bg-gray-50">
+<div id="notifica" class="nascosta"></div>
     <!-- Hero Section -->
     <section class="bg-gradient-to-r from-red-50 to-amber-50 py-12">
         <div class="container mx-auto px-4">
@@ -130,11 +149,11 @@
                         <p class="text-gray-600 mb-4"><%= p.getDescrizione() %></p>
                         <div class="flex justify-between items-center">
                             <span class="text-xl font-bold">&euro;<%= p.getPrezzo() %></span>
-                            <form method="post" action="<%= request.getContextPath() %>/carrello">
+                            <form class="aggiungiCarrello" method="post" action="<%= request.getContextPath() %>/carrello">
 						    <input type="hidden" name="azione" value="aggiungi">
-						    <input type="hidden" name="id_prodotto" value="<%= p.getId() %>">
+						    <input type="hidden" name="idProdotto" value="<%= p.getId() %>">
 						    <input type="hidden" name="quantita" value="1">
-                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
+                            <button type="submit" class="form-aggiungi bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
                                 <i class="fas fa-cart-plus mr-2"></i>Aggiungi
                             </button>
                             </form>
@@ -164,7 +183,51 @@
     </main>
 
     <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const forms = document.querySelectorAll(".aggiungiCarrello");
+
+        forms.forEach(form => {
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+
+                // Estrai dati dal form come oggetto JS
+                const formData = new URLSearchParams(new FormData(form));
+                const dati = Object.fromEntries(formData.entries());
+
+                fetch(form.action, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Requested-With": "XMLHttpRequest"
+                    },
+                    body: JSON.stringify(dati)
+                })
+                .then(res => {
+		                if (!res.ok) throw new Error("Errore server");
+		                return res.json(); // 👈 CORRETTO: interpreta come JSON
+		            })
+		            .then(json => {
+		                mostraNotifica(json.messaggio || "Prodotto aggiunto al carrello ✅", "#16a34a");
+		            })
+                .catch(err => {
+                    console.error(err);
+                    mostraNotifica("Errore durante l'aggiunta al carrello ❌", "#dc2626");
+                });
+            });
+        });
+    });
         
+    function mostraNotifica(testo, colore = "#333") {
+    	  const notifica = document.getElementById("notifica");
+    	  notifica.style.backgroundColor = colore;
+    	  notifica.innerText = testo;
+    	  notifica.style.display = "block";
+
+    	  // Nasconde dopo 3 secondi
+    	  setTimeout(() => {
+    	    notifica.style.display = "none";
+    	  }, 3000);
+    	}
     </script>
 </body>
 </html>
