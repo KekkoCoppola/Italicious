@@ -100,6 +100,7 @@ public class CarrelloServlet extends HttpServlet {
         switch (azione) {
             case "aggiungi":
                 carrello.aggiungiProdotto(idProdotto, quantita);
+                
                 if (idUtente != null)
                     CarrelloDAO.aggiungiOaggiornaElemento(idUtente, idProdotto, quantita);
                 risposta.addProperty("messaggio", "Prodotto  aggiunto al carrello ✅");

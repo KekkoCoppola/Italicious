@@ -85,7 +85,8 @@ public class Carrello implements Serializable {
     public List<ElementoCarrello> getProdotti() {
         return prodotti;
     }
-
+    
+   
     /**
      * Sostituisce l’intero contenuto del carrello.
      * Usato ad esempio quando si carica il carrello dal database dopo il login.

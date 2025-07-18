@@ -16,6 +16,16 @@
 	    <location>/error500.html</location>
 	</error-page>
 	
+	    <!-- CHI SIAMO -->
+	<servlet>
+		<servlet-name>ChiSiamoServlet</servlet-name>
+		<servlet-class>controller.ChiSiamoServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ChiSiamoServlet</servlet-name>
+		<url-pattern>/chi_siamo</url-pattern>
+	</servlet-mapping>
 	
     <!-- CARRELLO -->
 	<servlet>
@@ -26,8 +36,6 @@
 	<servlet-mapping>
 		<servlet-name>CarrelloServlet</servlet-name>
 		<url-pattern>/carrello</url-pattern>
-
-
 	</servlet-mapping>
 
 	<!-- SCHEDA PRODOTTO -->
