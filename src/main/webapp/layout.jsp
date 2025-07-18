@@ -5,6 +5,9 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+<link rel="icon" type="image/png" href="img/loghi/logo_top.png">
+
+
     <meta charset="UTF-8">
     <title>${pageTitle}</title>
     </head>
