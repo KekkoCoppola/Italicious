@@ -23,92 +23,116 @@
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <div class="container mx-auto px-4 py-10">
-        <h1 class="text-3xl font-bold mb-8 text-center">Il tuo carrello</h1>
+<div class="container mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold mb-8 text-center">Il tuo carrello</h1>
 
-        <%
-            if (carrello == null || carrello.getProdotti().isEmpty()) {
-        %>
-            <p class="text-center text-lg text-gray-600">Il carrello è vuoto.</p>
-        <%
-            } else {
-        %>
-            <div class="overflow-x-auto">
-                <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
-                    <thead class="bg-red-100 text-red-800">
-                        <tr>
-                            <th class="py-3 px-6 text-left">Prodotto</th>
-                            <th class="py-3 px-6 text-center">Prezzo</th>
-                            <th class="py-3 px-6 text-center">Quantità</th>
-                            <th class="py-3 px-6 text-center">Totale</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%
-                            for (ElementoCarrello item : carrello.getProdotti()) {
-                                int idProdotto = item.getIdProdotto();
-                                int quantita = item.getQuantita();
-                                Prodotto prodotto = ProdottoDAO.getProdottoById(idProdotto);
+    <%
+        if (carrello == null || carrello.getProdotti().isEmpty()) {
+    %>
+        <p class="text-center text-lg text-gray-600">Il carrello è vuoto.</p>
+    <%
+        } else {
+    %>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
+                <thead class="bg-red-100 text-red-800">
+                    <tr>
+                        <th class="py-3 px-6 text-left">Prodotto</th>
+                        <th class="py-3 px-6 text-center">Prezzo</th>
+                        <th class="py-3 px-6 text-center">Quantità</th>
+                        <th class="py-3 px-6 text-center">Totale</th>
+                    </tr>
+                </thead>
+                <tbody id="carrello-body">
+                    <%
+                        for (ElementoCarrello item : carrello.getProdotti()) {
+                            int idProdotto = item.getIdProdotto();
+                            int quantita = item.getQuantita();
+                            Prodotto prodotto = ProdottoDAO.getProdottoById(idProdotto);
 
-                                if (prodotto != null) {
-                                    double prezzoUnitario = prodotto.getPrezzo();
-                                    double subtotale = prezzoUnitario * quantita;
-                                    totale += subtotale;
-                        %>
-                        <tr class="border-b hover:bg-gray-50">
-                            <td class="py-4 px-6 font-semibold"><%= prodotto.getNome() %></td>
-                            <td class="py-4 px-6 text-center"><%= df.format(prezzoUnitario) %> €</td>
-                            <td class="py-4 px-6 text-center">
-                                <div class="flex justify-center items-center gap-2">
-                                    <form action="" method="post">
-                                        <input type="hidden" name="azione" value="aggiorna"/>
-                                        <input type="hidden" name="id_prodotto" value="<%= idProdotto %>"/>
-                                        <input type="hidden" name="quantita" value="<%= quantita - 1 %>"/>
-                                        <button type="submit" class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700" <%= (quantita <= 1) ? "disabled" : "" %>>-</button>
-                                    </form>
+                            if (prodotto != null) {
+                                double prezzoUnitario = prodotto.getPrezzo();
+                                double subtotale = prezzoUnitario * quantita;
+                                totale += subtotale;
+                    %>
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-4 px-6 font-semibold"><%= prodotto.getNome() %></td>
+                        <td class="py-4 px-6 text-center"><%= df.format(prezzoUnitario) %> €</td>
+                        <td class="py-4 px-6 text-center">
+                            <div class="flex justify-center items-center gap-2">
+                                <button onclick="aggiornaQuantita(<%= idProdotto %>, <%= quantita - 1 %>)"
+                                    class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700"
+                                    <%= (quantita <= 1) ? "disabled" : "" %>>-</button>
 
-                                    <span class="font-medium"><%= quantita %></span>
+                                <span class="font-medium"><%= quantita %></span>
 
-                                    <form action="" method="post">
-                                        <input type="hidden" name="azione" value="aggiorna"/>
-                                        <input type="hidden" name="id_prodotto" value="<%= idProdotto %>"/>
-                                        <input type="hidden" name="quantita" value="<%= quantita + 1 %>"/>
-                                        <button type="submit" class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700">+</button>
-                                    </form>
-                                </div>
-                            </td>
-                            <td class="py-4 px-6 text-center font-semibold"><%= df.format(subtotale) %> €</td>
-                        </tr>
-                        <%
-                                }
+                                <button onclick="aggiornaQuantita(<%= idProdotto %>, <%= quantita + 1 %>)"
+                                    class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700">+</button>
+                            </div>
+                        </td>
+                        <td class="py-4 px-6 text-center font-semibold"><%= df.format(subtotale) %> €</td>
+                    </tr>
+                    <%
                             }
-                        %>
-                        <tr class="bg-red-100 font-bold">
-                            <td colspan="3" class="py-4 px-6 text-right">Totale:</td>
-                            <td class="py-4 px-6 text-center"><%= df.format(totale) %> €</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                        }
+                    %>
+                    <tr class="bg-red-100 font-bold">
+                        <td colspan="3" class="py-4 px-6 text-right">Totale:</td>
+                        <td class="py-4 px-6 text-center"><%= df.format(totale) %> €</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-            <div class="flex justify-center mt-8 gap-4">
-                <form action="" method="post">
-                    <input type="hidden" name="azione" value="svuota"/>
-                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow">
-                        <i class="fas fa-trash-alt mr-2"></i>Svuota carrello
-                    </button>
-                </form>
+        <div class="flex justify-center mt-8 gap-4">
+            <form action="<%= request.getContextPath() %>/carrello" method="post">
+                <input type="hidden" name="azione" value="svuota"/>
+                <input type="hidden" name="id_prodotto" value="0"/>
+                <input type="hidden" name="quantita" value="0"/>
+                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow">
+                    <i class="fas fa-trash-alt mr-2"></i>Svuota carrello
+                </button>
+            </form>
 
-                <form action="" method="post">
-                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">
-                        <i class="fas fa-credit-card mr-2"></i>Procedi all'acquisto
-                    </button>
-                </form>
-            </div>
-        <%
-            }
-        %>
-    </div>
+            <form action="OrdineServlet" method="post">
+                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">
+                    <i class="fas fa-credit-card mr-2"></i>Procedi all'acquisto
+                </button>
+            </form>
+        </div>
+    <%
+        }
+    %>
+</div>
+
+<script>
+function aggiornaQuantita(idProdotto, nuovaQuantita) {
+    if (nuovaQuantita < 1) return;
+
+    const formData = new FormData();
+    formData.append("azione", "aggiorna");
+    formData.append("id_prodotto", idProdotto);
+    formData.append("quantita", nuovaQuantita);
+
+    fetch("<%= request.getContextPath() %>/carrello", {
+        method: "POST",
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        },
+        body: formData
+    })
+    .then(res => res.text())
+    .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const nuovoBody = doc.querySelector("#carrello-body");
+        const vecchioBody = document.querySelector("#carrello-body");
+        if (nuovoBody && vecchioBody) {
+            vecchioBody.innerHTML = nuovoBody.innerHTML;
+        }
+    });
+}
+</script>
 
 </body>
 </html>

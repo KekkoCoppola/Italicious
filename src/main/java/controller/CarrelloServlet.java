@@ -6,48 +6,35 @@ import Model.Utente;
 import Dao.CarrelloDAO;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
-import java.util.List;
-
-/**
- * Servlet per gestire il carrello dell’utente, sia in sessione che nel DB.
- */
 
 public class CarrelloServlet extends HttpServlet {
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        
 
-       /* if (session.getAttribute("username") == null) {
-        	response.sendRedirect("login");
-        	return;
-        } */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+
         request.setAttribute("pageTitle", "Carrello - Italicious");
-    	request.setAttribute("contentPage", "carrello.jsp");
+        request.setAttribute("contentPage", "carrello.jsp");
 
         request.getRequestDispatcher("/layout.jsp").forward(request, response);
     }
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        // Carrello in sessione
         Carrello carrello = (Carrello) session.getAttribute("carrello");
         if (carrello == null) {
             carrello = new Carrello();
             session.setAttribute("carrello", carrello);
         }
 
-        // Recupera utente loggato
         Utente utente = (Utente) session.getAttribute("utente");
         Integer idUtente = (utente != null) ? utente.getId() : null;
 
-        // Parametri della richiesta
         String azione = request.getParameter("azione");
-        int idProdotto = Integer.parseInt(request.getParameter("id_prodotto")); // nome esatto come nel DB
+        int idProdotto = Integer.parseInt(request.getParameter("id_prodotto"));
         int quantita = Integer.parseInt(request.getParameter("quantita"));
 
         switch (azione) {
@@ -84,11 +71,13 @@ public class CarrelloServlet extends HttpServlet {
                 break;
         }
 
-        // Aggiorna il carrello in sessione
         session.setAttribute("carrello", carrello);
-        response.sendRedirect("catalogo");
-    	return;
-        // Reindirizza a layout.jsp con contentPage impostato
-     
+
+        String requestedWith = request.getHeader("X-Requested-With");
+        if ("XMLHttpRequest".equals(requestedWith)) {
+            request.getRequestDispatcher("carrello.jsp").forward(request, response); // restituisce HTML completo
+        } else {
+            response.sendRedirect("carrello");
+        }
     }
 }
