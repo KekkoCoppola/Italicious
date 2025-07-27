@@ -80,7 +80,7 @@
             <!-- Menu per desktop -->
             <div class="hidden md:flex space-x-8">
                 <a href="/Italicious/home" class="text-gray-800 hover:text-green-600 font-medium transition">Home</a>
-                <a href="#" class="text-gray-800 hover:text-green-600 font-medium transition">Chi Siamo</a>
+                <a href="/Italicious/chi_siamo" class="text-gray-800 hover:text-green-600 font-medium transition">Chi Siamo</a>
                 <a href="/Italicious/catalogo" class="text-gray-800 hover:text-green-600 font-medium transition">Catalogo</a>
 
                 <%
@@ -101,13 +101,19 @@
                 <% if (isLoggedIn) { %>
                     <p class="text-sm text-gray-700">Ciao, <b><%= username %></b></p>
                 <% } %>
+				
+                <a href="/Italicious/carrello" class="relative text-gray-800 hover:text-green-600 transition">
+    <i class="fas fa-shopping-cart text-xl"></i> 
+    <span id="carrelloBadge" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
+          style="<%= (request.getAttribute("carrelloCount") != null && (int)request.getAttribute("carrelloCount") > 0) ? "" : "display:none;" %>">
+        <%= request.getAttribute("carrelloCount") %>
+    </span>
+</a>
 
-                <a href="/Italicious/carrello" class="text-gray-800 hover:text-green-600 transition">
-                    <i class="fas fa-shopping-cart text-xl"></i> 
-                </a>
 
                 <a href="#" class="text-gray-800 hover:text-green-600 transition profile-link" id="profileBtn">
                     <i class="fas fa-user text-xl"></i>
+                    
                 </a>
 
                 <div class="popup-menu" id="profileMenu">
@@ -129,7 +135,7 @@
         <!-- Menu mobile -->
         <div class="md:hidden hidden py-4" id="mobile-menu">
             <a href="/Italicious/home" class="block py-2 text-gray-800 hover:text-green-600 transition">Home</a>
-            <a href="#" class="block py-2 text-gray-800 hover:text-green-600 transition">Chi Siamo</a>
+            <a href="/Italicious/chi_siamo" class="block py-2 text-gray-800 hover:text-green-600 transition">Chi Siamo</a>
             <a href="/Italicious/catalogo" class="block py-2 text-gray-800 hover:text-green-600 transition">Catalogo</a>
 
             <% if (!isLoggedIn) { %>

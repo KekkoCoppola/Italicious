@@ -4,7 +4,29 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
 	version="5.0">
+	
+	<error-page>
+    <error-code>404</error-code>
+    <location>/error404.html</location>
+	</error-page>
+	
+	<!-- Pagina per errore 500 - Internal Server Error -->
+	<error-page>
+	    <error-code>500</error-code>
+	    <location>/error500.html</location>
+	</error-page>
+	
+	    <!-- CHI SIAMO -->
+	<servlet>
+		<servlet-name>ChiSiamoServlet</servlet-name>
+		<servlet-class>controller.ChiSiamoServlet</servlet-class>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>ChiSiamoServlet</servlet-name>
+		<url-pattern>/chi_siamo</url-pattern>
+	</servlet-mapping>
+	
     <!-- CARRELLO -->
 	<servlet>
 		<servlet-name>CarrelloServlet</servlet-name>
@@ -14,8 +36,6 @@
 	<servlet-mapping>
 		<servlet-name>CarrelloServlet</servlet-name>
 		<url-pattern>/carrello</url-pattern>
-
-
 	</servlet-mapping>
 
 	<!-- SCHEDA PRODOTTO -->
