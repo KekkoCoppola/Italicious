@@ -1,6 +1,9 @@
 package Model;
 
 import org.mindrot.jbcrypt.BCrypt;
+
+import Dao.DBConnection;
+
 import java.sql.*;
 
 public class UserService {
@@ -111,5 +114,24 @@ public class UserService {
             ResultSet rs = stmt.executeQuery();
             return rs.next(); // Se l'utente esiste, torna true
         }
+    }
+    
+    public static int getIdByMail(String email, String role) {
+    	String query = "SELECT id FROM utente WHERE mail = ?";
+		if (role.equals("admin")) {
+		   		query = "SELECT id FROM amministratore WHERE mail = ?";
+		}
+		
+		try (PreparedStatement stmt = DBConnection.getConnection().prepareStatement(query)) {
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id"); // restituisce l'ID trovato
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // log errore
+        }
+		return -1;
     }
 }

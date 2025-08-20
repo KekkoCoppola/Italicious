@@ -22,9 +22,31 @@ public class CarrelloDAO {
         String sql = """
             INSERT INTO Carrello (id_utente, id_prodotto, quantita)
             VALUES (?, ?, ?)
+            ON DUPLICATE KEY UPDATE quantita = ?
+        """;
+        	System.out.println("STAMPA ID UTENTE:"+idUtente+" ID PRODOTTO: "+idProdotto+" QUANTITA"+quantita);
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idUtente);
+            ps.setInt(2, idProdotto);
+            ps.setInt(3, quantita);
+            ps.setInt(4, quantita);
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void aggiornaMerge(int idUtente, int idProdotto, int quantita) {
+        String sql = """
+            INSERT INTO Carrello (id_utente, id_prodotto, quantita)
+            VALUES (?, ?, ?)
             ON DUPLICATE KEY UPDATE quantita = quantita + ?
         """;
-
+        	System.out.println("STAMPA ID UTENTE:"+idUtente+" ID PRODOTTO: "+idProdotto+" QUANTITA"+quantita);
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -111,4 +133,19 @@ public class CarrelloDAO {
             aggiungiOaggiornaElemento(idUtente, e.getIdProdotto(), e.getQuantita());
         }
     }
+    
+    public static List<ElementoCarrello> findByUserId(int userId) {
+        String sql = "SELECT id_prodotto, quantita FROM carrello WHERE id_utente = ?";
+        List<ElementoCarrello> out = new ArrayList<>();
+        try (PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    out.add(new ElementoCarrello(rs.getInt("id_prodotto"), rs.getInt("quantita")));
+                }
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return out;
+    }
+
 }

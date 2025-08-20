@@ -1,6 +1,7 @@
 package controller;
 
 import Model.Carrello;
+import Model.UserService;
 import Model.Utente;
 import Dao.CarrelloDAO;
 
@@ -81,8 +82,10 @@ public class CarrelloServlet extends HttpServlet {
             session.setAttribute("carrello", carrello);
         }
 
-        Utente utente = (Utente) session.getAttribute("utente");
-        Integer idUtente = (utente != null) ? utente.getId() : null;
+        String mailUtente = (String) session.getAttribute("email");
+        Integer idUtente = -1;
+        if(session.getAttribute("role")!=null)
+        		idUtente= UserService.getIdByMail(mailUtente, (String) session.getAttribute("role"));
 
         JsonObject json = new Gson().fromJson(request.getReader(), JsonObject.class);
 
@@ -96,19 +99,21 @@ public class CarrelloServlet extends HttpServlet {
 
         JsonObject risposta = new JsonObject();
         risposta.addProperty("success", true);
+        
+        
 
         switch (azione) {
             case "aggiungi":
                 carrello.aggiungiProdotto(idProdotto, quantita);
-                
-                if (idUtente != null)
+                System.out.println("idUtente: "+idUtente);
+                if (idUtente != -1)
                     CarrelloDAO.aggiungiOaggiornaElemento(idUtente, idProdotto, quantita);
                 risposta.addProperty("messaggio", "Prodotto  aggiunto al carrello ✅");
                 break;
 
             case "aggiorna":
                 carrello.aggiornaQuantita(idProdotto, quantita);
-                if (idUtente != null) {
+                if (idUtente != -1) {
                     if (quantita <= 0)
                         CarrelloDAO.rimuoviElemento(idUtente, idProdotto);
                     else

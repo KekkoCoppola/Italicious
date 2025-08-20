@@ -1,15 +1,31 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="Model.Carrello" %>
+<%@ page import="Dao.CarrelloDAO" %>
 <%@ page import="Model.ElementoCarrello" %>
 <%@ page import="Model.Prodotto" %>
+<%@ page import="Model.UserService" %>
 <%@ page import="Dao.ProdottoDAO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.DecimalFormat" %>
 
 <%
     Carrello carrello = (Carrello) session.getAttribute("carrello");
+	int idUtente = -1;
+	if(session.getAttribute("role")!=null)
+		idUtente = UserService.getIdByMail((String) session.getAttribute("email"),(String) session.getAttribute("role"));
     DecimalFormat df = new DecimalFormat("#0.00");
     double totale = 0.0;
+    
+    if (carrello == null) {
+        carrello = new Carrello();
+        if (idUtente != -1) {
+        	 List<ElementoCarrello> righe = CarrelloDAO.findByUserId(idUtente);
+             for (ElementoCarrello r : righe) {
+                 carrello.aggiungiProdotto(r.getIdProdotto(), r.getQuantita());
+             }
+        }
+        session.setAttribute("carrello", carrello);
+    }
 %>
 
 <!DOCTYPE html>
@@ -57,7 +73,7 @@
                     %>
                     <tr class="border-b hover:bg-gray-50">
                         <td class="py-4 px-6 font-semibold"><%= prodotto.getNome() %></td>
-                        <td class="py-4 px-6 text-center" id="prezzo-<%= idProdotto %>"><%= df.format(prezzoUnitario) %></td>
+                        <td class="py-4 px-6 text-center" id="prezzo-<%= idProdotto %>"><%= df.format(prezzoUnitario) %> &euro;</td>
                         <td class="py-4 px-6 text-center">
                             <div class="flex justify-center items-center gap-2">
                                 <button onclick="aggiornaQuantitaDinamica(<%= idProdotto %>, -1)"
@@ -69,6 +85,8 @@
 
                                 <button onclick="aggiornaQuantitaDinamica(<%= idProdotto %>, 1)"
                                     class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700">+</button>
+                                <button onclick="rimuovi(<%= idProdotto %>, 0)"
+                                    class="px-2 py-1 text-red-500  hover:text-red-700"><i class = "fas fa-trash"></i></button>
                             </div>
                         </td>
                         <td class="py-4 px-6 text-center font-semibold" id="subtotale-<%= idProdotto %>">
@@ -119,6 +137,33 @@ function aggiornaQuantitaDinamica(idProdotto, variazione) {
     if (nuovaQuantita < 1) return;
     aggiornaQuantita(idProdotto, nuovaQuantita);
 }
+
+function rimuovi(idProdotto, quantita) {
+    fetch('carrello', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({
+            azione: 'aggiorna',
+            id_prodotto: idProdotto,
+            quantita: quantita
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            //mostraNotifica("Elemento Rimosso ✅", "green");
+            location.reload();
+            //setTimeout(() => location.reload(), 300);
+        } else {
+            mostraNotifica("Errore rimozione", "red");
+        }
+    })
+    .catch(() => mostraNotifica("Errore nella richiesta", "red"));
+}
+
 
 function aggiornaQuantita(idProdotto, nuovaQuantita) {
     fetch('carrello', {

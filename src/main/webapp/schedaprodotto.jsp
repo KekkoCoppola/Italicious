@@ -42,23 +42,12 @@
         <nav class="flex mb-6" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
                 <li class="inline-flex items-center">
-                    <a href="/Italicious/home" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
-                        <i class="fas fa-home mr-2"></i>
-                        Home
+                    <a href="/Italicious/catalogo" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Indietro
                     </a>
                 </li>
-                <li>
-                    <div class="flex items-center">
-                        <i class="fas fa-chevron-right text-gray-400"></i>
-                        <a href="#" class="ml-1 text-sm font-medium text-gray-700 hover:text-green-600 md:ml-2"><%=p.getRegione() %></a>
-                    </div>
-                </li>
-                <li aria-current="page">
-                    <div class="flex items-center">
-                        <i class="fas fa-chevron-right text-gray-400"></i>
-                        <span class="ml-1 text-sm font-medium text-green-600 md:ml-2"><%=p.getNome() %></span>
-                    </div>
-                </li>
+                
             </ol>
         </nav>
 
@@ -263,9 +252,14 @@
                         <p class="text-gray-600 mb-4"><%= p2.getDescrizione() %></p>
                         <div class="flex justify-between items-center">
                             <span class="text-xl font-bold">&euro;<%= p2.getPrezzo() %></span>
-                            <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
+                            <form id="aggiungiAlCarrello" method="post" action="<%= request.getContextPath() %>/carrello">
+						    <input type="hidden" name="azione" value="aggiungi">
+						    <input type="hidden" name="idProdotto" value="<%= p.getId() %>">
+						    <input type="hidden" name="quantita" value="1">
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
                                 <i class="fas fa-cart-plus mr-2"></i>Aggiungi
                             </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -281,7 +275,38 @@
             </div>
         </div>
     </div>
-
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+	const form = document.getElementById("aggiungiAlCarrello");
+	
+	form.addEventListener("submit",function(e) {
+		console.log("OTTENGO: "+dati);
+		e.preventDefault();
+	    const formData = new URLSearchParams(new FormData(form));
+	    const dati = Object.fromEntries(formData.entries());
+		
+		fetch(form.action, {
+		    method: "POST",
+		    headers: {
+		        "Content-Type": "application/json",
+		        "X-Requested-With": "XMLHttpRequest"
+		    },
+		    body: JSON.stringify(dati)
+		})
+		.then(res => {
+		        if (!res.ok) throw new Error("Errore server");
+		        return res.json();
+		    })
+		    .then(json => {
+		        mostraNotifica(json.messaggio || "Prodotto aggiunto al carrello ✅", "#16a34a");
+		    })
+		.catch(err => {
+		    console.error(err);
+		    mostraNotifica("Errore durante l'aggiunta al carrello ❌", "#dc2626");
+		});
+	});
+});
+</script>
 
 </body>
 </html>

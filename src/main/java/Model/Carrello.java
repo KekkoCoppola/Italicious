@@ -4,28 +4,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Questa classe rappresenta il carrello dell'utente.
- * Viene salvata nella sessione e contiene una lista di prodotti con relative quantità.
- * Può essere caricata/salvata dal/in database tramite CarrelloDAO.
- */
 public class Carrello implements Serializable {
 
-    // Lista di prodotti nel carrello (ogni ElementoCarrello ha id prodotto + quantità)
     private List<ElementoCarrello> prodotti;
 
-    // Costruttore: inizializza la lista vuota
     public Carrello() {
         prodotti = new ArrayList<>();
     }
 
-    /**
-     * Aggiunge un prodotto al carrello.
-     * Se già presente, incrementa la quantità.
-     *
-     * @param idProdotto ID del prodotto da aggiungere
-     * @param quantita   Quantità da aggiungere
-     */
+
     public void aggiungiProdotto(int idProdotto, int quantita) {
         for (ElementoCarrello e : prodotti) {
             if (e.getIdProdotto() == idProdotto) {
@@ -34,7 +21,7 @@ public class Carrello implements Serializable {
                 return;
             }
         }
-        // Prodotto non presente → lo aggiungo come nuovo
+
         prodotti.add(new ElementoCarrello(idProdotto, quantita));
     }
 

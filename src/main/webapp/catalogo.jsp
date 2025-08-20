@@ -189,8 +189,6 @@
         forms.forEach(form => {
             form.addEventListener("submit", function(e) {
                 e.preventDefault();
-
-                // Estrai dati dal form come oggetto JS
                 const formData = new URLSearchParams(new FormData(form));
                 const dati = Object.fromEntries(formData.entries());
 
@@ -204,7 +202,7 @@
                 })
                 .then(res => {
 		                if (!res.ok) throw new Error("Errore server");
-		                return res.json(); // 👈 CORRETTO: interpreta come JSON
+		                return res.json();
 		            })
 		            .then(json => {
 		                mostraNotifica(json.messaggio || "Prodotto aggiunto al carrello ✅", "#16a34a");
@@ -223,7 +221,7 @@
     	  notifica.innerText = testo;
     	  notifica.style.display = "block";
 
-    	  // Nasconde dopo 3 secondi
+    	  // Nasconde nottifica dopo 3 secondi
     	  setTimeout(() => {
     	    notifica.style.display = "none";
     	  }, 3000);

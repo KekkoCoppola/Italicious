@@ -3,10 +3,15 @@ package controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import Model.Carrello;
+import Model.ElementoCarrello;
 import Model.UserService;
+import Dao.CarrelloDAO;
 import Dao.DBConnection;
 import java.io.IOException;
 import java.sql.*;
+
+import java.util.List;
 //@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	
@@ -32,7 +37,27 @@ public class LoginServlet extends HttpServlet {
 
             if (role != null) {
                 // Login riuscito, imposta la sessione
+            	
+            	
                 HttpSession session = request.getSession(); // Otteniamo la sessione corrente o ne creiamo una nuova
+                
+                Carrello guestCart = (Carrello) session.getAttribute("carrello");
+
+                // 2) somma il guest nel DB dell'utente (se c'è qualcosa)
+                if (guestCart != null && guestCart.getProdotti() != null) {
+                    for (ElementoCarrello e : guestCart.getProdotti()) {
+                        // SOMMA: usa proprio il tuo metodo "aggiungiOaggiornaElemento"
+                        CarrelloDAO.aggiungiOaggiornaElemento(UserService.getIdByMail(email, role), e.getIdProdotto(), e.getQuantita());
+                    }
+                }
+                Carrello mergedCart = new Carrello();
+                List<ElementoCarrello> righe = CarrelloDAO.findByUserId(UserService.getIdByMail(email, role));
+                for (ElementoCarrello r : righe) {
+                	mergedCart.aggiungiProdotto(r.getIdProdotto(), r.getQuantita());
+                }
+                session.setAttribute("carrello", mergedCart); 
+                
+                
                 session.setAttribute("email", email); 
                 String username = userService.getUsername(email, password, conn,role);
                 session.setAttribute("username", username);
