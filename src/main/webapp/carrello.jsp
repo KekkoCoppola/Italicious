@@ -108,7 +108,7 @@
         <div class="flex justify-center mt-8 gap-4">
             <form action="carrello" method="post">
                 <input type="hidden" name="azione" value="svuota"/>
-                <input type="hidden" name="id_prodotto" value="0"/>
+                <input type="hidden" name="idProdotto" value="0"/>
                 <input type="hidden" name="quantita" value="0"/>
                 <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow">
                     <i class="fas fa-trash-alt mr-2"></i>Svuota carrello

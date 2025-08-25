@@ -121,7 +121,8 @@
                         <a href="/Italicious/login">Accedi</a>
                     <% } else { %>
                         <a href="/profile">Profilo</a>
-                        <a href="/settings">Impostazioni</a>
+                        <a href="/settings">I Miei Ordini</a>
+                        <a href="/settings">Lista preferiti</a>
                         <a href="<%= request.getContextPath() %>/logout">Logout</a>
                     <% } %>
                 </div>

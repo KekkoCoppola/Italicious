@@ -40,7 +40,10 @@ public class CarrelloServlet extends HttpServlet {
         Integer idUtente = (utente != null) ? utente.getId() : null;
 
         String azione = request.getParameter("azione");
-        int idProdotto = Integer.parseInt(request.getParameter("id_prodotto"));
+        int idProdotto = request.getParameter("idProdotto") != null 
+                ? Integer.parseInt(request.getParameter("idProdotto")) 
+                : Integer.parseInt(request.getParameter("idProdotto2"));
+
         int quantita = Integer.parseInt(request.getParameter("quantita"));
 
         switch (azione) {
@@ -91,9 +94,17 @@ public class CarrelloServlet extends HttpServlet {
 
         String azione = json.get("azione").getAsString();
         // Supporta entrambi i nomi di campo
-        int idProdotto = json.has("id_prodotto") ?
-                         json.get("id_prodotto").getAsInt() :
-                         json.get("idProdotto").getAsInt();
+        int idProdotto = -1;
+
+        if (json.has("id_prodotto")) {
+            idProdotto = json.get("id_prodotto").getAsInt();
+        }if (json.has("idProdotto")) {
+            idProdotto = json.get("idProdotto").getAsInt();
+        }if (json.has("idProdotto2")) {
+        	System.out.println("PRODOTTO CARD GIUU ID : "+json.get("idProdotto2").getAsInt());
+            idProdotto = json.get("idProdotto2").getAsInt();
+        }
+        System.out.println("RICEVUTO PRODOTTO CON ID: "+idProdotto);
 
         int quantita = json.get("quantita").getAsInt();
 

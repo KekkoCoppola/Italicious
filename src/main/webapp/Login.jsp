@@ -19,9 +19,7 @@
   />
 	<input type="checkbox" id="blind-check" class="blind-check" hidden>
 	
-  <label for="blind-input" class="blind_input">
-    <button id="showbtn" class="" onclick="hide()">Mostra</button>
-  </label>
+
 
   <form class="form" action="login" method="POST">
     <div class="title">Bentornato</div>
@@ -35,11 +33,10 @@
       id="email"
     />
 
-    <div class="frg_pss">
+    <div class="field">
       <label class="label_input" for="password">Password</label>
-      <a href="">Password Dimenticata?</a>
       
-    </div>
+
     <input
       spellcheck="false"
       class="input"
@@ -47,6 +44,9 @@
       name="password"
       id="password"
     />
+    <a href="" class="link-forgot">Password Dimenticata?</a>
+    <button id="showbtn" type="button" onclick="hide()">Mostra</button>
+    </div>
     
     
     <button class="submit" type="submit">Login</button>
@@ -133,7 +133,7 @@
   </p>
   <p style="text-align: center;">
   <a href="home">
-    <button type="button" class="submit " style="margin-top: 10px;">Torna alla Home</button>
+    <button type="button" class="submit btn-home" style="margin-top: 10px;">Torna alla Home</button>
   </a>
   </p>
 </div>

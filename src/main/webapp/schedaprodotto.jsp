@@ -33,9 +33,25 @@
             background-repeat: no-repeat;
             background-position: center;
         }
+        #notifica {
+		  position: fixed;
+		  top: 20px;
+		  right: 20px;
+		  background-color: #333;
+		  color: #fff;
+		  padding: 12px 20px;
+		  border-radius: 8px;
+		  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+		  font-family: sans-serif;
+		  display: none;
+		  z-index: 9999;
+		  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+		}
+		
     </style>
 </head>
 <body class="bg-gray-50 font-sans">
+<div id="notifica" class="nascosta"></div>
     <div class="container mx-auto px-4 py-8 max-w-6xl">
     		<% Prodotto p = (Prodotto)request.getAttribute("prodotto"); %>
         <!-- Breadcrumb -->
@@ -169,13 +185,16 @@
                         </div>
 
                         <div class="flex space-x-4">
+                        	<form id="aggiungiAlCarrelloGrande" method="post" action="<%= request.getContextPath() %>/carrello">
+						    <input type="hidden" name="azione" value="aggiungi">
+						    <input type="hidden" name="idProdotto" value="<%= p.getId() %>">
+						    <input type="hidden" name="quantita" value="1">
                             <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg flex-1 flex items-center justify-center">
                                 <i class="fas fa-shopping-cart mr-2"></i>
                                 Aggiungi al carrello
                             </button>
-                            <button class="bg-white border border-green-600 text-green-600 hover:bg-green-50 font-bold py-3 px-4 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-heart heart-animation mr-2"></i>
-                            </button>
+                            </form>
+                       
                         </div>
                     </div>
 
@@ -252,9 +271,9 @@
                         <p class="text-gray-600 mb-4"><%= p2.getDescrizione() %></p>
                         <div class="flex justify-between items-center">
                             <span class="text-xl font-bold">&euro;<%= p2.getPrezzo() %></span>
-                            <form id="aggiungiAlCarrello" method="post" action="<%= request.getContextPath() %>/carrello">
+                            <form class="aggiungiCarrello" method="post" action="<%= request.getContextPath() %>/carrello">
 						    <input type="hidden" name="azione" value="aggiungi">
-						    <input type="hidden" name="idProdotto" value="<%= p.getId() %>">
+						    <input type="hidden" name="idProdotto2" value="<%= p2.getId() %>">
 						    <input type="hidden" name="quantita" value="1">
                             <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
                                 <i class="fas fa-cart-plus mr-2"></i>Aggiungi
@@ -277,15 +296,14 @@
     </div>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-	const form = document.getElementById("aggiungiAlCarrello");
+	const formGrande = document.getElementById("aggiungiAlCarrelloGrande");
 	
-	form.addEventListener("submit",function(e) {
-		console.log("OTTENGO: "+dati);
+	formGrande.addEventListener("submit",function(e) {
 		e.preventDefault();
-	    const formData = new URLSearchParams(new FormData(form));
+	    const formData = new URLSearchParams(new FormData(formGrande));
 	    const dati = Object.fromEntries(formData.entries());
 		
-		fetch(form.action, {
+		fetch(formGrande.action, {
 		    method: "POST",
 		    headers: {
 		        "Content-Type": "application/json",
@@ -298,6 +316,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		        return res.json();
 		    })
 		    .then(json => {
+		    	//console.log("CLICCATO TASTO SU");
 		        mostraNotifica(json.messaggio || "Prodotto aggiunto al carrello ✅", "#16a34a");
 		    })
 		.catch(err => {
@@ -305,7 +324,48 @@ document.addEventListener("DOMContentLoaded", () => {
 		    mostraNotifica("Errore durante l'aggiunta al carrello ❌", "#dc2626");
 		});
 	});
+	
+	
+	const forms = document.querySelectorAll(".aggiungiCarrello");
+
+    forms.forEach(form => {
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            const formData = new URLSearchParams(new FormData(form));
+            const dati = Object.fromEntries(formData.entries());
+
+            fetch(form.action, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Requested-With": "XMLHttpRequest"
+                },
+                body: JSON.stringify(dati)
+            })
+            .then(res => {
+	                if (!res.ok) throw new Error("Errore server");
+	                return res.json();
+	            })
+	            .then(json => {
+	                mostraNotifica(json.messaggio || "Prodotto aggiunto al carrello ✅", "#16a34a");
+	                //console.log("CLICCATO TASTO GIU CON DATI: "+JSON.stringify(dati));
+	            })
+            .catch(err => {
+                console.error(err);
+                mostraNotifica("Errore durante l'aggiunta al carrello ❌", "#dc2626");
+            });
+        });
+    });
 });
+function mostraNotifica(testo, colore = "#333") {
+	  const notifica = document.getElementById("notifica");
+	  notifica.style.backgroundColor = colore;
+	  notifica.innerText = testo;
+	  notifica.style.display = "block";
+	  setTimeout(() => {
+	    notifica.style.display = "none";
+	  }, 3000);
+	}
 </script>
 
 </body>

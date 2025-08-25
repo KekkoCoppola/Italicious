@@ -118,13 +118,13 @@
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-2xl title-font text-gray-800">I nostri prodotti</h2>
                 <div class="flex items-center">
-                    <span class="text-gray-600 mr-2">Ordina per:</span>
+                    <!--  <span class="text-gray-600 mr-2">Ordina per:</span>
                     <select class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
                         <option>Più popolari</option>
                         <option>Prezzo: dal più basso</option>
                         <option>Prezzo: dal più alto</option>
                         <option>Nome A-Z</option>
-                    </select>
+                    </select>-->
                 </div>
             </div>
         </div>

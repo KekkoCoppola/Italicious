@@ -53,11 +53,25 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
+        #notifica {
+		  position: fixed;
+		  top: 20px;
+		  right: 20px;
+		  background-color: #333;
+		  color: #fff;
+		  padding: 12px 20px;
+		  border-radius: 8px;
+		  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+		  font-family: sans-serif;
+		  display: none;
+		  z-index: 9999;
+		  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+		}
     </style>
 </head>
 <body class="bg-gray-50 font-sans">
     <!-- home.jsp -->
-
+<div id="notifica" class="nascosta"></div>
 
 
     <!-- Hero Section -->
@@ -156,9 +170,14 @@
                         <p class="text-gray-600 mb-4"><%= p2.getDescrizione() %></p>
                         <div class="flex justify-between items-center">
                             <span class="text-xl font-bold">&euro;<%= p2.getPrezzo() %></span>
+                            <form class="aggiungiCarrello" method="post" action="<%= request.getContextPath() %>/carrello">
+						    <input type="hidden" name="azione" value="aggiungi">
+						    <input type="hidden" name="idProdotto2" value="<%= p2.getId() %>">
+						    <input type="hidden" name="quantita" value="1">
                             <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
                                 <i class="fas fa-cart-plus mr-2"></i>Aggiungi
                             </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -262,6 +281,46 @@
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         });
+        
+        const forms = document.querySelectorAll(".aggiungiCarrello");
+
+        forms.forEach(form => {
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+                const formData = new URLSearchParams(new FormData(form));
+                const dati = Object.fromEntries(formData.entries());
+
+                fetch(form.action, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Requested-With": "XMLHttpRequest"
+                    },
+                    body: JSON.stringify(dati)
+                })
+                .then(res => {
+    	                if (!res.ok) throw new Error("Errore server");
+    	                return res.json();
+    	            })
+    	            .then(json => {
+    	                mostraNotifica(json.messaggio || "Prodotto aggiunto al carrello ✅", "#16a34a");
+    	                //console.log("CLICCATO TASTO GIU CON DATI: "+JSON.stringify(dati));
+    	            })
+                .catch(err => {
+                    console.error(err);
+                    mostraNotifica("Errore durante l'aggiunta al carrello ❌", "#dc2626");
+                });
+            });
+        });
+        function mostraNotifica(testo, colore = "#333") {
+      	  const notifica = document.getElementById("notifica");
+      	  notifica.style.backgroundColor = colore;
+      	  notifica.innerText = testo;
+      	  notifica.style.display = "block";
+      	  setTimeout(() => {
+      	    notifica.style.display = "none";
+      	  }, 3000);
+      	}
 
         // Dati delle regioni
         const regionsData = {
