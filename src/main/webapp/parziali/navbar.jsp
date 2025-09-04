@@ -118,12 +118,12 @@
 
                 <div class="popup-menu" id="profileMenu">
                     <% if (!isLoggedIn) { %>
-                        <a href="/Italicious/login">Accedi</a>
+                        <a href="/Italicious/login"><i class="fa-solid fa-right-to-bracket"></i> Accedi</a>
                     <% } else { %>
                         <a href="/profile">Profilo</a>
                         <a href="/settings">I Miei Ordini</a>
                         <a href="/settings">Lista preferiti</a>
-                        <a href="<%= request.getContextPath() %>/logout">Logout</a>
+                        <a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
                     <% } %>
                 </div>
 

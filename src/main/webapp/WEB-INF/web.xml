@@ -16,6 +16,19 @@
 	    <location>/error500.html</location>
 	</error-page>
 	
+	    <!-- RECENSIONI -->
+	<servlet>
+		<servlet-name>RecensioniServlet</servlet-name>
+		<servlet-class>controller.RecensioniServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>RecensioniServlet</servlet-name>
+		<url-pattern>/recensioni</url-pattern>
+	</servlet-mapping>
+	
+	
+	
 	    <!-- CHI SIAMO -->
 	<servlet>
 		<servlet-name>ChiSiamoServlet</servlet-name>

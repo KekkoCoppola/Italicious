@@ -184,5 +184,29 @@ public class ProdottoDAO {
             e.printStackTrace();
         }
     }
+    //DA SPOSTARE IN ORDINI.JAVA
+    public boolean haAcquistatoProdotto(int idUtente, int idProdotto) throws SQLException {
+        String sql = """
+            SELECT EXISTS (
+                SELECT 1
+                FROM ordine_prodotto op
+                JOIN ordine o ON o.id = op.id_ordine
+                WHERE o.id_utente = ? 
+                  AND op.id_prodotto = ?
+            ) AS acquistato
+        """;
+
+        try (PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql)) {
+            ps.setInt(1, idUtente);
+            ps.setInt(2, idProdotto);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("acquistato") == 1;
+                }
+            }
+        }
+        return false;
+    }
+
 }
 

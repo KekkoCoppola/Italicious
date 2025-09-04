@@ -45,6 +45,8 @@ public class CarrelloServlet extends HttpServlet {
                 : Integer.parseInt(request.getParameter("idProdotto2"));
 
         int quantita = Integer.parseInt(request.getParameter("quantita"));
+        
+        System.out.println("QUANTITA SELEZIONATA:"+quantita);
 
         switch (azione) {
             case "aggiungi":
@@ -93,7 +95,7 @@ public class CarrelloServlet extends HttpServlet {
         JsonObject json = new Gson().fromJson(request.getReader(), JsonObject.class);
 
         String azione = json.get("azione").getAsString();
-        // Supporta entrambi i nomi di campo
+      
         int idProdotto = -1;
 
         if (json.has("id_prodotto")) {
@@ -104,10 +106,16 @@ public class CarrelloServlet extends HttpServlet {
         	System.out.println("PRODOTTO CARD GIUU ID : "+json.get("idProdotto2").getAsInt());
             idProdotto = json.get("idProdotto2").getAsInt();
         }
-        System.out.println("RICEVUTO PRODOTTO CON ID: "+idProdotto);
+        
 
-        int quantita = json.get("quantita").getAsInt();
+        int quantita = 1; // default
+        try {
+            quantita = json.get("quantita").getAsInt();
+        } catch (Exception e) {
+            System.out.println("Parametro quantita mancante o non numerico");
+        }
 
+        System.out.println("RICEVUTO PRODOTTO CON ID: "+idProdotto+" E QUANTITA "+quantita);
         JsonObject risposta = new JsonObject();
         risposta.addProperty("success", true);
         

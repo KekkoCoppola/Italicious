@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="Model.Prodotto" %>
+<%@ page import="Model.UserService" %>
+<%@ page import="Model.Recensione" %>
+<%@ page import="Dao.RecensioneDAO" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="it">
@@ -47,7 +50,16 @@
 		  z-index: 9999;
 		  animation: fadein 0.5s, fadeout 0.5s 2.5s;
 		}
-		
+		.review-card .star-rating{direction:rtl}
+		.review-card .star-rating input[type="radio"]{display:none}
+		.review-card .star-rating label{
+			color:#e2e8f0;font-size:1.75rem;padding:0 3px;cursor:pointer;transition:all .2s ease
+		}
+		.review-card .star-rating label:hover,
+		.review-card .star-rating label:hover ~ label,
+		.review-card .star-rating input[type="radio"]:checked ~ label{color:#fbbf24}
+		.review-card .error-message{color:#ef4444;font-size:.875rem;margin-top:.25rem;display:none}
+		.review-card .char-counter{font-size:.75rem;color:#64748b;text-align:right}
     </style>
 </head>
 <body class="bg-gray-50 font-sans">
@@ -122,12 +134,31 @@
 
                     <div class="flex items-center mb-4">
                         <div class="flex items-center">
-                            <i class="fas fa-star text-green-400"></i>
-                            <i class="fas fa-star text-green-400"></i>
-                            <i class="fas fa-star text-green-400"></i>
-                            <i class="fas fa-star text-green-400"></i>
-                            <i class="fas fa-star-half-alt text-green-400"></i>
-                            <span class="text-gray-600 ml-2">4.7 (128 recensioni)</span>
+                        	<%
+                        		double media = RecensioneDAO.getMediaByProdotto(p.getId());
+	                        	double m = Math.max(0, Math.min(5, media));
+	                        	double mHalf = Math.round(m * 2.0) / 2.0;
+	                        	int countRecensioni = RecensioneDAO.countRecensioniByProdotto(p.getId());
+                            	List<Recensione> listaRecensioni = RecensioneDAO.getRecensioniByProdotto(p.getId());
+	                        	
+                        	%>
+                              <% for (int i = 1; i <= 5; i++) {
+							       String cls;
+							       if (mHalf >= i) {
+							         // stella piena
+							         cls = "fas fa-star text-yellow-400";
+							       } else if (mHalf >= i - 0.5) {
+							         // mezza stella
+							         cls = "fas fa-star-half-alt text-yellow-400";  
+							         
+							       } else {
+							         // vuota
+							         cls = "far fa-star text-gray-300";
+							       } %>
+							       <i class="<%= cls %>"></i>
+							  <% } %>
+                  
+                            <span class="text-gray-600 ml-2"><%=media %> (<%=countRecensioni%> recensioni)</span>
                         </div>
                         <span class="mx-2 text-gray-300">|</span>
                         <div class="flex items-center text-green-600">
@@ -173,31 +204,36 @@
                     </div>
 
                     <div class="mb-6">
+                    <form id="aggiungiAlCarrelloGrande" method="post" action="<%= request.getContextPath() %>/carrello">
                         <div class="flex items-center mb-4">
-                            <button class="bg-gray-200 hover:bg-gray-300 rounded-l-lg p-2">
+                            <button type=button data-step="-1" class="bg-gray-200 hover:bg-gray-300 rounded-l-lg p-2">
                                 <i class="fas fa-minus"></i>
                             </button>
-                            <input type="number" value="1" min="1" class="w-16 text-center border-t border-b border-gray-200 py-2">
-                            <button class="bg-gray-200 hover:bg-gray-300 rounded-r-lg p-2">
+                              <input id="qty" name="quantita" type="number"
+						         value="1" min="1" max="<%= p.getDisponibilita() %>"
+						         class="w-16 text-center border-x border-gray-200 py-2 outline-none"
+						         inputmode="numeric" readonly>
+                            <button type=button data-step="1" class="bg-gray-200 hover:bg-gray-300 rounded-r-lg p-2">
                                 <i class="fas fa-plus"></i>
                             </button>
                             <span class="ml-4 text-sm text-gray-500">Disponibili: <%=p.getDisponibilita() %></span>
                         </div>
 
                         <div class="flex space-x-4">
-                        	<form id="aggiungiAlCarrelloGrande" method="post" action="<%= request.getContextPath() %>/carrello">
+                        	
 						    <input type="hidden" name="azione" value="aggiungi">
 						    <input type="hidden" name="idProdotto" value="<%= p.getId() %>">
-						    <input type="hidden" name="quantita" value="1">
+						    
                             <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg flex-1 flex items-center justify-center">
                                 <i class="fas fa-shopping-cart mr-2"></i>
                                 Aggiungi al carrello
                             </button>
-                            </form>
+                            
                        
                         </div>
+                        </form>
                     </div>
-
+	
                     <div class="border-t border-gray-200 pt-4">
                         <div class="flex items-center text-sm text-gray-600">
                             <i class="fas fa-truck mr-2"></i>
@@ -224,28 +260,116 @@
                 </nav>
             </div>
             <div class="p-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Recensione 1 -->
-                <div class="review-card bg-gray-50 p-6 rounded-lg shadow-md">
-                    <div class="flex items-center mb-4">
-                        <div class="flex-shrink-0">
-                            <img class="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/women/32.jpg" alt="Maria Rossi">
-                        </div>
-                        <div class="ml-3">
-                            <p class="text-sm font-medium text-gray-900">Maria Rossi</p>
-                            <div class="flex">
-                                <i class="fas fa-star text-yellow-400"></i>
-                                <i class="fas fa-star text-yellow-400"></i>
-                                <i class="fas fa-star text-yellow-400"></i>
-                                <i class="fas fa-star text-yellow-400"></i>
-                                <i class="fas fa-star text-yellow-400"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 italic">"Ho ricevuto il pacco con i prodotti della Toscana e sono rimasta stupita dalla qualità. L'olio EVO ha un profumo incredibile e il pecorino è perfetto. Consiglio Italicious a tutti gli amanti della vera cucina italiana!"</p>
-                </div>
-                </div>
-            </div>
+				  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+				    <%
+				      if (listaRecensioni != null && !listaRecensioni.isEmpty()) {
+				        for (Recensione r : listaRecensioni) {
+				    %>
+				      <div class="review-card bg-gray-50 p-6 rounded-lg shadow-md">
+				        <div class="flex items-center mb-4">
+				          <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=<%=RecensioneDAO.getAutore(r.getIdUtente()) %>&background=E5E7EB&color=374151&size=64" alt="Avatar">
+				          <div class="ml-3">
+				            <p class="text-sm font-medium text-gray-900"><%= RecensioneDAO.getAutore(r.getIdUtente()) %></p>
+				            <% int rating = Math.max(0, Math.min(5, r.getPunteggio())); %>
+				            <div class="flex items-center" title="<%=rating%>/5">
+				              <% for (int i = 1; i <= 5; i++) { %>
+				                <i class="<%= (i <= rating) ? "fas fa-star text-yellow-400" : "far fa-star text-gray-300" %>"></i>
+				              <% } %>
+				            </div>
+				          </div>
+				        </div>
+				        <p class="text-gray-600 italic"><%= r.getDescrizione() %></p>
+				      </div>
+				    <%
+				        } // end for
+				      } else {
+				    %>
+				      <p class="col-span-full text-gray-500">Nessuna recensione disponibile per questo prodotto.</p>
+				    <%
+				      } // end if
+				    %>
+				  </div>
+				</div>
+
+           
+            
+            <%	
+            	if(session.getAttribute("email")!=null){
+	            String mail = (String) session.getAttribute("email");
+	    		int idUtente = UserService.getIdByMail(mail,(String) session.getAttribute("role"));
+            	if(!RecensioneDAO.haGiaRecensito(idUtente, p.getId())){
+            	
+            %>
+            
+            <div id="review-card-<%=p.getId()%>" class="review-card bg-white rounded-xl shadow-md p-6 md:p-8">
+			  <div class="mb-6">
+			    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-1">Lascia una recensione</h2>
+			    <p class="text-sm text-gray-600">
+			      Prodotto: <span class="font-medium text-green-700"><%= p.getNome() %></span>
+			    </p>
+			  </div>
+			
+			  <form id="reviewForm-<%=p.getId()%>" class="space-y-6"
+			        method="post" action="<%= request.getContextPath() %>/recensioni">
+			    <input type="hidden" name="id_prodotto" value="<%= p.getId() %>">
+			
+			    <!-- Valutazione -->
+			    <div>
+			      <label class="block text-sm font-medium text-gray-700 mb-2">Valutazione</label>
+			      <div class="star-rating flex justify-center" role="radiogroup" aria-label="Valutazione">
+			        <input type="radio" id="r5-<%=p.getId()%>" name="punteggio" value="5" />
+			        <label for="r5-<%=p.getId()%>" title="Eccellente">★</label>
+			
+			        <input type="radio" id="r4-<%=p.getId()%>" name="punteggio" value="4" />
+			        <label for="r4-<%=p.getId()%>" title="Molto buono">★</label>
+			
+			        <input type="radio" id="r3-<%=p.getId()%>" name="punteggio" value="3" />
+			        <label for="r3-<%=p.getId()%>" title="Buono">★</label>
+			
+			        <input type="radio" id="r2-<%=p.getId()%>" name="punteggio" value="2" />
+			        <label for="r2-<%=p.getId()%>" title="Sufficiente">★</label>
+			
+			        <input type="radio" id="r1-<%=p.getId()%>" name="punteggio" value="1" />
+			        <label for="r1-<%=p.getId()%>" title="Scarsa">★</label>
+			      </div>
+			      <div class="flex justify-between text-xs text-gray-500 mt-1">
+			        <span>Scarsa</span><span>Eccellente</span>
+			      </div>
+			      <p class="error-message" data-error="rating">Seleziona una valutazione</p>
+			    </div>
+			
+			    <!-- Testo recensione -->
+			    <div>
+			      <label for="rev-<%=p.getId()%>" class="block text-sm font-medium text-gray-700 mb-1">
+			        La tua recensione*
+			      </label>
+			      <textarea id="rev-<%=p.getId()%>" name="descrizione" rows="5"
+			                minlength="50" maxlength="1000"
+			                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+			                placeholder="Condividi la tua esperienza con questo prodotto..." required></textarea>
+			      <p class="error-message" data-error="content">La recensione deve contenere almeno 50 caratteri</p>
+			      <div class="char-counter"><span data-counter>0</span>/1000 caratteri</div>
+			    </div>
+			
+			    <!-- Azioni -->
+			    <div class="flex flex-col sm:flex-row gap-3 pt-2">
+			      <button type="submit" class="flex-1 px-6 py-3 bg-green-600 text-white font-medium rounded-lg
+			                                  hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500
+			                                  focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition"
+			              disabled>
+			        Invia recensione
+			      </button>
+			      <button type="reset" class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg
+			                                 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+			        Annulla
+			      </button>
+			    </div>
+			  </form>
+			</div>
+			<%
+            	}
+            	}
+			%>
         </div>
 
         <!-- Related Products -->
@@ -274,7 +398,7 @@
                             <form class="aggiungiCarrello" method="post" action="<%= request.getContextPath() %>/carrello">
 						    <input type="hidden" name="azione" value="aggiungi">
 						    <input type="hidden" name="idProdotto2" value="<%= p2.getId() %>">
-						    <input type="hidden" name="quantita" value="1">
+						    <input type="hidden" name="quantita2" value="1">
                             <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
                                 <i class="fas fa-cart-plus mr-2"></i>Aggiungi
                             </button>
@@ -286,7 +410,7 @@
 	           }
 	        } else {
 	    %>
-	            <p>Nessun prodotto disponibile.</p>
+	            <p>Nessun altro prodotto di questa regione disponibile.</p>
 	    <%
 	        }
 	    %>
@@ -296,6 +420,7 @@
     </div>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+	
 	const formGrande = document.getElementById("aggiungiAlCarrelloGrande");
 	
 	formGrande.addEventListener("submit",function(e) {
@@ -366,6 +491,74 @@ function mostraNotifica(testo, colore = "#333") {
 	    notifica.style.display = "none";
 	  }, 3000);
 	}
+	
+//+ e -
+const qty = document.getElementById("qty");
+  document.querySelectorAll("[data-step]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      qty.stepUp(btn.dataset.step);
+      const min = +qty.min || 1, max = +qty.max || 9999;
+      if (qty.value < min) qty.value = min;
+      if (qty.value > max) qty.value = max;
+    });
+  });
+
+//CODICE RECENSIONI
+function initReviewCard(root){
+    const form = root.querySelector('form');
+    const content = form.querySelector('textarea[name="descrizione"]');
+    const counter = form.querySelector('[data-counter]');
+    const ratingInputs = form.querySelectorAll('input[name="punteggio"]');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const errRating = root.querySelector('[data-error="rating"]');
+    const errContent = root.querySelector('[data-error="content"]');
+
+    const validateContent = () => {
+      const ok = content.value.trim().length >= 50;
+      errContent.style.display = ok ? 'none' : 'block';
+      return ok;
+    };
+    const validateRating = () => {
+      const ok = [...ratingInputs].some(i => i.checked);
+      errRating.style.display = ok ? 'none' : 'block';
+      return ok;
+    };
+    const validateForm = () => {
+      const ok = validateContent() && validateRating();
+      submitBtn.disabled = !ok;
+      return ok;
+    };
+
+    content.addEventListener('input', () => {
+      counter.textContent = content.value.length;
+      validateForm();
+    });
+    ratingInputs.forEach(i => i.addEventListener('change', validateForm));
+    form.addEventListener('reset', () => {
+      setTimeout(() => {
+        counter.textContent = '0';
+        errRating.style.display = 'none';
+        errContent.style.display = 'none';
+        submitBtn.disabled = true;
+      }, 0);
+    });
+
+    // Se vuoi inviarla in AJAX, aggiungi data-ajax="true" al form
+    form.addEventListener('submit', (e) => {
+      if (form.dataset.ajax === 'true') {
+        e.preventDefault();
+        if (!validateForm()) return;
+        const body = new URLSearchParams(new FormData(form));
+        fetch(form.action, { method: 'POST', body })
+          .then(r => r.ok ? r.json() : Promise.reject(r))
+          .then(_ => { form.reset(); /* mostra notifica qui */ })
+          .catch(console.error);
+      }
+    });
+  }
+
+  // Call per questa istanza
+  initReviewCard(document.getElementById('review-card-<%=p.getId()%>'));
 </script>
 
 </body>
