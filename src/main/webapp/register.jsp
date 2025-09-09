@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login</title>
-  <link rel="stylesheet" href="css/Login.css" />
+  <title>Registrazione</title>
+  <link rel="stylesheet" href="css/Login.css?v=1.0">
 </head>
 <body>
   <!-- From Uiverse.io by ilkhoeri --> 
@@ -18,34 +18,46 @@
     hidden=""
   />
 	<input type="checkbox" id="blind-check" class="blind-check" hidden>
-  <label for="blind-input" class="blind_input">
-    <button id="showbtn" class="" onclick="hide()">Mostra</button>
-  </label>
+	
+
 
   <form class="form" action="register" method="POST">
     <div class="title">Benvenuto</div>
 
     <label class="label_input" for="name">Nome</label>
     <input
+      placeholder="Es. Mario Rossi"
       spellcheck="false"
       class="input"
-      type="text"
+      type="name"
       name="name"
       id="name"
     />
+    
+    <label class="label_input" for="telefono">Telefono</label>
+    <input type="tel" name="telefono" id="telefono"
+       class="input"
+       placeholder="Es. +39 333 1234567"
+       pattern="^\+?[0-9\s\-]{7,15}$"
+       required>
+    
+    
     <label class="label_input" for="email">Email</label>
     <input
-      spellcheck="false"
-      class="input"
-      type="email"
-      name="email"
-      id="email"
-    />
+	  placeholder="Es. mariorossi@example.com"
+	  spellcheck="false"
+	  class="input"
+	  type="email"
+	  name="email"
+	  id="email"
+	  required
+	  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+	/>
 
-    <div class="frg_pss">
+    <div class="field">
       <label class="label_input" for="password">Password</label>
+      
 
-    </div>
     <input
       spellcheck="false"
       class="input"
@@ -53,6 +65,10 @@
       name="password"
       id="password"
     />
+    <a href="" class="link-forgot">Password Dimenticata?</a>
+    <button id="showbtn" type="button" onclick="hide()">Mostra</button>
+    </div>
+    
     
     <button class="submit" type="submit">Registrati</button>
     
@@ -133,15 +149,16 @@
       ></path>
     </svg>
   </label>
-   <p style="text-align: center;">
+   <p style="text-align: center; color:#fff;">
     Hai già un account? <a href="login">Effettua L'accesso</a>
   </p>
-  <p style="text-align: center;">
-  <a href="home">
-    <button type="button" class="submit" style="margin-top: 10px;">Torna alla Home</button>
+
+  <div class="brand">
+  <a href="/Italicious/home">
+    <img src="img/loghi/logo.png" alt="Italicious Logo" class="brand-logo">
   </a>
-  </p>
-  
+</div>
+
 </div>
    
 
@@ -150,32 +167,58 @@
 
 </body>
 <script>
-var card = document.getElementById("card");
-var passInput = document.getElementById("password");
-var showbtn = document.getElementById("showbtn");
-var occhi =document.getElementById("blind-check");
+	var card = document.getElementById("card");
+	var passInput = document.getElementById("password");
+	var showbtn = document.getElementById("showbtn");
+	var occhi =document.getElementById("blind-check");
+	
+	passInput.addEventListener("focus", () => {
+		  if (passInput.type === "password") {
+		    document.getElementById("blind-check").checked = true;
+		  }
+		});
+	passInput.addEventListener("blur", () => {
+		  if (passInput.type === "password") {
+		    document.getElementById("blind-check").checked = false;
+		  }
+		});
+	
+	function hide(){
+		if (passInput.type === "password") {
+			passInput.type = "text";
+			showbtn.textContent = "Nascondi";
+			occhi.checked=false;
+		    } else {
+		    	passInput.type = "password";
+		    	showbtn.textContent = "Mostra";
+		    	occhi.checked=true;
+		    }
+	}
+	
+	
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggleCheckbox = document.getElementById("blind-input");
+    const passwordInput = document.getElementById("password");
 
-passInput.addEventListener("focus", () => {
-	  if (passInput.type === "password") {
-	    document.getElementById("blind-check").checked = true;
-	  }
-	});
-passInput.addEventListener("blur", () => {
-	  if (passInput.type === "password") {
-	    document.getElementById("blind-check").checked = false;
-	  }
-	});
-
-function hide(){
-	if (passInput.type === "password") {
-		passInput.type = "text";
-		showbtn.textContent = "Nascondi";
-		occhi.checked=false;
-	    } else {
-	    	passInput.type = "password";
-	    	showbtn.textContent = "Mostra";
-	    	occhi.checked=true;
-	    }
-}
+    toggleCheckbox.addEventListener("input", function () {
+    
+      passwordInput.type = this.checked ? "text" : "password";
+      passwordInput.focus();
+      passwordInput.setSelectionRange(passwordInput.value.length, passwordInput.value.length);
+    
+    });
+  });
+  //VALIDAZIONE MAIL
+    const emailInput = document.getElementById("email");
+  		emailInput.addEventListener("blur", () => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(emailInput.value)) {
+      emailInput.classList.add("border-red-500");
+      alert("Inserisci un'email valida!");
+    } else {
+      emailInput.classList.remove("border-red-500");
+    }
+  });
+  
 </script>
 </html>

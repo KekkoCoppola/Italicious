@@ -153,7 +153,7 @@ public class ProdottoDAO {
         return prodotto;
     }
     
-    public void updateProdotto(Prodotto prodotto) {
+    public static void updateProdotto(Prodotto prodotto) {
         String query = "UPDATE Prodotto SET nome = ?, descrizione = ?, prezzo = ?, iva = ?, disponibilita = ?, immagine = ?, regione = ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {

@@ -54,7 +54,7 @@
                 <thead class="bg-red-100 text-red-800">
                     <tr>
                         <th class="py-3 px-6 text-left">Prodotto</th>
-                        <th class="py-3 px-6 text-center">Prezzo</th>
+                        <th class="py-3 px-6 text-center">Prezzo Unitario</th>
                         <th class="py-3 px-6 text-center">Quantità</th>
                         <th class="py-3 px-6 text-center">Totale</th>
                     </tr>
@@ -115,7 +115,7 @@
                 </button>
             </form>
 
-            <form action="OrdineServlet" method="post">
+            <form action="checkout" method="post">
                 <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">
                     <i class="fas fa-credit-card mr-2"></i>Procedi all'acquisto
                 </button>

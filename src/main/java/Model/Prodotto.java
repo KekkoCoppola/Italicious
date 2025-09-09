@@ -24,6 +24,14 @@ public class Prodotto {
         this.immagine = immagine;
         this.regione = regione;
     }
+    
+    
+    public double getPrezzoPiuIva() {
+        double totale = prezzo + (prezzo * iva / 100.0);
+        return Math.round(totale * 100.0) / 100.0;
+    }
+
+
     // Getter & Setter
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -34,7 +42,7 @@ public class Prodotto {
     public String getDescrizione() { return descrizione; }
     public void setDescrizione(String descrizione) { this.descrizione = descrizione; }
 
-    public double getPrezzo() { return prezzo; }
+    public double getPrezzo() { return Math.round(prezzo * 100.0) / 100.0; }
     public void setPrezzo(double prezzo) { this.prezzo = prezzo; }
 
     public double getIva() { return iva; }
@@ -48,4 +56,13 @@ public class Prodotto {
 
     public String getRegione() { return regione; }
     public void setRegione(String regione) { this.regione = regione; }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Prodotto)) return false;
+        Prodotto p = (Prodotto) o;
+        return id == p.id; // confronta per id
+    }
+
 }

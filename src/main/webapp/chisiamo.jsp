@@ -53,32 +53,11 @@
  <!-- Hero Section -->
     <section class="hero-section text-white py-16">
         <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6">                     La nostra <span class="text-green-600">passione</span> per l'<span class="text-red-600">Italia</span>
-
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">La nostra <span class="text-green-600">passione</span> per l'<span class="text-red-600">Italia</span>
             </h1>
-            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Scopri la storia dietro Italicious e la nostra missione per portare i sapori autentici 
-                    della tradizione italiana direttamente a casa tua.</p>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Scopri la storia dietro Italicious e la nostra missione per portare i sapori autentici della tradizione italiana direttamente a casa tua.</p>
         </div>
     </section>
-
-
-    <!--
-    <section class="hero-pattern">
-        <div class="container mx-auto px-4 py-20 md:py-28">
-            <div class="max-w-4xl mx-auto text-center">
-                <h1 class="text-4xl md:text-6xl font-bold title-font mb-6 text-gray-800">
-                    La nostra <span class="text-red-600">passione</span> per l'<span class="text-green-600">Italia</span>
-                </h1>
-                <p class="text-lg md:text-xl text-gray-600 mb-8">
-                    
-                </p>
-
-            </div>
-        </div>
-    </section>
-    -->
-
-    <!-- Our Story -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center">
@@ -110,8 +89,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Mission Section -->
     <section id="mission" class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">

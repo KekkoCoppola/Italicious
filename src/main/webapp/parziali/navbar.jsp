@@ -1,3 +1,5 @@
+<%@ page import="Model.UserService" %>
+<%@ page import="Model.Utente" %>
 <style>
     .flag-stripe {
         height: 8px;
@@ -58,9 +60,14 @@
 </style>
 
 <%
-    String username = (String) session.getAttribute("username");
+
     String ruolo = (String) session.getAttribute("role");
-    boolean isLoggedIn = username != null;
+	boolean isLoggedIn = ruolo != null;
+	Utente u = new Utente();
+	if(isLoggedIn){
+		int id = (Integer) session.getAttribute("userId");
+    	u = UserService.getUserById(id,ruolo);
+	}
 %>
 
 <nav class="backdrop-blur-md bg-white/30 shadow-md sticky top-0 z-50">
@@ -79,18 +86,18 @@
 
             <!-- Menu per desktop -->
             <div class="hidden md:flex space-x-8">
-                <a href="/Italicious/home" class="text-gray-800 hover:text-green-600 font-medium transition">Home</a>
-                <a href="/Italicious/chi_siamo" class="text-gray-800 hover:text-green-600 font-medium transition">Chi Siamo</a>
-                <a href="/Italicious/catalogo" class="text-gray-800 hover:text-green-600 font-medium transition">Catalogo</a>
+                <a href="<%=request.getContextPath() %>/home" class="text-gray-800 hover:text-green-600 font-medium transition">Home</a>
+                <a href="<%=request.getContextPath() %>/chi_siamo" class="text-gray-800 hover:text-green-600 font-medium transition">Chi Siamo</a>
+                <a href="<%=request.getContextPath() %>/catalogo" class="text-gray-800 hover:text-green-600 font-medium transition">Catalogo</a>
 
                 <%
                     if (!isLoggedIn) {
                 %>
-                    <a href="/Italicious/login" class="text-gray-800 hover:text-green-600 font-medium transition">Accedi</a>
+                    <a href="<%=request.getContextPath() %>/login" class="text-gray-800 hover:text-green-600 font-medium transition">Accedi</a>
                 <%
                     } else if ("admin".equals(ruolo)) {
                 %>
-                    <a href="/Italicious/admin" class="text-gray-800 hover:text-green-600 font-medium transition">Gestione</a>
+                    <a href="<%=request.getContextPath() %>/admin" class="text-gray-800 hover:text-green-600 font-medium transition">Gestione</a>
                 <%
                     }
                 %>
@@ -99,7 +106,7 @@
             <!-- Sezione destra (utente, carrello, hamburger) -->
             <div class="flex items-center space-x-6 relative">
                 <% if (isLoggedIn) { %>
-                    <p class="text-sm text-gray-700">Ciao, <b><%= username %></b></p>
+                    <p class="text-sm text-gray-700">Ciao, <b><%= u.getNome() %></b></p>
                 <% } %>
 				
                 <a href="/Italicious/carrello" class="relative text-gray-800 hover:text-green-600 transition">
@@ -120,9 +127,9 @@
                     <% if (!isLoggedIn) { %>
                         <a href="/Italicious/login"><i class="fa-solid fa-right-to-bracket"></i> Accedi</a>
                     <% } else { %>
-                        <a href="/profile">Profilo</a>
-                        <a href="/settings">I Miei Ordini</a>
-                        <a href="/settings">Lista preferiti</a>
+                        <a href="<%=request.getContextPath() %>/profilo">Profilo</a>
+                        <a href="<%=request.getContextPath() %>/ordini">I Miei Ordini</a>
+                        <a href="<%=request.getContextPath() %>/lista_preferiti">Lista preferiti</a>
                         <a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
                     <% } %>
                 </div>
@@ -149,6 +156,8 @@
 <script>
     const profileBtn = document.getElementById('profileBtn');
     const profileMenu = document.getElementById('profileMenu');
+    const mobileBtn  = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
 
     profileBtn.addEventListener('click', function(e) {
         e.preventDefault();
@@ -159,5 +168,8 @@
         if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target)) {
             profileMenu.classList.remove('show');
         }
+    });
+    mobileBtn.addEventListener('click', function () {
+      mobileMenu.classList.toggle('hidden');
     });
 </script>

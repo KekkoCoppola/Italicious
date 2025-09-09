@@ -1,19 +1,8 @@
-    <!-- NewsLetter -->
-    
-    <section class="py-16 bg-gradient-to-r from-green-600 to-red-600 text-white">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-6">Rimani Aggiornato</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto">Iscriviti alla nostra newsletter per ricevere offerte esclusive e scoprire nuovi prodotti regionali</p>
-            
-            <form class="max-w-md mx-auto flex">
-                <input type="email" placeholder="La tua email" class="flex-grow px-4 py-3 rounded-l-full focus:outline-none text-gray-800">
-                <button type="submit" class="bg-white text-green-600 hover:bg-gray-100 font-bold px-6 py-3 rounded-r-full transition">
-                    Iscriviti
-                </button>
-            </form>
-        </div>
-    </section>
-    
+<%
+    String username = (String) session.getAttribute("username");
+    String ruolo = (String) session.getAttribute("role");
+    boolean isLoggedIn = username != null;
+%>
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12">
         <div class="container mx-auto px-4">
@@ -41,7 +30,17 @@
                         <li><a href="#" class="text-gray-400 hover:text-white transition">Chi Siamo</a></li>
                         <li><a href="/Italicious/catalogo" class="text-gray-400 hover:text-white transition">Catalogo</a></li>
                         <!--<li><a href="#" class="text-gray-400 hover:text-white transition">Cerca</a></li>  -->
+                        <%
+                        	if(!isLoggedIn){
+                        %>
                         <li><a href="/Italicious/login" class="text-gray-400 hover:text-white transition">Accedi</a></li>
+                        <%
+                        	}else if(ruolo.equals("admin")){
+                        %>
+                        <li><a href="/Italicious/admin" class="text-gray-400 hover:text-white transition">Gestione</a></li>
+                        <%
+                        	}
+                        %>
                     </ul>
                 </div>
                 

@@ -159,6 +159,8 @@
 			        System.out.println("PRODOTTI: "+prodotti);
 			        if (prodotti != null && !prodotti.isEmpty()) {
 			            for (Prodotto p2 : prodotti) {
+			            	boolean esaurito = false;
+                    		if(p2.getDisponibilita()==0) esaurito=true;
    			%>
                  <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
                     <img src="<%= p2.getImmagine() %>" alt="<%= p2.getNome() %>" class="w-full h-48 object-cover" onclick="window.location.href='schedaprodotto?id=<%=p2.getId()%>'">
@@ -167,15 +169,15 @@
                             <h3 class="text-xl font-bold mb-2"><%= p2.getNome() %></h3>
                             <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded"><%= p2.getRegione() %></span>
                         </div>
-                        <p class="text-gray-600 mb-4"><%= p2.getDescrizione() %></p>
+                        <p class="text-gray-600 mb-4 min-h-[60px]"><%= p2.getDescrizione() %></p>
                         <div class="flex justify-between items-center">
                             <span class="text-xl font-bold">&euro;<%= p2.getPrezzo() %></span>
                             <form class="aggiungiCarrello" method="post" action="<%= request.getContextPath() %>/carrello">
 						    <input type="hidden" name="azione" value="aggiungi">
 						    <input type="hidden" name="idProdotto2" value="<%= p2.getId() %>">
 						    <input type="hidden" name="quantita" value="1">
-                            <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
-                                <i class="fas fa-cart-plus mr-2"></i>Aggiungi
+                            <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400" <%= esaurito ? "disabled" : ""%> >
+                                <i class="<%= esaurito ? "fas fa-circle-xmark" : "fas fa-cart-plus"%> mr-2"></i><%= esaurito ? "Esaurito" : "Aggiungi" %>
                             </button>
                             </form>
                         </div>

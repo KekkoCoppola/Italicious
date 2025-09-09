@@ -16,6 +16,7 @@ public class SchedaProdottoServlet extends HttpServlet{
 	    ProdottoDAO prodotti = new ProdottoDAO();
 	    Prodotto prodotto = prodotti.getProdottoById(id);
 	    List<Prodotto> prodottiByRegione = ProdottoDAO.getProdottiByRegione(prodotto.getRegione()); 
+	    prodottiByRegione.remove(prodotto);
 	    System.out.println("PRODOTTO "+prodotto);
 	    request.setAttribute("prodotto", prodotto);
 	    request.setAttribute("prodottiByRegione", prodottiByRegione);

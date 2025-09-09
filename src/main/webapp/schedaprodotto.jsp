@@ -135,6 +135,8 @@
                     <div class="flex items-center mb-4">
                         <div class="flex items-center">
                         	<%
+                        		boolean esaurito = false;
+                        		if(p.getDisponibilita()==0) esaurito=true;
                         		double media = RecensioneDAO.getMediaByProdotto(p.getId());
 	                        	double m = Math.max(0, Math.min(5, media));
 	                        	double mHalf = Math.round(m * 2.0) / 2.0;
@@ -161,15 +163,29 @@
                             <span class="text-gray-600 ml-2"><%=media %> (<%=countRecensioni%> recensioni)</span>
                         </div>
                         <span class="mx-2 text-gray-300">|</span>
-                        <div class="flex items-center text-green-600">
+                        
+                            
+                            <%
+                            	if(esaurito){
+                            %>
+                            <div class="flex items-center text-red-600">
+                            <i class="fas fa-circle-xmark mr-1"></i>
+                            <span>Esaurito</span>
+                            <%
+                            	}else{
+                            %>
+                            <div class="flex items-center text-green-600">
                             <i class="fas fa-check-circle mr-1"></i>
                             <span>Disponibile</span>
+                            <%
+                            	}
+                            %>
                         </div>
                     </div>
 
                     <div class="mb-6">
-                        <span class="text-3xl font-bold text-gray-900">&euro;<%=p.getPrezzo() %></span>
-                        <span class="text-sm text-gray-500 ml-1">IVA esclusa (<%=p.getIva() %>%)</span>
+                        <span class="text-3xl font-bold text-gray-900">&euro; <%=p.getPrezzo() %></span>
+                        <span class="text-sm text-gray-500 ml-1">IVA inclusa (<%=p.getIva() %>%)</span>
                     </div>
 
                     <div class="mb-6">
@@ -206,6 +222,9 @@
                     <div class="mb-6">
                     <form id="aggiungiAlCarrelloGrande" method="post" action="<%= request.getContextPath() %>/carrello">
                         <div class="flex items-center mb-4">
+                        <%
+                        	if(!esaurito){
+                        %>
                             <button type=button data-step="-1" class="bg-gray-200 hover:bg-gray-300 rounded-l-lg p-2">
                                 <i class="fas fa-minus"></i>
                             </button>
@@ -217,16 +236,19 @@
                                 <i class="fas fa-plus"></i>
                             </button>
                             <span class="ml-4 text-sm text-gray-500">Disponibili: <%=p.getDisponibilita() %></span>
+                            	<%
+                        	}
+						%>
                         </div>
-
+					
                         <div class="flex space-x-4">
                         	
 						    <input type="hidden" name="azione" value="aggiungi">
 						    <input type="hidden" name="idProdotto" value="<%= p.getId() %>">
 						    
-                            <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg flex-1 flex items-center justify-center">
+                            <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg flex-1 flex items-center justify-center  disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400" <%= esaurito ? "disabled" : ""%>>
                                 <i class="fas fa-shopping-cart mr-2"></i>
-                                Aggiungi al carrello
+                                <%= esaurito ? "Esaurito" : "Aggiungi al carrello" %>
                             </button>
                             
                        
@@ -248,12 +270,12 @@
             </div>
         </div>
 
-        <!-- Product Tabs -->
+        <!-- RECENSIONI -->
         <div class="mt-8 bg-white rounded-xl shadow-lg overflow-hidden">
             <div class="border-b border-gray-200">
                 <nav class="flex -mb-px">
                     
-                    <button class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm border-transparent text-green-500 hover:text-green-700 hover:border-green-300">
+                    <button class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm border-transparent text-green-500 ">
                         <i class="fas fa-star mr-2"></i>Recensioni
                     </button>
                     
@@ -384,6 +406,8 @@
 			        System.out.println("PRODOTTI: "+prodotti);
 			        if (prodotti != null && !prodotti.isEmpty()) {
 			            for (Prodotto p2 : prodotti) {
+			            	boolean esaurito2 = false;
+			            	if(p2.getDisponibilita()==0) esaurito2=true;
    			%>
                  <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
                     <img src="<%= p2.getImmagine() %>" alt="<%= p2.getNome() %>" class="w-full h-48 object-cover" onclick="window.location.href='schedaprodotto?id=<%=p2.getId()%>'">
@@ -392,15 +416,15 @@
                             <h3 class="text-xl font-bold mb-2"><%= p2.getNome() %></h3>
                             <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded"><%= p2.getRegione() %></span>
                         </div>
-                        <p class="text-gray-600 mb-4"><%= p2.getDescrizione() %></p>
+                        <p class="text-gray-600 mb-4 min-h-[60px]"><%= p2.getDescrizione() %></p>
                         <div class="flex justify-between items-center">
                             <span class="text-xl font-bold">&euro;<%= p2.getPrezzo() %></span>
                             <form class="aggiungiCarrello" method="post" action="<%= request.getContextPath() %>/carrello">
 						    <input type="hidden" name="azione" value="aggiungi">
 						    <input type="hidden" name="idProdotto2" value="<%= p2.getId() %>">
 						    <input type="hidden" name="quantita2" value="1">
-                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
-                                <i class="fas fa-cart-plus mr-2"></i>Aggiungi
+                            <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400" <%= esaurito2 ? "disabled" : ""%> >
+                                <i class="<%= esaurito2 ? "fas fa-circle-xmark" : "fas fa-cart-plus"%> mr-2"></i><%= esaurito2 ? "Esaurito" : "Aggiungi" %>
                             </button>
                             </form>
                         </div>

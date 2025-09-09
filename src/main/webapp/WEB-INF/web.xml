@@ -16,6 +16,40 @@
 	    <location>/error500.html</location>
 	</error-page>
 	
+	
+				    <!-- CHECKOUT -->
+	<servlet>
+		<servlet-name>CheckoutServlet</servlet-name>
+		<servlet-class>controller.CheckoutServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CheckoutServlet</servlet-name>
+		<url-pattern>/checkout</url-pattern>
+	</servlet-mapping>
+	
+			    <!-- ORDINI -->
+	<servlet>
+		<servlet-name>OrdiniServlet</servlet-name>
+		<servlet-class>controller.OrdiniServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>OrdiniServlet</servlet-name>
+		<url-pattern>/ordini</url-pattern>
+	</servlet-mapping>
+	
+		    <!-- PROFILO -->
+	<servlet>
+		<servlet-name>ProfiloServlet</servlet-name>
+		<servlet-class>controller.ProfiloServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ProfiloServlet</servlet-name>
+		<url-pattern>/profilo</url-pattern>
+	</servlet-mapping>
+	
 	    <!-- RECENSIONI -->
 	<servlet>
 		<servlet-name>RecensioniServlet</servlet-name>

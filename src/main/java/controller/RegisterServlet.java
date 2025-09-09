@@ -23,7 +23,7 @@ public class RegisterServlet extends HttpServlet {
     	String nome = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-  System.out.println("OTTENUTI: "+nome+email+password);
+        String telefono = request.getParameter("telefono");
 
         Connection conn = null;
         try {
@@ -31,7 +31,7 @@ public class RegisterServlet extends HttpServlet {
             UserService userService = new UserService();
             
 
-            if (userService.registerUser(nome,email, password, conn)) {
+            if (userService.registerUser(nome,email, telefono,password, conn)) {
                 // Registrazione avvenuta con successo
                 response.sendRedirect("login"); // Reindirizza alla pagina di login
             } else {

@@ -436,3 +436,18 @@ body {
 	/* text-emphasis: circle; */
 	-webkit-text-security: disc;
 }
+  .brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;   /* o 'flex-start' se lo vuoi a sinistra */
+    gap: 8px;
+    margin-top: 12px;
+  }
+  /* immagine del logo: sovrascrive eventuali regole generiche su .card img */
+  .brand-logo {
+    height: 48px;              /* regola l’altezza del logo */
+    width: auto;
+    object-fit: contain;
+    position: static !important;
+    max-width: 240px;          /* evita che esploda in larghezza */
+  }

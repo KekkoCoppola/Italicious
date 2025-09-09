@@ -17,7 +17,7 @@ public class Utente implements Serializable {
 
     // Costruttore vuoto
     public Utente() {}
-
+    
     // Getters e Setters
     public int getId() {
         return id;

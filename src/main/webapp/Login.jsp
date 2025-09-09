@@ -128,14 +128,16 @@
       ></path>
     </svg>
   </label>
-   <p style="text-align: center;">
+   <p style="text-align: center; color:#fff;">
     Non hai un account? <a href="register">Registrati qui</a>
   </p>
-  <p style="text-align: center;">
-  <a href="home">
-    <button type="button" class="submit btn-home" style="margin-top: 10px;">Torna alla Home</button>
+
+  <div class="brand">
+  <a href="/Italicious/home">
+    <img src="img/loghi/logo.png" alt="Italicious Logo" class="brand-logo">
   </a>
-  </p>
+</div>
+
 </div>
    
 

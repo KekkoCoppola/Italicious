@@ -62,6 +62,7 @@ public class LoginServlet extends HttpServlet {
                 String username = userService.getUsername(email, password, conn,role);
                 session.setAttribute("username", username);
                 session.setAttribute("role", role); // Salva il ruolo (user o admin)
+                session.setAttribute("userId", UserService.getIdByMail(email, role));
 
                 // Redirigi alla pagina corretta in base al ruolo
                 if ("admin".equals(role)) {

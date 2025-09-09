@@ -12,15 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-       
-        body {
-            
-            background-color: #f9f5f0;
-        }
-        
-        .title-font {
-            font-family: 'Playfair Display', serif;
-        }
+       @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
+      
         
         .product-card:hover {
             transform: translateY(-5px);
@@ -138,6 +131,8 @@
 			        System.out.println("PRODOTTI: "+prodotti);
 			        if (prodotti != null && !prodotti.isEmpty()) {
 			            for (Prodotto p : prodotti) {
+			            	boolean esaurito = false;
+                    		if(p.getDisponibilita()==0) esaurito=true;
    			%>
                  <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
                     <img src="<%= p.getImmagine() %>" alt="<%= p.getNome() %>" class="w-full h-48 object-cover" onclick="window.location.href='schedaprodotto?id=<%=p.getId()%>'">
@@ -146,15 +141,15 @@
                             <h3 class="text-xl font-bold mb-2"><%= p.getNome() %></h3>
                             <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded"><%= p.getRegione() %></span>
                         </div>
-                        <p class="text-gray-600 mb-4"><%= p.getDescrizione() %></p>
+                        <p class="text-gray-600 mb-4 min-h-[60px]"><%= p.getDescrizione() %></p>
                         <div class="flex justify-between items-center">
                             <span class="text-xl font-bold">&euro;<%= p.getPrezzo() %></span>
                             <form class="aggiungiCarrello" method="post" action="<%= request.getContextPath() %>/carrello">
 						    <input type="hidden" name="azione" value="aggiungi">
 						    <input type="hidden" name="idProdotto" value="<%= p.getId() %>">
 						    <input type="hidden" name="quantita" value="1">
-                            <button type="submit" class="form-aggiungi bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition">
-                                <i class="fas fa-cart-plus mr-2"></i>Aggiungi
+                            <button type="submit" class="form-aggiungi bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400" <%= esaurito ? "disabled" : ""%>>
+                                <i class="<%= esaurito ? "fas fa-circle-xmark" : "fas fa-cart-plus"%> mr-2"></i><%= esaurito ? "Esaurito" : "Aggiungi"%>
                             </button>
                             </form>
                         </div>
