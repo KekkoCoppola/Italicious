@@ -6,7 +6,7 @@
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
                     <div class="flex items-center space-x-2 mb-4">
                         <!--<div class="flag-stripe green w-4 h-8 rounded-l"></div>
@@ -44,16 +44,7 @@
                     </ul>
                 </div>
                 
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Informazioni</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Spedizioni</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Pagamenti</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Resi</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Termini e Condizioni</a></li>
-                    </ul>
-                </div>
+           
                 
                 <div>
                     <h3 class="text-lg font-bold mb-4">Contatti</h3>

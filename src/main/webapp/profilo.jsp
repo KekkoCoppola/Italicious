@@ -45,7 +45,15 @@
                             </div>
                             <div>
                                 <label class="block text-gray-700 text-sm font-medium mb-2" for="phone">Telefono</label>
-                                <input type="tel" id="telefono" name="telefono" value="+39 <%=u.getTelefono() %>" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200">
+                                <input type="tel" id="telefono" name="telefono" value="<%= (u.getTelefono() != null ? u.getTelefono() : "") %>" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-2" for="indirizzo">Indirizzo</label>
+                                <input id="indirizzo" name="indirizzo" value="<%= (u.getIndirizzo() != null ? u.getIndirizzo() : "") %>" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm font-medium mb-2" for="fatturazione">Partita IVA o Codice Fiscale</label>
+                                <input id="fatturazione" name="fatturazione" value="<%= (u.getFatturazione() != null ? u.getFatturazione() : "") %>" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200">
                             </div>
                         </div>
                           
@@ -61,29 +69,7 @@
                     </form>
                 </div>
                 
-                <div class="bg-white rounded-lg shadow-md p-6 mt-6">
-                    <h2 class="title text-xl font-bold mb-4">Sicurezza</h2>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center border-b pb-4">
-                            <div>
-                                <h3 class="font-medium">Password</h3>
-                                <p class="text-sm text-gray-500">Ultima modifica: 3 mesi fa</p>
-                            </div>
-                            <button class="btn-primary px-4 py-1 text-sm rounded-lg">
-                                Cambia
-                            </button>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h3 class="font-medium">Autenticazione a due fattori</h3>
-                                <p class="text-sm text-gray-500">Aumenta la sicurezza del tuo account</p>
-                            </div>
-                            <button class="px-4 py-1 text-sm border rounded-lg hover:bg-gray-50">
-                                Attiva
-                            </button>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>

@@ -14,6 +14,7 @@
 	%>
 	<button onclick="location.href='catalogo'">Catalogo</button>
 </head>
+    <link rel="stylesheet" href="css/admin.css">
 <body>
     <h2>Gestione Prodotti</h2>
     <a href="admin?action=add">Aggiungi nuovo prodotto</a>

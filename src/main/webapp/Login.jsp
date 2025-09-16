@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="css/Login.css?v=1.0">
 </head>
 <body>
-  <!-- From Uiverse.io by ilkhoeri --> 
+
+  <div id="notifica" class="nascosta"></div>
 <div class="card">
   <input
     value=""
@@ -19,7 +20,19 @@
   />
 	<input type="checkbox" id="blind-check" class="blind-check" hidden>
 	
-
+<%
+String notifica = (String) request.getAttribute("notifica");
+String colore = (String) request.getAttribute("coloreNotifica");
+if (notifica != null && colore!=null) {
+%>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    mostraNotifica("<%= notifica %>", "<%= colore %>");
+  });
+</script>
+<%
+}
+%>
 
   <form class="form" action="login" method="POST">
     <div class="title">Bentornato</div>
@@ -31,6 +44,7 @@
       type="email"
       name="email"
       id="email"
+      required
     />
 
     <div class="field">
@@ -43,6 +57,7 @@
       type="password"
       name="password"
       id="password"
+      required
     />
     <a href="" class="link-forgot">Password Dimenticata?</a>
     <button id="showbtn" type="button" onclick="hide()">Mostra</button>
@@ -133,7 +148,7 @@
   </p>
 
   <div class="brand">
-  <a href="/Italicious/home">
+  <a href="<%=request.getContextPath() %>/home">
     <img src="img/loghi/logo.png" alt="Italicious Logo" class="brand-logo">
   </a>
 </div>
@@ -187,5 +202,14 @@
     
     });
   });
+  function mostraNotifica(testo, colore = "#333") {
+	  const notifica = document.getElementById("notifica");
+	  notifica.style.backgroundColor = colore;
+	  notifica.innerText = testo;
+	  notifica.style.display = "block";
+	  setTimeout(() => {
+	    notifica.style.display = "none";
+	  }, 3000);
+	}
 </script>
 </html>

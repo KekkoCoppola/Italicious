@@ -41,8 +41,8 @@
                         <a href="<%=request.getContextPath() %>/ordini" class="sidebar-item block px-6 py-3 text-sm font-medium <%= current.equals("ordini") ? "active" : ""%>">
                             <i class="fas fa-shopping-bag mr-2"></i> Ordini
                         </a>
-                        <a href="<%=request.getContextPath() %>/lista_desideri" class="sidebar-item block px-6 py-3 text-sm font-medium <%= current.equals("lista_desideri") ? "active" : ""%>">
-                            <i class="fas fa-heart mr-2"></i> Lista desideri
+                        <a href="<%=request.getContextPath() %>/lista_preferiti" class="sidebar-item block px-6 py-3 text-sm font-medium <%= current.equals("lista_preferiti") ? "active" : ""%>">
+                            <i class="fas fa-heart mr-2"></i> Lista preferiti
                         </a>
                     </nav>
                 </div>

@@ -10,88 +10,30 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-       @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
-      
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .product-card {
-            transition: all 0.3s ease;
-        }
-        
-        .region-filter.active {
-            background-color: #e11d48;
-            color: white;
-        }
-        
-        .cart-preview {
-            transition: all 0.3s ease;
-            max-height: 0;
-            overflow: hidden;
-        }
-        
-        .cart-preview.open {
-            max-height: 500px;
-        }
-        
-        /* Animazione pulsante carrello */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        .cart-pulse {
-            animation: pulse 0.5s ease;
-        }
-        
-        #notifica {
-		  position: fixed;
-		  top: 20px;
-		  right: 20px;
-		  background-color: #333;
-		  color: #fff;
-		  padding: 12px 20px;
-		  border-radius: 8px;
-		  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-		  font-family: sans-serif;
-		  display: none;
-		  z-index: 9999;
-		  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-		}
-		
-		@keyframes fadein {
-		  from { opacity: 0; top: 0px; }
-		  to { opacity: 1; top: 20px; }
-		}
-		@keyframes fadeout {
-		  from { opacity: 1; top: 20px; }
-		  to { opacity: 0; top: 0px; }
-		}
-    </style>
+	<link rel="stylesheet" href="css/catalogo.css">
 </head>
 <body class="bg-gray-50">
 <div id="notifica" class="nascosta"></div>
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-red-50 to-amber-50 py-12">
-        <div class="container mx-auto px-4">
-            <div class="max-w-3xl mx-auto text-center">
-                <h1 class="text-4xl md:text-5xl title-font text-gray-800 mb-4">Scopri l'autentico gusto italiano</h1>
-                <p class="text-lg text-gray-600 mb-8">Prodotti selezionati direttamente dalle migliori regioni d'Italia, consegnati a casa tua con amore e tradizione.</p>
-                <div class="relative max-w-md mx-auto">
-                    <input type="text" placeholder="Cerca prodotti..." class="w-full py-3 px-5 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
-                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="bg-gradient-to-r from-red-50 to-amber-50 py-12">
+  <div class="container mx-auto px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl title-font text-gray-800 mb-4">Scopri l'autentico gusto italiano</h1>
+      <p class="text-lg text-gray-600 mb-8">Prodotti selezionati direttamente dalle migliori regioni d'Italia, consegnati a casa tua con amore e tradizione.</p>
+
+      <div class="relative max-w-md mx-auto">
+        <input id="searchBox" type="text" placeholder="Cerca prodotti..."
+               autocomplete=off  class="w-full py-3 px-5 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+     
+          <i class="fas fa-search absolute right-1 top-1/2 -translate-y-1/2 text-red-600"></i>
+
+        <!-- Dropdown suggerimenti -->
+        <div id="sugg" class="absolute z-[9999] mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg hidden"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-12">
@@ -99,13 +41,32 @@
         <div class="mb-12">
             <h2 class="text-2xl title-font text-gray-800 mb-6">Filtra per categoria</h2>
             <div class="flex flex-wrap gap-3 mb-8">
-                <button class="region-filter active px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition" data-region="all">Tutti</button>
-                <button class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition" data-region="pasta">Pasta</button>
-                <button class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition" data-region="formaggi">Formaggi</button>
-                <button class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition" data-region="salumi">Salumi</button>
-                <button class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition" data-region="olio">Olio e Aceti</button>
-                <button class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition" data-region="dolci">Dolci</button>
-                <button class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition" data-region="vini">Vini</button>
+                <%
+					String cat = request.getParameter("cat") != null ? request.getParameter("cat") : "all";
+				%>
+				
+				<form class="flex flex-wrap gap-3 mb-8"
+				      method="get" action="<%=request.getContextPath()%>/catalogo">
+				  <button type="submit" name="cat" value="tutti"
+				          class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition <%= "tutti".equals(cat) ? "bg-red-600 text-white" : "" %>">
+				    Tutti
+				  </button>
+				
+				  <button type="submit" name="cat" value="pasta"
+				          class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition <%= "pasta".equals(cat) ? "bg-red-600 text-white" : "" %>">
+				    Pasta
+				  </button>
+				
+				  <button type="submit" name="cat" value="formaggi"
+				          class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition <%= "formaggi".equals(cat) ? "bg-red-600 text-white" : "" %>">
+				    Formaggi
+				  </button>
+				
+				  <button type="submit" name="cat" value="salumi"  class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition <%= "salumi".equals(cat) ? "bg-red-600 text-white" : "" %>">Salumi</button>
+				  <button type="submit" name="cat" value="bevande" class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition <%= "bevande".equals(cat) ? "bg-red-600 text-white" : "" %>">Bevande</button>
+				  <button type="submit" name="cat" value="dolci"   class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition <%= "dolci".equals(cat) ? "bg-red-600 text-white" : "" %>">Dolci</button>
+				  <button type="submit" name="cat" value="oli"     class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition <%= "oli".equals(cat) ? "bg-red-600 text-white" : "" %>">Oli e Aceti</button>
+				</form>
             </div>
             
             <div class="flex items-center justify-between mb-6">
@@ -143,7 +104,7 @@
                         </div>
                         <p class="text-gray-600 mb-4 min-h-[60px]"><%= p.getDescrizione() %></p>
                         <div class="flex justify-between items-center">
-                            <span class="text-xl font-bold">&euro;<%= p.getPrezzo() %></span>
+                            <span class="text-xl font-bold">&euro;<%= p.getPrezzoFormattato() %></span>
                             <form class="aggiungiCarrello" method="post" action="<%= request.getContextPath() %>/carrello">
 						    <input type="hidden" name="azione" value="aggiungi">
 						    <input type="hidden" name="idProdotto" value="<%= p.getId() %>">
@@ -221,6 +182,76 @@
     	    notifica.style.display = "none";
     	  }, 3000);
     	}
-    </script>
+    //RICERCA DROPDOWN
+	document.addEventListener('DOMContentLoaded', () => {
+  const box  = document.getElementById('searchBox');
+  const menu = document.getElementById('sugg');
+  let t;
+
+  function show(list){
+    if (!list || !list.length) {
+      menu.innerHTML = '';
+      menu.classList.add('hidden');
+      return;
+    }
+    var placeholder = '<%=request.getContextPath()%>/img/placeholder.png';
+    var html = '';
+    for (var i=0; i<list.length; i++){
+      var p = list[i];
+      var img = (p.img && p.img.length) ? p.img : placeholder;
+      var regione = (p.regione && p.regione.length) ? p.regione : 'Italia';
+      html += '<div class="sitem" data-id="' + p.id + '">'
+           +    '<img class="simg" src="' + img + '" alt="">'
+           +    '<div style="display:flex; flex-direction:column; align-items:flex-start; gap:.15rem;">'
+           +      '<div class="sname">' + escapeHtml(p.nome) + '</div>'
+           +      '<span class="sbadge">' + escapeHtml(regione) + '</span>'
+           +    '</div>'
+           +  '</div>';
+    }
+    menu.innerHTML = html;
+    menu.classList.remove('hidden');
+  }
+
+  function escapeHtml(s){
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]); });
+  }
+
+  box.addEventListener('input', () => {
+    const q = box.value.trim();
+    clearTimeout(t);
+    if (q.length < 1) { show([]); return; }
+
+    t = setTimeout(async () => {
+      const cat = new URLSearchParams(window.location.search).get('categoria') || '';
+      const url = '<%=request.getContextPath()%>/catalogo?suggest=1&q='
+                + encodeURIComponent(q)
+                + '&categoria=' + encodeURIComponent(cat)
+                + '&limit=8';
+
+      console.log('URL chiamato:', url);
+      try {
+        const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) { show([]); return; }
+        const data = await res.json();
+        console.log('Risposta JSON:', data);
+        show(data);
+      } catch (e) {
+        console.error(e);
+        show([]);
+      }
+    }, 180);
+  });
+
+  menu.addEventListener('mousedown', e => {
+    const el = e.target.closest('.sitem');
+    if (!el) return;
+    window.location.href = '<%=request.getContextPath()%>/schedaprodotto?id=' + el.dataset.id;
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target) && e.target !== box) menu.classList.add('hidden');
+  });
+});    </script>
 </body>
 </html>

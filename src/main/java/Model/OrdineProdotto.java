@@ -1,6 +1,7 @@
 package Model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class OrdineProdotto {
     private int idOrdine;     // FK -> ordine.id
@@ -18,21 +19,23 @@ public class OrdineProdotto {
         this.quantita = quantita;
     }
 
-    // --- helpers calcolo riga ---
-    public BigDecimal getImponibileRiga() {
+ // --- helpers calcolo riga (prezzi già ivati) ---
+    public BigDecimal getTotaleRigaIvato() {
+        // prezzo unitario già ivato × quantità
         return prezzo.multiply(BigDecimal.valueOf(quantita));
     }
 
-    public BigDecimal getIvaRiga() {
-        // prezzo * qta * (iva/100)
-        return getImponibileRiga()
-                .multiply(iva)
-                .divide(BigDecimal.valueOf(100));
+    public BigDecimal getImponibileRiga() {
+        // imponibile = totale / (1 + iva%)
+        BigDecimal moltiplicatore = BigDecimal.ONE.add(iva.divide(BigDecimal.valueOf(100)));
+        return getTotaleRigaIvato().divide(moltiplicatore, 2, RoundingMode.HALF_UP);
     }
 
-    public BigDecimal getTotaleRigaIvato() {
-        return getImponibileRiga().add(getIvaRiga());
+    public BigDecimal getIvaRiga() {
+        // iva = totale - imponibile
+        return getTotaleRigaIvato().subtract(getImponibileRiga());
     }
+
 
     // --- getters/setters ---
     public int getIdOrdine() { return idOrdine; }

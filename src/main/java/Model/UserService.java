@@ -8,7 +8,6 @@ import java.sql.*;
 
 public class UserService {
 
-    // Verifica se l'utente esiste e la password è corretta (sia per user che per admin)
     public String loginUser(String email, String password, Connection conn) throws SQLException {
         // Verifica nella tabella user
         String query = "SELECT password FROM utente WHERE mail = ?";
@@ -42,29 +41,25 @@ public class UserService {
 
     // Registra un nuovo utente
     public boolean registerUser(String nome, String email,String telefono, String password, Connection conn) throws SQLException {
-       
- 
             // Registrazione per utente normale nella tabella user
             return registerNormalUser(nome,email,telefono, password, conn);
-
-       
-    }
+            }
     
     public static boolean updateUtente(Utente u,String role) {
         boolean updated = false;
-        String query = "UPDATE utente SET nome = ?, mail = ?, indirizzo = ?, telefono = ? WHERE id = ?";
+        String query = "UPDATE utente SET nome = ?, mail = ?, indirizzo = ?, telefono = ?, fatturazione = ? WHERE id = ?";
         if (role.equals("admin")) {
-    		query = "UPDATE amministratore SET nome = ?, mail = ?, indirizzo = ?, telefono = ? WHERE id = ?";
+    		query = "UPDATE amministratore SET nome = ?, mail = ?, indirizzo = ?, telefono = ?,fatturazione = ? WHERE id = ?";
     	}
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
-
             ps.setString(1, u.getNome());
             ps.setString(2, u.getMail());
             ps.setString(3, u.getIndirizzo());
             ps.setString(4, u.getTelefono());
-            ps.setInt(5, u.getId());
+            ps.setString(5, u.getFatturazione());
+            ps.setInt(6, u.getId());
 
             int rows = ps.executeUpdate();
             updated = rows > 0;
@@ -123,7 +118,7 @@ public class UserService {
 
     // Registrazione utente normale
     private boolean registerNormalUser(String nome, String email,String telefono, String password, Connection conn) throws SQLException {
-        if (doesUserExist(email, conn, "utente")) {
+        if (doesUserExist(email, conn, "utente") && doesUserExist(email, conn, "amministratore")) {
             return false; // Username già esistente
         }
 
@@ -141,7 +136,7 @@ public class UserService {
 
     // Registrazione amministratore
     private boolean registerAdmin(String nome,String email, String password, Connection conn) throws SQLException {
-        if (doesUserExist(email, conn, "amministratore")) {
+        if (doesUserExist(email, conn, "utente") && doesUserExist(email, conn, "amministratore")) {
             return false; // Username già esistente
         }
 
@@ -187,9 +182,9 @@ public class UserService {
     
     public static Utente getUserById(int id,String role) {
     	Utente utente = null;
-    	String query = "SELECT id, nome, mail, password, indirizzo, telefono FROM utente WHERE id = ?";
+    	String query = "SELECT id, nome, mail, password, indirizzo, telefono,fatturazione FROM utente WHERE id = ?";
     	if (role.equals("admin")) {
-	   		query = "SELECT id, nome, mail, password FROM amministratore WHERE id = ?";
+	   		query = "SELECT id, nome, mail, password,indirizzo,telefono,fatturazione FROM amministratore WHERE id = ?";
 	}
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
@@ -205,6 +200,7 @@ public class UserService {
                     utente.setPassword(rs.getString("password"));
                     utente.setIndirizzo(rs.getString("indirizzo"));
                     utente.setTelefono(rs.getString("telefono"));
+                    utente.setFatturazione(rs.getString("fatturazione"));
                 }
             }
 

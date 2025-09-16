@@ -116,15 +116,17 @@
             </form>
 
             <form action="checkout" method="post">
-                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">
+                <button type="submit" id="checkoutBtn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">
                     <i class="fas fa-credit-card mr-2"></i>Procedi all'acquisto
-                </button>
+                </button>                
             </form>
         </div>
     <%
         }
     %>
 </div>
+
+
 
 <!-- Notifica -->
 <div id="notifica" class="fixed top-5 right-5 bg-gray-800 text-white px-4 py-2 rounded-lg shadow z-50 hidden"></div>
@@ -216,6 +218,7 @@ function mostraNotifica(msg, colore) {
     box.classList.remove("hidden");
     setTimeout(() => box.classList.add("hidden"), 3000);
 }
+
 </script>
 
 </body>

@@ -61,7 +61,7 @@ public class CheckoutServlet extends HttpServlet{
 			int id = new OrdineDAO().insertOrdineConRighe(o);
 			request.setAttribute("idOrdine", "#"+o.getId());
 			request.setAttribute("dataOrdine", o.getDataOrdine());
-			request.setAttribute("totaleOrdine", o.getTotaleImponibile());
+			request.setAttribute("totaleOrdine", o.getTotaleIvato());
 			request.getRequestDispatcher("ordine_successo.jsp").forward(request, response);
 			carrello.svuota();
             if ((Integer) session.getAttribute("userId") != null)

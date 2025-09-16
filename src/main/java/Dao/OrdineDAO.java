@@ -72,7 +72,7 @@ public class OrdineDAO {
     /* ==========================
        READ
        ========================== */
-    public Ordine findByIdWithRighe(int idOrdine) throws SQLException {
+    public static Ordine findByIdWithRighe(int idOrdine) throws SQLException {
     	Connection conn = DBConnection.getConnection();
         final String qOrd = """
             SELECT id, data_ordine, corriere, codice_tracking, stato, id_utente
@@ -280,6 +280,24 @@ public class OrdineDAO {
             ps.setInt(1, idOrdine);
             ps.setInt(2, idProdotto);
             ps.executeUpdate();
+        }
+    }
+    public static boolean haAcquistatoProdotto(int idUtente, int idProdotto) throws SQLException {
+        String sql = "SELECT 1 " +
+                     "FROM ordine o " +
+                     "JOIN ordine_prodotto op ON o.id = op.id_ordine " +
+                     "WHERE o.id_utente = ? AND op.id_prodotto = ? " +
+                     "LIMIT 1";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idUtente);
+            ps.setInt(2, idProdotto);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next(); // true se esiste almeno una riga
+            }
         }
     }
 }

@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="css/Login.css?v=1.0">
 </head>
 <body>
-  <!-- From Uiverse.io by ilkhoeri --> 
+  <div id="notifica" class="nascosta"></div> 
 <div class="card">
   <input
     value=""
@@ -19,7 +19,21 @@
   />
 	<input type="checkbox" id="blind-check" class="blind-check" hidden>
 	
+<%
+String notifica = (String) request.getAttribute("notifica");
+String colore = (String) request.getAttribute("coloreNotifica");
+if (notifica != null && colore!=null) {
+%>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    mostraNotifica("<%= notifica %>", "<%= colore %>");
+  });
+</script>
+<%
+}
+%>
 
+  
 
   <form class="form" action="register" method="POST">
     <div class="title">Benvenuto</div>
@@ -34,13 +48,12 @@
       id="name"
     />
     
-    <label class="label_input" for="telefono">Telefono</label>
+    <label class="label_input" for="telefono">Telefono (Opzionale)</label>
     <input type="tel" name="telefono" id="telefono"
        class="input"
        placeholder="Es. +39 333 1234567"
        pattern="^\+?[0-9\s\-]{7,15}$"
-       required>
-    
+       >
     
     <label class="label_input" for="email">Email</label>
     <input

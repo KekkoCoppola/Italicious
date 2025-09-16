@@ -40,20 +40,23 @@ public class Ordine {
     public void addRiga(OrdineProdotto r){ righe.add(r); }
     public List<OrdineProdotto> getRighe(){ return righe; }
 
-    public BigDecimal getTotaleImponibile(){
+    public BigDecimal getTotaleIvato() {
+        // Prezzi già ivati → somma dei totali riga
+        return righe.stream()
+            .map(OrdineProdotto::getTotaleRigaIvato)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public BigDecimal getTotaleImponibile() {
+        // Somma degli imponibili scorporati da ciascuna riga
         return righe.stream()
             .map(OrdineProdotto::getImponibileRiga)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public BigDecimal getTotaleIva(){
-        return righe.stream()
-            .map(OrdineProdotto::getIvaRiga)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    public BigDecimal getTotaleIvato(){
-        return getTotaleImponibile().add(getTotaleIva());
+    public BigDecimal getTotaleIva() {
+        // Differenza tra totale ivato e imponibile
+        return getTotaleIvato().subtract(getTotaleImponibile());
     }
 
     // --- getters/setters base ---

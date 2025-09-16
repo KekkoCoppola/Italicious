@@ -7,18 +7,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.*;
 import java.util.List;
-//@WebServlet("/admin")
+
 public class AdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession session = request.getSession(false); // Otteniamo la sessione esistente, se non c'è è null
+    	HttpSession session = request.getSession(false); 
     	if (session == null || "user".equals(session.getAttribute("role"))) {
-    	    // Se non c'è sessione o username, reindirizza al login
     	    response.sendRedirect("login");
     	    return;
     	}
     	String action = request.getParameter("action");
         if (action == null || action.isEmpty()) {
-            action = "view";  // Impostiamo 'view' come valore di default
+            action = "view";  
         }
 
 
@@ -52,6 +51,11 @@ public class AdminServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	HttpSession session = request.getSession(false); // Otteniamo la sessione esistente, se non c'è è null
+    	if (session == null || "user".equals(session.getAttribute("role"))) {
+    	    response.sendRedirect("login");
+    	    return;
+    	}
         String action = request.getParameter("action");
 
         if ("add".equals(action)) {
@@ -64,8 +68,9 @@ public class AdminServlet extends HttpServlet {
             int disponibilita = Integer.parseInt(request.getParameter("disponibilita"));
             String immagine = request.getParameter("immagine");
             String regione = request.getParameter("regione");
+            String categoria = request.getParameter("categoria");
 
-            Prodotto prodotto = new Prodotto(id,nome, descrizione, prezzo,iva, disponibilita, immagine, regione);
+            Prodotto prodotto = new Prodotto(id,nome, descrizione,categoria, prezzo,iva, disponibilita, immagine, regione);
             
             ProdottoDAO prodottoDAO = new ProdottoDAO();
             prodottoDAO.addProdotto(prodotto);
@@ -81,8 +86,10 @@ public class AdminServlet extends HttpServlet {
             int disponibilita = Integer.parseInt(request.getParameter("disponibilita"));
             String immagine = request.getParameter("immagine");
             String regione = request.getParameter("regione");
+            String categoria = request.getParameter("categoria");
 
-            Prodotto prodotto = new Prodotto(id,nome, descrizione, prezzo,iva, disponibilita, immagine, regione);
+
+            Prodotto prodotto = new Prodotto(id,nome, descrizione,categoria, prezzo,iva, disponibilita, immagine, regione);
             ProdottoDAO prodottoDAO = new ProdottoDAO();
             prodottoDAO.updateProdotto(prodotto);
 

@@ -72,7 +72,8 @@ public class LoginServlet extends HttpServlet {
                 }
             } else {
                 // Credenziali errate
-                request.setAttribute("error", "Email o password errati.");
+                request.setAttribute("notifica", "Email o password errati.");
+                request.setAttribute("coloreNotifica", "#dc2626");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/Login.jsp");
                 dispatcher.forward(request, response);
             }

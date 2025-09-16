@@ -17,6 +17,28 @@
 	</error-page>
 	
 	
+						    <!-- LISTA PREFERITI -->
+	<servlet>
+		<servlet-name>ListaPreferitiServlet</servlet-name>
+		<servlet-class>controller.ListaPreferitiServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ListaPreferitiServlet</servlet-name>
+		<url-pattern>/lista_preferiti</url-pattern>
+	</servlet-mapping>
+	
+					    <!-- FATTURA -->
+	<servlet>
+		<servlet-name>FattureServlet</servlet-name>
+		<servlet-class>controller.FattureServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FattureServlet</servlet-name>
+		<url-pattern>/fattura</url-pattern>
+	</servlet-mapping>
+	
 				    <!-- CHECKOUT -->
 	<servlet>
 		<servlet-name>CheckoutServlet</servlet-name>

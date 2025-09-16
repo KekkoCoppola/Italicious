@@ -36,12 +36,16 @@ public class ProfiloServlet extends HttpServlet{
 	    	String nome = request.getParameter("nome");
 	    	String mail = request.getParameter("mail");
 	    	String telefono = request.getParameter("telefono");
+	    	String indirizzo = request.getParameter("indirizzo");
+	    	String fatturazione = request.getParameter("fatturazione");
 	    	Utente u = new Utente();
 	    	u.setId(id);
 	    	u.setNome(nome);
 	    	u.setMail(mail);
 	    	u.setTelefono(telefono);
-	    	
+	    	u.setIndirizzo(indirizzo);
+	    	u.setFatturazione(fatturazione);
+	    	System.out.println("FATTURAZIONE INSERITA: "+u.getFatturazione());
 	    	UserService.updateUtente(u, (String) session.getAttribute("role"));
 	    	
 	    	

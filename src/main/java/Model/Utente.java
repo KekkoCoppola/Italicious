@@ -14,6 +14,7 @@ public class Utente implements Serializable {
     private String password;       // corrisponde a: password VARCHAR(255)
     private String indirizzo;      // corrisponde a: indirizzo VARCHAR(120)
     private String telefono;       // corrisponde a: telefono VARCHAR(20)
+    private String fatturazione;       // corrisponde a: telefono VARCHAR(20
 
     // Costruttore vuoto
     public Utente() {}
@@ -65,5 +66,12 @@ public class Utente implements Serializable {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+    public String getFatturazione() {
+        return fatturazione;
+    }
+
+    public void setFatturazione(String fatturazione) {
+        this.fatturazione = fatturazione;
     }
 }

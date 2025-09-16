@@ -22,5 +22,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.servlet.jsp.jstl-3.0.1.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.servlet-api-6.0.0.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/gson-2.10.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/openpdf-1.3.39.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

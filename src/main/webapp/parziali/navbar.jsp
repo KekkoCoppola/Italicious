@@ -75,9 +75,9 @@
         <div class="flex justify-between items-center py-4">
             <!-- Logo -->
             <div class="flex items-center space-x-1">
-                <div class="flag-stripe green w-4 h-8 rounded-l"></div>
-                <div class="flag-stripe white w-4 h-8"></div>
-                <div class="flag-stripe red w-4 h-8 rounded-r"></div>
+                <div class="flag-stripe green w-4 h-8 hidden rounded-l md:block"></div>
+                <div class="flag-stripe white w-4 h-8 hidden md:block"></div>
+                <div class="flag-stripe red w-4 h-8 rounded-r hidden md:block"></div>
 
                 <a href="/Italicious/home" class="text-2xl font-bold text-gray-800 hover:text-green-700 transition">
                     <img src="img/loghi/logo.png" alt="Italicious Logo" class="h-10 object-contain">

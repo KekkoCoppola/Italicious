@@ -8,7 +8,7 @@ import Dao.DBConnection;
 import java.io.IOException;
 import java.sql.*;
 
-//@WebServlet("/register")
+
 public class RegisterServlet extends HttpServlet {
 	
     @Override
@@ -27,16 +27,20 @@ public class RegisterServlet extends HttpServlet {
 
         Connection conn = null;
         try {
-            conn = DBConnection.getConnection(); // Tua classe DBManager per la connessione al DB
+            conn = DBConnection.getConnection(); 
             UserService userService = new UserService();
             
 
             if (userService.registerUser(nome,email, telefono,password, conn)) {
                 // Registrazione avvenuta con successo
-                response.sendRedirect("login"); // Reindirizza alla pagina di login
+                request.setAttribute("notifica", "Account creato correttamente ✔️!");
+                request.setAttribute("coloreNotifica", "#16a34a"); //verde= 16a34a || rosso=dc2626
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/Login.jsp");
+                dispatcher.forward(request, response);
             } else {
                 // Username già esistente
-                request.setAttribute("error", "Username già esistente!");
+                request.setAttribute("notifica", "Username già esistente ❌!");
+                request.setAttribute("coloreNotifica", "#dc2626"); 
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/register.jsp");
                 dispatcher.forward(request, response);
             }

@@ -3,6 +3,8 @@
 <%@ page import="Model.UserService" %>
 <%@ page import="Model.Recensione" %>
 <%@ page import="Dao.RecensioneDAO" %>
+<%@ page import="Dao.ListaPreferitiDAO" %>
+<%@ page import="Dao.OrdineDAO" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html lang="it">
@@ -65,14 +67,20 @@
 <body class="bg-gray-50 font-sans">
 <div id="notifica" class="nascosta"></div>
     <div class="container mx-auto px-4 py-8 max-w-6xl">
-    		<% Prodotto p = (Prodotto)request.getAttribute("prodotto"); %>
+    		<% 
+    			Prodotto p = (Prodotto)request.getAttribute("prodotto");
+    			ListaPreferitiDAO lf = new ListaPreferitiDAO();
+    			boolean preferito = false;
+    			if(session.getAttribute("userId")!=null)
+    			 	preferito = lf.exists((Integer) session.getAttribute("userId"),p.getId());
+    		%>
         <!-- Breadcrumb -->
         <nav class="flex mb-6" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
                 <li class="inline-flex items-center">
-                    <a href="/Italicious/catalogo" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
+                    <a href="<%=request.getContextPath() %>/catalogo" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
                         <i class="fas fa-arrow-left mr-2"></i>
-                        Indietro
+                        Catalogo
                     </a>
                 </li>
                 
@@ -96,30 +104,16 @@
                                  class="w-full h-80 object-cover rounded-lg flex-shrink-0"> -->
                         </div>
                         <div class="absolute top-4 left-4">
-                            <span class="bg-green-500 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full">DOP</span>
+                            <span class="bg-green-500 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full"><%=p.getCategoria().toUpperCase() %></span>
                         </div>
-                        <form action="lista-preferiti" method="post">
-							    <input type="hidden" name="action" value="add">
-							    <input type="hidden" name="id_prodotto" value="42">
+                        <form action="<%=request.getContextPath() %>/lista_preferiti" method="post">
+							    <input type="hidden" name="id_prodotto" value="<%=p.getId()%>">
                         		<button type="submit" class="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100">
-                            		<i class="far fa-heart text-gray-600 text-xl"></i>
+                            		<i class="<%= preferito ? "fas fa-heart text-red-600" : "far fa-heart text-grey-600"%>  text-xl" onclick="mostraNotifica('Prodotto <%= preferito ? "rimosso dai" : "aggiunto ai"%> preferiti!', '#38a169')"></i>
                        			</button>
                         </form>
                     </div>
-                    <!--  <div class="grid grid-cols-4 gap-2">
-                        <img src="<%=p.getImmagine() %>" 
-                             alt="Thumbnail 1" 
-                             class="h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-green-400">
-                        <img src="https://images.unsplash.com/photo-1608039755401-742074f0545e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                             alt="Thumbnail 2" 
-                             class="h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-green-400">
-                        <img src="https://images.unsplash.com/photo-1608039755401-742074f0545e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                             alt="Thumbnail 3" 
-                             class="h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-green-400">
-                        <img src="https://images.unsplash.com/photo-1608039755401-742074f0545e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                             alt="Thumbnail 4" 
-                             class="h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-green-400">
-                    </div>-->
+                
                 </div>
 		
                 <!-- INFO PRODOTTO -->
@@ -184,7 +178,7 @@
                     </div>
 
                     <div class="mb-6">
-                        <span class="text-3xl font-bold text-gray-900">&euro; <%=p.getPrezzo() %></span>
+                        <span class="text-3xl font-bold text-gray-900">&euro; <%=p.getPrezzoFormattato() %></span>
                         <span class="text-sm text-gray-500 ml-1">IVA inclusa (<%=p.getIva() %>%)</span>
                     </div>
 
@@ -200,22 +194,115 @@
                     <div class="mb-6">
                         <h3 class="text-lg font-semibold mb-2">Caratteristiche</h3>
                         <div class="grid grid-cols-2 gap-2">
-                            <div class="flex items-center">
-                                <i class="fas fa-wine-bottle text-gray-500 mr-2"></i>
-                                <span>250ml</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-leaf text-gray-500 mr-2"></i>
-                                <span>Biologico</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-clock text-gray-500 mr-2"></i>
-                                <span>12 anni</span>
-                            </div>
-                            <div class="flex items-center">
-                                <i class="fas fa-certificate text-gray-500 mr-2"></i>
-                                <span>DOP</span>
-                            </div>
+                        <%	
+                       
+                        switch (p.getCategoria().toLowerCase()) {
+                            case "bevande":
+                    %>
+                                <div class="flex items-center">
+                                    <i class="fas fa-wine-bottle text-gray-500 mr-2"></i>
+                                    <span>750ml</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-percent text-gray-500 mr-2"></i>
+                                    <span>12% vol</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-leaf text-gray-500 mr-2"></i>
+                                    <span>Biologico</span>
+                                </div>
+                    <%
+                                break;
+                            case "alimentari":
+                    %>
+                                <div class="flex items-center">
+                                    <i class="fas fa-weight-hanging text-gray-500 mr-2"></i>
+                                    <span>500g</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-clock text-gray-500 mr-2"></i>
+                                    <span>Tempo cottura: 8 min</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-leaf text-gray-500 mr-2"></i>
+                                    <span>Biologico</span>
+                                </div>
+                    <%
+                                break;
+                            case "dolci":
+                    %>
+                                <div class="flex items-center">
+                                    <i class="fas fa-weight-hanging text-gray-500 mr-2"></i>
+                                    <span>250g</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-certificate text-gray-500 mr-2"></i>
+                                    <span>IGP</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-candy-cane text-gray-500 mr-2"></i>
+                                    <span>Ingredienti tipici</span>
+                                </div>
+                    <%
+                                break;
+                            case "formaggi":
+                    %>
+                                <div class="flex items-center">
+                                    <i class="fas fa-weight-hanging text-gray-500 mr-2"></i>
+                                    <span>300g</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-clock text-gray-500 mr-2"></i>
+                                    <span>Stagionatura: 12 mesi</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-certificate text-gray-500 mr-2"></i>
+                                    <span>DOP</span>
+                                </div>
+                    <%
+                                break;
+                            case "salumi":
+                    %>
+                                <div class="flex items-center">
+                                    <i class="fas fa-weight-hanging text-gray-500 mr-2"></i>
+                                    <span>1kg</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-clock text-gray-500 mr-2"></i>
+                                    <span>Stagionatura: 24 mesi</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-certificate text-gray-500 mr-2"></i>
+                                    <span>IGP</span>
+                                </div>
+                    <%
+                                break;
+                            case "oli":
+                    %>
+                                <div class="flex items-center">
+                                    <i class="fas fa-wine-bottle text-gray-500 mr-2"></i>
+                                    <span>500ml</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-leaf text-gray-500 mr-2"></i>
+                                    <span>Biologico</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-certificate text-gray-500 mr-2"></i>
+                                    <span>DOP</span>
+                                </div>
+                    <%
+                                break;
+                            default:
+                    %>
+                                <div class="flex items-center">
+                                    <i class="fas fa-box text-gray-500 mr-2"></i>
+                                    <span>Caratteristiche non disponibili</span>
+                                </div>
+                    <%
+                        }
+                    %>
+
                         </div>
                     </div>
 
@@ -320,6 +407,8 @@
 	            String mail = (String) session.getAttribute("email");
 	    		int idUtente = UserService.getIdByMail(mail,(String) session.getAttribute("role"));
             	if(!RecensioneDAO.haGiaRecensito(idUtente, p.getId())){
+            		if(session.getAttribute("userId")!=null)
+            			if(OrdineDAO.haAcquistatoProdotto((Integer) session.getAttribute("userId"),p.getId())){
             	
             %>
             
@@ -389,6 +478,7 @@
 			  </form>
 			</div>
 			<%
+            			}
             	}
             	}
 			%>
@@ -418,7 +508,7 @@
                         </div>
                         <p class="text-gray-600 mb-4 min-h-[60px]"><%= p2.getDescrizione() %></p>
                         <div class="flex justify-between items-center">
-                            <span class="text-xl font-bold">&euro;<%= p2.getPrezzo() %></span>
+                            <span class="text-xl font-bold">&euro;<%= p2.getPrezzoFormattato() %></span>
                             <form class="aggiungiCarrello" method="post" action="<%= request.getContextPath() %>/carrello">
 						    <input type="hidden" name="azione" value="aggiungi">
 						    <input type="hidden" name="idProdotto2" value="<%= p2.getId() %>">
@@ -506,15 +596,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
-function mostraNotifica(testo, colore = "#333") {
-	  const notifica = document.getElementById("notifica");
-	  notifica.style.backgroundColor = colore;
-	  notifica.innerText = testo;
-	  notifica.style.display = "block";
-	  setTimeout(() => {
-	    notifica.style.display = "none";
-	  }, 3000);
-	}
+
 	
 //+ e -
 const qty = document.getElementById("qty");
