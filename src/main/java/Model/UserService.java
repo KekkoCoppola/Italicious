@@ -152,7 +152,7 @@ public class UserService {
     }
 
     // Controlla se l'utente esiste già nella tabella specificata
-    private boolean doesUserExist(String email, Connection conn, String table) throws SQLException {
+    public static boolean doesUserExist(String email, Connection conn, String table) throws SQLException {
         String query = "SELECT mail FROM " + table + " WHERE mail = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, email);
@@ -160,6 +160,43 @@ public class UserService {
             return rs.next(); // Se l'utente esiste, torna true
         }
     }
+    
+    public static boolean usernameExistsAcrossTables(Connection conn, String username, int excludeId) throws SQLException {
+        final String sql = """
+            SELECT 1 FROM utente WHERE nome = ? AND id <> ?
+            UNION ALL
+            SELECT 1 FROM amministratore WHERE nome = ? AND id <> ?
+            LIMIT 1
+        """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username.trim());
+            ps.setInt(2, excludeId);
+            ps.setString(3, username.trim());
+            ps.setInt(4, excludeId);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public static boolean emailExistsAcrossTables(Connection conn, String email, int excludeId) throws SQLException {
+        final String sql = """
+            SELECT 1 FROM utente WHERE mail = ? AND id <> ?
+            UNION ALL
+            SELECT 1 FROM amministratore WHERE mail = ? AND id <> ?
+            LIMIT 1
+        """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email.trim());
+            ps.setInt(2, excludeId);
+            ps.setString(3, email.trim());
+            ps.setInt(4, excludeId);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
     
     public static int getIdByMail(String email, String role) {
     	String query = "SELECT id FROM utente WHERE mail = ?";

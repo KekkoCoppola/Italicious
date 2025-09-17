@@ -5,9 +5,36 @@
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
 	version="5.0">
 	
+	
+	<!-- FILTRO ADMIN -->
+	<filter>
+	    <filter-name>AdminAuthFilter</filter-name>
+	    <filter-class>controller.AdminAuthFilter</filter-class>
+	
+	    <!-- JSP DA PROTEGGERE -->
+	    <init-param>
+	        <param-name>protectedPaths</param-name>
+	        <param-value>
+	            /admin/*
+	        </param-value>
+	    </init-param>
+	</filter>
+	
+	<!-- Applica il filtro  -->
+	<filter-mapping>
+	    <filter-name>AdminAuthFilter</filter-name>
+	    <url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	
+		<!-- Pagina per errore 403 - Server Error -->
 	<error-page>
-    <error-code>404</error-code>
-    <location>/error404.html</location>
+	    <error-code>403</error-code>
+	    <location>/error403.html</location>
+	</error-page>
+		<!-- Pagina per errore 404 - Not Found Error -->
+	<error-page>
+	    <error-code>404</error-code>
+	    <location>/error404.html</location>
 	</error-page>
 	
 	<!-- Pagina per errore 500 - Internal Server Error -->

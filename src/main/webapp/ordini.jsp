@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="Model.Ordine" %>
+<%@ page import="Model.Ordine.StatoOrdine" %>
 <%@ page import="java.util.List" %>
 <%@ page import="Model.UserService" %>
 <%@ page import="Model.Utente" %>
@@ -65,10 +66,35 @@
       <span class="font-medium">€ <%= Nfmt.format(o.getTotaleIvato()) %></span>
     </div>
 
-    <div class="md:col-span-2">
-      <span class="md:hidden block text-xs text-gray-500">Stato</span>
-      <span class="inline-block bg-green-100 text-green-800 px-2 py-0.5 rounded text-sm"><%= o.getStato() %></span>
-    </div>
+<%
+	StatoOrdine stato = o.getStato();
+    String badgeClass = "";
+
+    switch (stato) {
+    case IN_ELABORAZIONE:
+        badgeClass = "bg-yellow-100 text-yellow-800";
+        break;
+    case SPEDITO:
+        badgeClass = "bg-blue-100 text-blue-800";
+        break;
+    case ANNULLATO:
+        badgeClass = "bg-red-100 text-red-800";
+        break;
+    case CONSEGNATO:
+        badgeClass = "bg-green-100 text-green-800";
+        break;
+    default:
+        badgeClass = "bg-gray-100 text-gray-800";
+}
+%>
+
+<div class="md:col-span-2">
+    <span class="md:hidden block text-xs text-gray-500">Stato</span>
+    <span class="inline-block <%= badgeClass %> px-2 py-0.5 rounded text-sm">
+        <%= stato.getValue() %>
+    </span>
+</div>
+
 
     <div class="md:col-span-2">
       <span class="md:hidden block text-xs text-gray-500">Corriere</span>

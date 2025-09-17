@@ -1,4 +1,8 @@
 @charset "UTF-8";
+@media (min-width: 768px) {
+  .card { width: 420px; }
+  #showbtn { right: 10px; }
+}
 #notifica {
 		  position: fixed;
 		  top: 20px;

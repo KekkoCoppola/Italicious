@@ -22,6 +22,19 @@
 	Utente u = UserService.getUserById((int) session.getAttribute("userId"), (String) session.getAttribute("role"));
 %>
 <body class="min-h-screen">
+<%
+String notifica = (String) request.getAttribute("notifica");
+String colore = (String) request.getAttribute("coloreNotifica");
+if (notifica != null && colore!=null) {
+%>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    mostraNotifica("<%= notifica %>", "<%= colore %>");
+  });
+</script>
+<%
+}
+%>
     <div class="container mx-auto px-4 py-8">
         <div class="flex flex-col md:flex-row gap-8">
             <!-- Sidebar -->

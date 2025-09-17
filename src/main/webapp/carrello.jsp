@@ -81,7 +81,7 @@
                                     id="btn-meno-<%= idProdotto %>"
                                     <%= (quantita <= 1) ? "disabled" : "" %>>−</button>
 
-                                <span class="font-medium" id="quantita-<%= idProdotto %>"><%= quantita %></span>
+                                <span class="font-medium" id="quantita-<%= idProdotto %>" data-max="<%= prodotto.getDisponibilita() %>"><%= quantita %></span>
 
                                 <button onclick="aggiornaQuantitaDinamica(<%= idProdotto %>, 1)"
                                     class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700">+</button>
@@ -136,7 +136,9 @@ function aggiornaQuantitaDinamica(idProdotto, variazione) {
     const span = document.getElementById("quantita-" + idProdotto);
     const attuale = parseInt(span.innerText);
     const nuovaQuantita = attuale + variazione;
+    const max = parseInt(span.dataset.max); 
     if (nuovaQuantita < 1) return;
+    if (nuovaQuantita > max) return; 
     aggiornaQuantita(idProdotto, nuovaQuantita);
 }
 

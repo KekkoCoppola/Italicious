@@ -79,7 +79,7 @@
                 <div class="flag-stripe white w-4 h-8 hidden md:block"></div>
                 <div class="flag-stripe red w-4 h-8 rounded-r hidden md:block"></div>
 
-                <a href="/Italicious/home" class="text-2xl font-bold text-gray-800 hover:text-green-700 transition">
+                <a href="<%=request.getContextPath() %>/home" class="text-2xl font-bold text-gray-800 hover:text-green-700 transition">
                     <img src="img/loghi/logo.png" alt="Italicious Logo" class="h-10 object-contain">
                 </a>
             </div>
@@ -109,7 +109,7 @@
                     <p class="text-sm text-gray-700">Ciao, <b><%= u.getNome() %></b></p>
                 <% } %>
 				
-                <a href="/Italicious/carrello" class="relative text-gray-800 hover:text-green-600 transition">
+                <a href="<%=request.getContextPath() %>/carrello" class="relative text-gray-800 hover:text-green-600 transition">
     <i class="fas fa-shopping-cart text-xl"></i> 
     <span id="carrelloBadge" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
           style="<%= (request.getAttribute("carrelloCount") != null && (int)request.getAttribute("carrelloCount") > 0) ? "" : "display:none;" %>">
@@ -142,12 +142,12 @@
 
         <!-- Menu mobile -->
         <div class="md:hidden hidden py-4" id="mobile-menu">
-            <a href="/Italicious/home" class="block py-2 text-gray-800 hover:text-green-600 transition">Home</a>
-            <a href="/Italicious/chi_siamo" class="block py-2 text-gray-800 hover:text-green-600 transition">Chi Siamo</a>
-            <a href="/Italicious/catalogo" class="block py-2 text-gray-800 hover:text-green-600 transition">Catalogo</a>
+            <a href="<%=request.getContextPath() %>/home" class="block py-2 text-gray-800 hover:text-green-600 transition">Home</a>
+            <a href="<%=request.getContextPath() %>/chi_siamo" class="block py-2 text-gray-800 hover:text-green-600 transition">Chi Siamo</a>
+            <a href="<%=request.getContextPath() %>/catalogo" class="block py-2 text-gray-800 hover:text-green-600 transition">Catalogo</a>
 
             <% if (!isLoggedIn) { %>
-                <a href="/Italicious/login" class="block py-2 text-gray-800 hover:text-green-600 transition">Accedi</a>
+                <a href="<%=request.getContextPath() %>/login" class="block py-2 text-gray-800 hover:text-green-600 transition">Accedi</a>
             <% } %>
         </div>
     </div>

@@ -14,54 +14,9 @@
     <title>Prodotti Tipici Italiani - Dettaglio Prodotto</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/schedaProdotto.css">
     <style>
-        .product-gallery {
-            scroll-snap-type: x mandatory;
-        }
-        .product-gallery img {
-            scroll-snap-align: start;
-        }
-        .flag-italy {
-            background: linear-gradient(to right, #009246 33%, #FFFFFF 33%, #FFFFFF 66%, #CE2B37 66%);
-        }
-        .heart-animation {
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-        .origin-map {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60" fill="none" stroke="%23e5e7eb"><path d="M50,5 C60,15 70,10 80,15 C90,20 95,30 80,40 C65,50 60,45 50,55 C40,45 35,50 20,40 C5,30 10,20 20,15 C30,10 40,15 50,5 Z"/></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-        #notifica {
-		  position: fixed;
-		  top: 20px;
-		  right: 20px;
-		  background-color: #333;
-		  color: #fff;
-		  padding: 12px 20px;
-		  border-radius: 8px;
-		  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-		  font-family: sans-serif;
-		  display: none;
-		  z-index: 9999;
-		  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-		}
-		.review-card .star-rating{direction:rtl}
-		.review-card .star-rating input[type="radio"]{display:none}
-		.review-card .star-rating label{
-			color:#e2e8f0;font-size:1.75rem;padding:0 3px;cursor:pointer;transition:all .2s ease
-		}
-		.review-card .star-rating label:hover,
-		.review-card .star-rating label:hover ~ label,
-		.review-card .star-rating input[type="radio"]:checked ~ label{color:#fbbf24}
-		.review-card .error-message{color:#ef4444;font-size:.875rem;margin-top:.25rem;display:none}
-		.review-card .char-counter{font-size:.75rem;color:#64748b;text-align:right}
+
     </style>
 </head>
 <body class="bg-gray-50 font-sans">
@@ -94,14 +49,9 @@
                     <div class="relative mb-4">
                         <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1 ">
                             <img src="<%=p.getImmagine() %>"  
-                                 alt="Aceto Balsamico di Modena" 
+                                 alt="<%=p.getNome() %>" 
                                  class="w-full h-auto object-cover rounded-lg flex-shrink-0">
-                            <!-- <img src="https://images.unsplash.com/photo-1608039755401-742074f0545e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                                 alt="Aceto Balsamico di Modena - confezione" 
-                                 class="w-full h-80 object-cover rounded-lg flex-shrink-0">
-                            <img src="https://images.unsplash.com/photo-1608039755401-742074f0545e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                                 alt="Aceto Balsamico di Modena - produzione" 
-                                 class="w-full h-80 object-cover rounded-lg flex-shrink-0"> -->
+
                         </div>
                         <div class="absolute top-4 left-4">
                             <span class="bg-green-500 text-white text-xs font-semibold px-2.5 py-0.5 rounded-full"><%=p.getCategoria().toUpperCase() %></span>
@@ -478,7 +428,39 @@
 			  </form>
 			</div>
 			<%
+            			}else{
+            				%>
+            				<div id="review-card-<%=p.getId()%>" class="review-card bg-white rounded-xl shadow-md p-6 md:p-8">
+					  <div class="text-center space-y-3">
+					    <div class="flex justify-center">
+					      <i class="fa-solid fa-circle-info text-gray-400 text-3xl"></i>
+					    </div>
+					    <h2 class="text-lg md:text-xl font-semibold text-gray-700">
+					      Non puoi recensire questo prodotto
+					    </h2>
+					    <p class="text-sm text-gray-500">
+					      Devi aver <span class="font-medium text-gray-700">acquistato</span> il prodotto per poter lasciare una recensione.
+					    </p>
+					  </div>
+					</div>
+            				<%
             			}
+            	}else{
+            		%>
+            				<div id="review-card-<%=p.getId()%>" class="review-card bg-white rounded-xl shadow-md p-6 md:p-8">
+					  <div class="text-center space-y-3">
+					    <div class="flex justify-center">
+					      <i class="fa-solid fa-circle-info text-gray-400 text-3xl"></i>
+					    </div>
+					    <h2 class="text-lg md:text-xl font-semibold text-gray-700">
+					      Hai già recensito questo prodotto
+					    </h2>
+					    <p class="text-sm text-gray-500">
+					      hai già effettuato una recensione su questo prodotto.
+					    </p>
+					  </div>
+					</div>
+            		<%
             	}
             	}
 			%>
@@ -555,7 +537,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		        return res.json();
 		    })
 		    .then(json => {
-		    	//console.log("CLICCATO TASTO SU");
 		        mostraNotifica(json.messaggio || "Prodotto aggiunto al carrello ✅", "#16a34a");
 		    })
 		.catch(err => {
@@ -648,8 +629,6 @@ function initReviewCard(root){
         submitBtn.disabled = true;
       }, 0);
     });
-
-    // Se vuoi inviarla in AJAX, aggiungi data-ajax="true" al form
     form.addEventListener('submit', (e) => {
       if (form.dataset.ajax === 'true') {
         e.preventDefault();
@@ -663,7 +642,6 @@ function initReviewCard(root){
     });
   }
 
-  // Call per questa istanza
   initReviewCard(document.getElementById('review-card-<%=p.getId()%>'));
 </script>
 

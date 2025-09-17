@@ -26,18 +26,18 @@
                 <div>
                     <h3 class="text-lg font-bold mb-4">Navigazione</h3>
                     <ul class="space-y-2">
-                        <li><a href="/Italicious/home" class="text-gray-400 hover:text-white transition">Home</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Chi Siamo</a></li>
-                        <li><a href="/Italicious/catalogo" class="text-gray-400 hover:text-white transition">Catalogo</a></li>
+                        <li><a href="<%=request.getContextPath() %>/home" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="<%=request.getContextPath() %>/chi_siamo" class="text-gray-400 hover:text-white transition">Chi Siamo</a></li>
+                        <li><a href="<%=request.getContextPath() %>/catalogo" class="text-gray-400 hover:text-white transition">Catalogo</a></li>
                         <!--<li><a href="#" class="text-gray-400 hover:text-white transition">Cerca</a></li>  -->
                         <%
                         	if(!isLoggedIn){
                         %>
-                        <li><a href="/Italicious/login" class="text-gray-400 hover:text-white transition">Accedi</a></li>
+                        <li><a href="<%=request.getContextPath() %>/login" class="text-gray-400 hover:text-white transition">Accedi</a></li>
                         <%
                         	}else if(ruolo.equals("admin")){
                         %>
-                        <li><a href="/Italicious/admin" class="text-gray-400 hover:text-white transition">Gestione</a></li>
+                        <li><a href="<%=request.getContextPath() %>/admin" class="text-gray-400 hover:text-white transition">Gestione</a></li>
                         <%
                         	}
                         %>

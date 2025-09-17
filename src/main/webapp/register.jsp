@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Registrazione</title>
+  <title>Registrazione - Italicious</title>
   <link rel="stylesheet" href="css/Login.css?v=1.0">
+  <link rel="icon" type="image/png" href="img/loghi/logo_top.png">
 </head>
 <body>
   <div id="notifica" class="nascosta"></div> 
-<div class="card">
+<div id="card" class="card">
   <input
     value=""
     class="blind-check"
@@ -222,16 +223,16 @@ if (notifica != null && colore!=null) {
     });
   });
   //VALIDAZIONE MAIL
-    const emailInput = document.getElementById("email");
-  		emailInput.addEventListener("blur", () => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regex.test(emailInput.value)) {
-      emailInput.classList.add("border-red-500");
-      alert("Inserisci un'email valida!");
-    } else {
-      emailInput.classList.remove("border-red-500");
-    }
-  });
-  
+const emailInput = document.getElementById("email");
+const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+emailInput.addEventListener("input", () => {
+  if (!regex.test(emailInput.value)) {
+    emailInput.classList.add("border-red-500");
+  } else {
+    emailInput.classList.remove("border-red-500");
+  }
+});
+
 </script>
 </html>

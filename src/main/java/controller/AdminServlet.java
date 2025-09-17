@@ -26,7 +26,7 @@ public class AdminServlet extends HttpServlet {
             ProdottoDAO prodottoDAO = new ProdottoDAO();
             List<Prodotto> prodotti = prodottoDAO.getAllProdotti();
             request.setAttribute("prodotti", prodotti);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/admin.jsp");
             dispatcher.forward(request, response);
         } else if ("edit".equals(action)) {
             // Modifica un prodotto
@@ -34,10 +34,10 @@ public class AdminServlet extends HttpServlet {
             ProdottoDAO prodottoDAO = new ProdottoDAO();
             Prodotto prodotto = prodottoDAO.getProdottoById(id);
             request.setAttribute("prodotto", prodotto);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("edit.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/edit.jsp");
             dispatcher.forward(request, response);
         } else if ("add".equals(action)){
-        	RequestDispatcher dispatcher = request.getRequestDispatcher("add.jsp");
+        	RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/add.jsp");
             dispatcher.forward(request, response);
             // Altrimenti mostra la lista dei prodotti
             

@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login</title>
+  <title>Login - Italicious</title>
   <link rel="stylesheet" href="css/Login.css?v=1.0">
+  <link rel="icon" type="image/png" href="img/loghi/logo_top.png">
 </head>
 <body>
 
   <div id="notifica" class="nascosta"></div>
-<div class="card">
+<div id="card" class="card">
   <input
     value=""
     class="blind-check"
@@ -211,5 +212,6 @@ if (notifica != null && colore!=null) {
 	    notifica.style.display = "none";
 	  }, 3000);
 	}
+  
 </script>
 </html>

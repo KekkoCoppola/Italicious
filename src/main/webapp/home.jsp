@@ -23,7 +23,7 @@
         <div class="container mx-auto px-4 text-center">
             <h1 class="text-4xl md:text-5xl font-bold mb-6">Scopri i Sapori d'Italia</h1>
             <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Autentici prodotti regionali direttamente dalla terra italiana alla tua tavola</p>
-            <a href="/Italicious/catalogo" class="bg-white text-red-600 border-2 border-green-600 hover:bg-green-600 hover:text-white font-bold py-3 px-8 rounded-full text-lg transition transform hover:scale-105">
+            <a href="<%=request.getContextPath() %>/catalogo" class="bg-white text-red-600 border-2 border-green-600 hover:bg-green-600 hover:text-white font-bold py-3 px-8 rounded-full text-lg transition transform hover:scale-105">
                 Esplora il Catalogo
             </a>
         </div>
@@ -78,7 +78,7 @@
             </div>
             
             <div class="text-center mt-10">
-                <a href="/Italicious/catalogo" class="bg-white text-green-600 border-2 border-green-600 hover:bg-green-600 hover:text-white font-bold py-3 px-8 rounded-full text-lg transition transform hover:scale-105">
+                <a href="<%=request.getContextPath() %>/catalogo" class="bg-white text-green-600 border-2 border-green-600 hover:bg-green-600 hover:text-white font-bold py-3 px-8 rounded-full text-lg transition transform hover:scale-105">
                     Vedi Tutti i Prodotti
                 </a>
             </div>
