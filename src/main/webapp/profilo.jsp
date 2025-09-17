@@ -31,7 +31,7 @@
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <h1 class="title text-2xl font-bold mb-6">Il tuo profilo</h1>
                     
-                    <form method=POST action="<%=request.getContextPath() %>/profilo">
+                    <form id=formProfilo method=POST action="<%=request.getContextPath() %>/profilo">
                     <input type=Hidden value = "<%=session.getAttribute("userId")%>" name=id>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                             <div>
@@ -75,6 +75,55 @@
     </div>
     
     <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("formProfilo");
+
+        form.addEventListener("submit", function (e) {
+            let valid = true;
+            let messages = [];
+
+            // Nome obbligatorio
+            const nome = document.getElementById("nome").value.trim();
+            if (nome.length < 2) {
+                valid = false;
+                messages.push("Il nome deve contenere almeno 2 caratteri.");
+            }
+
+            // Email obbligatoria e valida
+            const mail = document.getElementById("mail").value.trim();
+            const mailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!mailRegex.test(mail)) {
+                valid = false;
+                messages.push("Inserisci un'email valida.");
+            }
+
+            // Telefono (opzionale ma numerico)
+            const telefono = document.getElementById("telefono").value.trim();
+            if (telefono !== "" && !/^\d{7,15}$/.test(telefono)) {
+                valid = false;
+                messages.push("Il numero di telefono deve contenere solo cifre (7-15 cifre).");
+            }
+
+            // Partita IVA o Codice Fiscale (opzionale ma valido)
+            const fatturazione = document.getElementById("fatturazione").value.trim();
+            if (fatturazione !== "") {
+                const cfRegex = /^[A-Z0-9]{16}$/i; // Codice fiscale
+                const pivaRegex = /^\d{11}$/; // Partita IVA
+                if (!cfRegex.test(fatturazione) && !pivaRegex.test(fatturazione)) {
+                    valid = false;
+                    messages.push("Inserisci un codice fiscale (16 caratteri) o una partita IVA (11 cifre) valida.");
+                }
+            }
+
+            // Mostra errori se presenti
+            if (!valid) {
+                e.preventDefault();
+                alert(messages.join("\n"));
+            }
+        });
+    });
+
+
         // Feather icons replacement
         document.addEventListener('DOMContentLoaded', function() {
             feather.replace();

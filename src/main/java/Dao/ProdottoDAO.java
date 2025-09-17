@@ -223,6 +223,7 @@ public class ProdottoDAO {
             SELECT p.*, COALESCE(AVG(f.punteggio), 0) AS media
             FROM Prodotto p
             LEFT JOIN Feedback f ON p.id = f.id_prodotto
+            WHERE p.disponibilita > 0
             GROUP BY p.id
             ORDER BY media DESC
             LIMIT 3
@@ -304,8 +305,8 @@ public class ProdottoDAO {
     }
     
     public void deleteProdotto(int id) {
-        String query = "DELETE FROM Prodotto WHERE id = ?";
-       
+        String query = "UPDATE Prodotto SET disponibilita = 0 WHERE id = ?";
+
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -315,6 +316,7 @@ public class ProdottoDAO {
             e.printStackTrace();
         }
     }
+
     //DA SPOSTARE IN ORDINI.JAVA
     public boolean haAcquistatoProdotto(int idUtente, int idProdotto) throws SQLException {
         String sql = """

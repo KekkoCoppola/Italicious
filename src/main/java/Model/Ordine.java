@@ -17,8 +17,9 @@ public class Ordine {
 
     public enum StatoOrdine {
         IN_ELABORAZIONE("in elaborazione"),
-        IN_TRANSITO("in transito"),
-        CONSEGNATO("consegnato");
+        SPEDITO("spedito"),
+        CONSEGNATO("consegnato"),
+    	ANNULLATO("annullato");
 
         private final String value;
         StatoOrdine(String v){ this.value = v; }

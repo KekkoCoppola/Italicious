@@ -16,6 +16,18 @@
 	    <location>/error500.html</location>
 	</error-page>
 	
+
+							    <!-- GESTIONE ORDINI -->
+	<servlet>
+		<servlet-name>OrdiniAdminServlet</servlet-name>
+		<servlet-class>controller.OrdiniAdminServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>OrdiniAdminServlet</servlet-name>
+		<url-pattern>/gestione_ordini</url-pattern>
+	</servlet-mapping>
+	
 	
 						    <!-- LISTA PREFERITI -->
 	<servlet>

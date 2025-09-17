@@ -44,6 +44,18 @@
                         <a href="<%=request.getContextPath() %>/lista_preferiti" class="sidebar-item block px-6 py-3 text-sm font-medium <%= current.equals("lista_preferiti") ? "active" : ""%>">
                             <i class="fas fa-heart mr-2"></i> Lista preferiti
                         </a>
+                        <%
+                        	if(session.getAttribute("role").equals("admin")){
+                        %>
+                        <a href="<%=request.getContextPath() %>/admin" class="sidebar-item block px-6 py-3 text-sm font-medium <%= current.equals("admin") ? "active" : ""%>">
+                            <i class="fas fa-wine-bottle mr-2"></i> Gestione Prodotti
+                        </a>
+                        <a href="<%=request.getContextPath() %>/gestione_ordini" class="sidebar-item block px-6 py-3 text-sm font-medium <%= current.equals("gestione_ordini") ? "active" : ""%>">
+                            <i class="fas fa-boxes-stacked mr-2"></i> Gestione Ordini
+                        </a>
+                        <%
+                        	}
+                        %>
                     </nav>
                 </div>
             </div>

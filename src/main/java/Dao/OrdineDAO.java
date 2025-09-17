@@ -117,6 +117,53 @@ public class OrdineDAO {
         }
         return o;
     }
+    public static List<Ordine> findAllWithRighe() throws SQLException {
+        Connection conn = DBConnection.getConnection();
+        final String qOrd = """
+            SELECT id, data_ordine, corriere, codice_tracking, stato, id_utente
+            FROM ordine
+        """;
+        final String qRig = """
+            SELECT prezzo, iva, quantita, id_ordine, id_prodotto
+            FROM ordine_prodotto
+            WHERE id_ordine = ?
+        """;
+
+        List<Ordine> ordini = new ArrayList<>();
+
+        try (PreparedStatement psOrd = conn.prepareStatement(qOrd);
+             ResultSet rsOrd = psOrd.executeQuery()) {
+
+            while (rsOrd.next()) {
+                Ordine o = new Ordine();
+                o.setId(rsOrd.getInt("id"));
+                o.setDataOrdine(rsOrd.getDate("data_ordine").toLocalDate());
+                o.setCorriere(rsOrd.getString("corriere"));
+                o.setCodiceTracking(rsOrd.getString("codice_tracking"));
+                o.setStato(StatoOrdine.fromValue(rsOrd.getString("stato")));
+                o.setIdUtente(rsOrd.getInt("id_utente"));
+
+                // carico le righe dell'ordine
+                try (PreparedStatement psRig = conn.prepareStatement(qRig)) {
+                    psRig.setInt(1, o.getId());
+                    try (ResultSet rsRig = psRig.executeQuery()) {
+                        while (rsRig.next()) {
+                            OrdineProdotto r = new OrdineProdotto();
+                            r.setPrezzo(rsRig.getBigDecimal("prezzo"));
+                            r.setIva(rsRig.getBigDecimal("iva"));
+                            r.setQuantita(rsRig.getInt("quantita"));
+                            r.setIdOrdine(rsRig.getInt("id_ordine"));
+                            r.setIdProdotto(rsRig.getInt("id_prodotto"));
+                            o.addRiga(r);
+                        }
+                    }
+                }
+                ordini.add(o);
+            }
+        }
+        return ordini;
+    }
+
 
     public List<Ordine> findByUserWithRighe(int idUtente) throws SQLException {
         Connection conn = DBConnection.getConnection();
@@ -230,7 +277,7 @@ public class OrdineDAO {
     }
 
     /** Aggiorna solo lo stato dell'ordine. */
-    public void updateSoloStato(int idOrdine, StatoOrdine stato) throws SQLException {
+    public static void updateSoloStato(int idOrdine, StatoOrdine stato) throws SQLException {
     	Connection conn = DBConnection.getConnection();
         final String sql = "UPDATE ordine SET stato=? WHERE id=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
