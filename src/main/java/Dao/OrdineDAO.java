@@ -11,9 +11,7 @@ import java.util.List;
 
 public class OrdineDAO {
 	
-    /* ==========================
-       CREATE
-       ========================== */
+    /* DAO PER ORDINE */
     public int insertOrdineConRighe(Ordine ordine) throws SQLException {
         final String sqlOrdine = """
             INSERT INTO ordine (data_ordine, corriere, codice_tracking, stato, id_utente)
@@ -69,9 +67,7 @@ public class OrdineDAO {
         }
     }
 
-    /* ==========================
-       READ
-       ========================== */
+    /* RITORNA L'ORDINE CON LE RIGHE DAL SUO ID */
     public static Ordine findByIdWithRighe(int idOrdine) throws SQLException {
     	Connection conn = DBConnection.getConnection();
         final String qOrd = """
@@ -117,6 +113,7 @@ public class OrdineDAO {
         }
         return o;
     }
+    /* RITORNA TUTTI GLI ORDINI CON LE RIGHE*/
     public static List<Ordine> findAllWithRighe() throws SQLException {
         Connection conn = DBConnection.getConnection();
         final String qOrd = """
@@ -164,7 +161,7 @@ public class OrdineDAO {
         return ordini;
     }
 
-
+    /* RITORNA L'ORDINE CON LE RIGHE DAL ID UTENTE */
     public List<Ordine> findByUserWithRighe(int idUtente) throws SQLException {
         Connection conn = DBConnection.getConnection();
         final String qOrd = """
@@ -217,9 +214,6 @@ public class OrdineDAO {
     }
 
 
-    /* ==========================
-       UPDATE
-       ========================== */
 
     /** Aggiorna i campi di ordine e SOSTITUISCE le righe. */
     public void updateOrdineConRighe(Ordine ordine) throws SQLException {
@@ -287,10 +281,7 @@ public class OrdineDAO {
         }
     }
 
-    /* ==========================
-       DELETE
-       ========================== */
-
+    /* CANCELLA L'ORDINE */
     public void deleteOrdine(int idOrdine) throws SQLException {
     	Connection conn = DBConnection.getConnection();
         // Se hai FK ON DELETE CASCADE su ordine_prodotto, basta cancellare ordine.
@@ -301,9 +292,8 @@ public class OrdineDAO {
         }
     }
 
-    /* ==========================
-       RIGHE singole (utility)
-       ========================== */
+    /*
+       RIGHE singole (utility) */
     public void addRiga(OrdineProdotto riga) throws SQLException {
     	Connection conn = DBConnection.getConnection();
         final String ins = """
@@ -329,6 +319,7 @@ public class OrdineDAO {
             ps.executeUpdate();
         }
     }
+    /* RITORNA TRUE SE IL PRODOTTO è TRA GLI ORDINI DELL'UTENTE */
     public static boolean haAcquistatoProdotto(int idUtente, int idProdotto) throws SQLException {
         String sql = "SELECT 1 " +
                      "FROM ordine o " +

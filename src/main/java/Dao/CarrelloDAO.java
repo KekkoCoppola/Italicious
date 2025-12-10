@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * DAO per gestire il carrello persistente nel database.
- * Opera sulla tabella 'Carrello' con colonne: id_utente, id_prodotto, quantita.
+ * tabella 'Carrello' con colonne: id_utente, id_prodotto, quantita.
  */
 public class CarrelloDAO {
 
@@ -39,7 +39,9 @@ public class CarrelloDAO {
             e.printStackTrace();
         }
     }
-    
+    /**
+     * Aggiorna il carrello e fa il merge tra carrello guest e utente.
+     */
     public static void aggiornaMerge(int idUtente, int idProdotto, int quantita) {
         String sql = """
             INSERT INTO Carrello (id_utente, id_prodotto, quantita)
@@ -133,7 +135,9 @@ public class CarrelloDAO {
             aggiungiOaggiornaElemento(idUtente, e.getIdProdotto(), e.getQuantita());
         }
     }
-    
+    /**
+     * trova il carrello di un utente.
+     */
     public static List<ElementoCarrello> findByUserId(int userId) {
         String sql = "SELECT id_prodotto, quantita FROM carrello WHERE id_utente = ?";
         List<ElementoCarrello> out = new ArrayList<>();

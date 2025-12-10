@@ -27,7 +27,7 @@ import jakarta.servlet.http.*;
 
 public class FattureServlet extends HttpServlet {
 
-    // --- formattatori base (it-IT) ---
+    // --- formattatori per le date e l'euro (it-IT) ---
     private static final DateTimeFormatter DATE_IT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final DecimalFormat CURRENCY_IT;
     static {
@@ -44,7 +44,7 @@ public class FattureServlet extends HttpServlet {
              response.sendRedirect("login");
              return;
         }
-         String richiedente = request.getParameter("richiedente"); // CF o PIVA
+         String richiedente = request.getParameter("richiedente"); // CF o PARTITA IVA
          String ordineIdStr = request.getParameter("ordineId");
          if (ordineIdStr == null) {
              response.sendRedirect("ordini");
@@ -65,9 +65,8 @@ public class FattureServlet extends HttpServlet {
                  response.sendRedirect("ordini");
                  return;
              }
-             // TODO (opzionale per sicurezza): verifica che appartenga all'utente loggato
-             // int userId = (int) session.getAttribute("userId");
-             // if (!OrdineDAO.appartieneA(DBConnection.getConnection(), idOrdine, userId)) { ... }
+  
+         
 
          } catch (SQLException e) {
              e.printStackTrace();
@@ -88,10 +87,6 @@ public class FattureServlet extends HttpServlet {
             PdfWriter.getInstance(doc, out);
             doc.open();
 
-            // =========================
-            // 1) LOGO + TITOLO
-            // =========================
-            // Logo (opzionale): metti il tuo file in /WebContent/img/loghi/logo.png
             try {
                 Image logo = Image.getInstance(getServletContext().getRealPath("/img/loghi/logo.png"));
                 logo.scaleToFit(130, 80);
@@ -116,7 +111,7 @@ public class FattureServlet extends HttpServlet {
             info.setSpacingAfter(12f);
             info.setWidths(new float[]{1, 1});
 
-            // --- VENDITORE (la tua azienda) ---
+            // --- VENDITORE  ---
             PdfPTable venditore = new PdfPTable(1);
             venditore.setWidthPercentage(100);
 
@@ -134,13 +129,13 @@ public class FattureServlet extends HttpServlet {
             cliente.addCell(boxHeader("CLIENTE"));
             
             
-            // Qui metti i dati del ricevente: o li leggi dal DB, o li prendi dal form
-            cliente.addCell(boxRow("Denominazione", u.getNome()));                          // TODO: nome/ragione sociale del cliente
-            cliente.addCell(boxRow("Indirizzo", u.getIndirizzo()));         // TODO: indirizzo cliente
-            cliente.addCell(boxRow("CF / P.IVA", safeAscii(richiedente)));                    // ← qui uso il parametro richiedente
+            // DATI RICEVENTE
+            cliente.addCell(boxRow("Denominazione", u.getNome()));                          
+            cliente.addCell(boxRow("Indirizzo", u.getIndirizzo()));        
+            cliente.addCell(boxRow("CF / P.IVA", safeAscii(richiedente)));  
             cliente.addCell(boxRow("Email", u.getMail()));  
-            cliente.addCell(boxRow("Telefono", u.getTelefono()));  // TODO: email cliente (se ce l’hai)
-                      												// TODO: sdi/pec cliente (se B2B)
+            cliente.addCell(boxRow("Telefono", u.getTelefono()));  
+                      												
 
             // Inserisco le 2 colonne nella tabella “info”
             PdfPCell cVend = new PdfPCell(venditore);
@@ -153,7 +148,7 @@ public class FattureServlet extends HttpServlet {
             doc.add(info);
 
             // =========================
-            // 3) METADATI DOCUMENTO
+            // 3) DATI DOCUMENTO
             // =========================
             PdfPTable meta = new PdfPTable(3);
             meta.setWidthPercentage(100);
@@ -173,7 +168,7 @@ public class FattureServlet extends HttpServlet {
             table.setWidths(new float[]{4, 1.2f, 1.6f, 1.2f, 1.8f});
             table.setHeaderRows(1);
 
-            // Header con colore
+    
             table.addCell(th("Articolo"));
             table.addCell(th("Q.tà"));
             table.addCell(th("Prezzo"));
@@ -183,10 +178,8 @@ public class FattureServlet extends HttpServlet {
             boolean zebra = false;
             for (OrdineProdotto r : ordine.getRighe()) {
             	Prodotto p = ProdottoDAO.getProdottoById(r.getIdProdotto());
-                String nomeArticolo = p.getNome(); // TODO: recupera nome reale da ProdottoDAO
-                // Esempio:
-                // Prodotto p = ProdottoDAO.getProdottoById(r.getIdProdotto());
-                // if (p != null) nomeArticolo = p.getNome();
+                String nomeArticolo = p.getNome();
+             
 
                 table.addCell(td(nomeArticolo, zebra));
                 table.addCell(tdCenter(String.valueOf(r.getQuantita()), zebra));
@@ -199,7 +192,7 @@ public class FattureServlet extends HttpServlet {
             doc.add(table);
 
             // =========================
-            // 5) BOX TOTALI (a destra)
+            // 5) TOTALI IN EURO
             // =========================
             BigDecimal totImp = ordine.getTotaleImponibile();
             BigDecimal totIva = ordine.getTotaleIva();
@@ -219,7 +212,7 @@ public class FattureServlet extends HttpServlet {
 
             PdfPCell labTot = totalLabelStrong("TOTALE DOCUMENTO:");
             PdfPCell valTot = totalValueStrong("€ " + CURRENCY_IT.format(totDoc));
-            labTot.setBackgroundColor(new Color(245, 247, 250)); // celestino chiaro
+            labTot.setBackgroundColor(new Color(245, 247, 250)); 
             valTot.setBackgroundColor(new Color(245, 247, 250));
             totali.addCell(labTot);
             totali.addCell(valTot);
@@ -227,7 +220,7 @@ public class FattureServlet extends HttpServlet {
             doc.add(totali);
 
             // =========================
-            // 6) NOTE / FOOTER
+            // 6) FOOTER
             // =========================
             Paragraph note = new Paragraph(
                 "Note:\n" +
@@ -240,13 +233,13 @@ public class FattureServlet extends HttpServlet {
             FatturaDAO.saveOrUpdateFattura(idOrdine, richiedente, totDoc, totImp);
             doc.close();
         } catch (SQLException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 
     }
 
- // ====== CELLE “BOX” TITOLATE (Venditore/Cliente) ======
+ // ====== CELLE CLIENTE E VENDITORE ======
     private PdfPCell boxHeader(String title){
         PdfPCell c = new PdfPCell(new Phrase(title, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 11)));
         c.setBackgroundColor(new Color(240, 243, 247));
@@ -264,7 +257,7 @@ public class FattureServlet extends HttpServlet {
         return c;
     }
 
-    // ====== METADATI DOCUMENTO (3 colonne) ======
+    // ====== DATI DOCUMENTI ======
     private PdfPCell metaCell(String label, String value){
         Phrase ph = new Phrase();
         ph.add(new Chunk(label + "\n", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10)));
@@ -275,7 +268,6 @@ public class FattureServlet extends HttpServlet {
         return c;
     }
     private PdfPCell metaCell(String labelValue){
-        // overload, se vuoi passare un’unica stringa
         return metaCell("", labelValue);
     }
 
@@ -289,7 +281,7 @@ public class FattureServlet extends HttpServlet {
         return c;
     }
 
-    // ====== CELLE BODY (righe zebra) ======
+    // ====== CELLE ======
     private PdfPCell td(String text, boolean zebra){
         PdfPCell c = new PdfPCell(new Phrase(safeAscii(text), FontFactory.getFont(FontFactory.HELVETICA, 10)));
         if (zebra) c.setBackgroundColor(new Color(250, 250, 250));
@@ -308,7 +300,7 @@ public class FattureServlet extends HttpServlet {
         return c;
     }
 
-    // ====== BOX TOTALI ======
+    // ====== TOTALI ======
     private PdfPCell totalLabel(String text){
         PdfPCell c = new PdfPCell(new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, 11)));
         c.setBorderColor(new Color(220, 224, 229));

@@ -12,7 +12,7 @@ public class Carrello implements Serializable {
         prodotti = new ArrayList<>();
     }
 
-
+    /* AGGIUNGE UN PRODOTTO AL CARRELLO*/
     public void aggiungiProdotto(int idProdotto, int quantita) {
         for (ElementoCarrello e : prodotti) {
             if (e.getIdProdotto() == idProdotto) {
@@ -25,11 +25,7 @@ public class Carrello implements Serializable {
         prodotti.add(new ElementoCarrello(idProdotto, quantita));
     }
 
-    /**
-     * Rimuove completamente un prodotto dal carrello.
-     *
-     * @param idProdotto ID del prodotto da rimuovere
-     */
+    /* RIMUOVE UN PRODOTTO DAL CARRELLO */
     public void rimuoviProdotto(int idProdotto) {
         // Rimuove l'elemento con quell'id (se esiste)
         prodotti.removeIf(e -> e.getIdProdotto() == idProdotto);
@@ -38,9 +34,6 @@ public class Carrello implements Serializable {
     /**
      * Aggiorna la quantità di un prodotto nel carrello.
      * Se la quantità è zero o negativa, il prodotto viene rimosso.
-     *
-     * @param idProdotto     ID del prodotto da aggiornare
-     * @param nuovaQuantita  Nuova quantità da impostare
      */
     public void aggiornaQuantita(int idProdotto, int nuovaQuantita) {
         for (ElementoCarrello e : prodotti) {
@@ -66,8 +59,6 @@ public class Carrello implements Serializable {
 
     /**
      * Restituisce la lista di prodotti nel carrello.
-     *
-     * @return Lista di oggetti ElementoCarrello
      */
     public List<ElementoCarrello> getProdotti() {
         return prodotti;
@@ -77,8 +68,6 @@ public class Carrello implements Serializable {
     /**
      * Sostituisce l’intero contenuto del carrello.
      * Usato ad esempio quando si carica il carrello dal database dopo il login.
-     *
-     * @param listaProdotti Lista di prodotti da impostare
      */
     public void setProdotti(List<ElementoCarrello> listaProdotti) {
         this.prodotti = listaProdotti;

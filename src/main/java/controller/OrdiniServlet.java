@@ -13,9 +13,8 @@ import jakarta.servlet.http.HttpSession;
 public class OrdiniServlet extends HttpServlet{
 	@Override 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false); // Otteniamo la sessione esistente, se non c'è è null
+		HttpSession session = request.getSession(false); 
     	if (session == null || session.getAttribute("username")==null) {
-    	    // Se non c'è sessione o username, reindirizza al login
     	    response.sendRedirect("login");
     	    return;
     	}
@@ -26,9 +25,8 @@ public class OrdiniServlet extends HttpServlet{
 	}
 	@Override 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false); // Otteniamo la sessione esistente, se non c'è è null
+		HttpSession session = request.getSession(false); 
     	if (session == null || session.getAttribute("username")==null) {
-    	    // Se non c'è sessione o username, reindirizza al login
     	    response.sendRedirect("login");
     	    return;
     	}

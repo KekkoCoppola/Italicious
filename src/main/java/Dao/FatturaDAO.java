@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class FatturaDAO {
+    /* SALVA UNA NUOVA FATTURA O AGGIORNA SE GIA ESISTENTE*/
 	public static int saveOrUpdateFattura(int ordineId, String partitaIva,
             BigDecimal totale, BigDecimal totaleImponibile)
 throws SQLException {
@@ -29,7 +30,7 @@ throws SQLException {
 		// Recupera l'id della fattura
 		try (ResultSet rs = ps.getGeneratedKeys()) {
 		if (rs.next()) {
-		return rs.getInt(1); // se era un insert nuovo
+		return rs.getInt(1); 
 		}
 	}
 	

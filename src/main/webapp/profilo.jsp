@@ -137,7 +137,7 @@ if (notifica != null && colore!=null) {
     });
 
 
-        // Feather icons replacement
+        // replace delle icone feather
         document.addEventListener('DOMContentLoaded', function() {
             feather.replace();
         });

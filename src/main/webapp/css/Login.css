@@ -22,7 +22,7 @@ body {
 	margin: 0;
 	padding: 0;
 	background-color: rgb(255, 255, 255);
-	background-image: url('../img/background/loginbg.jpg');
+	background-image: url('../img/login.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -32,44 +32,56 @@ body {
 }
 
 .card {
-	--p: 32px;
-	--h-form: auto;
-	--w-form: 380px;
-	--input-px: 0.75rem;
-	--input-py: 0.65rem;
-	--submit-h: 38px;
-	--blind-w: 64px;
-	--space-y: 0.5rem;
-	width: var(--w-form);
-	height: var(--h-form);
-	max-width: 100%;
-	border-radius: 16px;
-	
-	/* Glass effect */
-	background: rgba(255, 255, 255, 0.15); /* trasparenza */
-	backdrop-filter: blur(12px);
-	-webkit-backdrop-filter: blur(12px);
-	border: 1px solid rgba(255, 255, 255, 0.25);
-	box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  /* Dimensioni fluide */
+  --p: clamp(16px, 2.5vw, 22px);
+  --w-form: clamp(280px, 92vw, 380px);
+  --h-form: auto;
+  --input-px: 0.75rem;
+  --input-py: 0.65rem;
+  --submit-h: 38px;
+  --blind-w: 64px;
+  --space-y: 0.5rem;
 
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+  width: min(100%, var(--w-form));
+  height: var(--h-form);
+  max-width: 100%;
+  max-height: min(90vh, 100dvh - 32px); /* evita overflow su mobile */
+  border-radius: 16px;
 
-	display: flex;
-	align-items: center;
-	justify-content: space-evenly;
-	flex-direction: column;
-	overflow-y: auto;
-	padding: var(--p);
-	scrollbar-width: none;
-	-webkit-overflow-scrolling: touch;
-	-webkit-font-smoothing: antialiased;
-	-webkit-user-select: none;
-	user-select: none;
-	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+  /* Glass effect */
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.25);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+
+  /* Centro su desktop */
+  position: fixed;
+  inset: 50% auto auto 50%; /* top/left 50% */
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+
+  padding: var(--p);
+  overflow: auto; /* scroll interno se serve */
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  user-select: none;
+  font-family: "Trebuchet MS","Lucida Sans Unicode","Lucida Grande","Lucida Sans",Arial,sans-serif;
+
+  overscroll-behavior: contain; /* niente bounce */
 }
+.card::-webkit-scrollbar { display: none; }
+
+/* Tablet: un filo più ampio/alto */
+
+/* Accessibilità: meno movimento se l’utente lo preferisce */
 
 
 .avatar {
@@ -237,7 +249,7 @@ body {
   background: transparent !important;
   color: inherit !important;
   border: 0 !important;
-  display: contents !important; /* lascia “passare” il bottone interno */
+  display: contents !important; 
 }
 
 .card label.blind_input:before {
@@ -456,11 +468,11 @@ body {
   .brand {
     display: flex;
     align-items: center;
-    justify-content: center;   /* o 'flex-start' se lo vuoi a sinistra */
+    justify-content: center;
     gap: 8px;
     margin-top: 12px;
   }
-  /* immagine del logo: sovrascrive eventuali regole generiche su .card img */
+
   .brand-logo {
     height: 48px;              /* regola l’altezza del logo */
     width: auto;

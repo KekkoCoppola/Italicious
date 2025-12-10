@@ -37,8 +37,10 @@
   <footer class="mt-auto">
     <jsp:include page="parziali/footer.jsp" />
   </footer>
-	<div id="notifica" class="nascosta"></div>
+	<div id="notifica" class="nascosta"></div> <!-- banner di solito nascosto, si attiva richiamndo la funzione di script -->
 </body>
+
+<!--  script -->
 <script>
 function mostraNotifica(testo, colore = "#333") {
 	  const notifica = document.getElementById("notifica");

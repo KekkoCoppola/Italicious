@@ -78,7 +78,7 @@ public class CarrelloServlet extends HttpServlet {
         session.setAttribute("carrello", carrello);
         response.sendRedirect("carrello");
     }
-
+  //AJAX
     private void gestisciAjax(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         Carrello carrello = (Carrello) session.getAttribute("carrello");
@@ -108,7 +108,7 @@ public class CarrelloServlet extends HttpServlet {
         }
         
 
-        int quantita = 1; // default
+        int quantita = 1; 
         try {
             quantita = json.get("quantita").getAsInt();
         } catch (Exception e) {

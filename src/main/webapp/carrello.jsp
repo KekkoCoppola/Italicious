@@ -72,7 +72,11 @@
                                 totale += subtotale;
                     %>
                     <tr class="border-b hover:bg-gray-50">
-                        <td class="py-4 px-6 font-semibold"><%= prodotto.getNome() %></td>
+                        <td class="py-4 px-6 font-semibold">
+                        <a href="<%=request.getContextPath()%>/schedaprodotto?id=<%= prodotto.getId() %>" 
+       						class="text-green-600 hover:underline"><%= prodotto.getNome() %>
+       						</a>
+       						</td>
                         <td class="py-4 px-6 text-center" id="prezzo-<%= idProdotto %>"><%= df.format(prezzoUnitario) %> &euro;</td>
                         <td class="py-4 px-6 text-center">
                             <div class="flex justify-center items-center gap-2">
@@ -143,6 +147,7 @@ function aggiornaQuantitaDinamica(idProdotto, variazione) {
 }
 
 function rimuovi(idProdotto, quantita) {
+	<!-- fetch  AJAX PER LA RIMOZIONE O AGGIUNTA AL CARRELLO-->
     fetch('carrello', {
         method: 'POST',
         headers: {
@@ -168,7 +173,7 @@ function rimuovi(idProdotto, quantita) {
     .catch(() => mostraNotifica("Errore nella richiesta", "red"));
 }
 
-
+<!-- fetch AJAX PER LA QUANTITA-->
 function aggiornaQuantita(idProdotto, nuovaQuantita) {
     fetch('carrello', {
         method: 'POST',

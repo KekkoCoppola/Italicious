@@ -7,7 +7,7 @@ import java.util.List;
 import Model.Prodotto;
 
 public class ProdottoDAO {
-
+	  /* RITORNA TUTTI I PRODOTTI */
     public List<Prodotto> getAllProdotti() {
         List<Prodotto> prodotti = new ArrayList<>();
       
@@ -37,6 +37,7 @@ public class ProdottoDAO {
 
         return prodotti;
     }
+    /* RITORNA LE CATEGORIE */
     public static List<String> getCategorie() {
         List<String> categorie = new ArrayList<>();
         String sql = "SHOW COLUMNS FROM prodotto LIKE 'categoria'";
@@ -60,7 +61,7 @@ public class ProdottoDAO {
         }
         return categorie;
     }
-    
+    /* RITORNA LE REGIONI */
     public static List<String> getRegioni() {
         List<String> regioni = new ArrayList<>();
         String sql = "SELECT nome FROM regione ORDER BY nome ASC";
@@ -78,7 +79,7 @@ public class ProdottoDAO {
     }
 
 
-    
+    /* RITORNA UNA LISTA DI PRODOTTI FILTRATI DALLA REGIONE PASSATA */
     public static List<Prodotto> getProdottiByRegione(String regione) {
         List<Prodotto> prodotti = new ArrayList<>();
 
@@ -87,7 +88,7 @@ public class ProdottoDAO {
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, regione); // Imposta il valore della regione nel placeholder
+            stmt.setString(1, regione); 
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -111,7 +112,7 @@ public class ProdottoDAO {
 
         return prodotti;
     }
-    
+    /* RITORNA UNA LISTA DI PRODOTTI FILTRATI DALLA CATEGORIA PASSATA */
     public List<Prodotto> getProdottiByCategoria(String categoria) {
         List<Prodotto> prodotti = new ArrayList<>();
 
@@ -120,7 +121,7 @@ public class ProdottoDAO {
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, categoria); // Imposta il valore della regione nel placeholder
+            stmt.setString(1, categoria); 
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -144,7 +145,7 @@ public class ProdottoDAO {
 
         return prodotti;
     }
-    
+    /* RITORNA UNA LISTA DI PRODOTTI FILTRATI DAL PARAMETRO DI RICERCA PASSATO (NOME NEL SEARCH)*/
     public static List<Prodotto> suggest(String q, String categoria, int limit) {
         List<Prodotto> out = new ArrayList<>();
         if (q == null || (q = q.trim()).length() < 1) return out;
@@ -197,7 +198,7 @@ public class ProdottoDAO {
     }
 
 
-    
+    /* AGGIUNGE UN PRODOTTO AL DB */
     public void addProdotto(Prodotto prodotto) {
         String query = "INSERT INTO Prodotto (nome, descrizione, prezzo, immagine, regione,categoria) VALUES (?, ?, ?, ?, ?,?)";
         try (Connection conn = DBConnection.getConnection();
@@ -215,7 +216,7 @@ public class ProdottoDAO {
         }
       
     }
-    
+    /* RITORNA UNA LISTA DI PRODOTTI TRA I TOP 3 CON MEDIA RECENSIONI PIU ALTA */
     public static List<Prodotto> getTop3ProdottiByFeedback() {
         List<Prodotto> topProdotti = new ArrayList<>();
 
@@ -255,7 +256,7 @@ public class ProdottoDAO {
     }
 
 
-    
+    /* RITORNA UN PRODOTTO DAL SUO ID*/
     public static Prodotto getProdottoById(int id) {
         Prodotto prodotto = null;
         String query = "SELECT * FROM Prodotto WHERE id = ?";
@@ -283,7 +284,7 @@ public class ProdottoDAO {
         }
         return prodotto;
     }
-    
+    /*AGGIORNA UN PRODOTTO */
     public static void updateProdotto(Prodotto prodotto) {
         String query = "UPDATE Prodotto SET nome = ?, descrizione = ?, prezzo = ?, iva = ?, disponibilita = ?, immagine = ?, regione = ? , categoria = ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -303,7 +304,7 @@ public class ProdottoDAO {
             e.printStackTrace();
         }
     }
-    
+    /* CANCELLA UN PRODOTTO (SETTA LA DISPONIBILITA A 0) */
     public void deleteProdotto(int id) {
         String query = "UPDATE Prodotto SET disponibilita = 0 WHERE id = ?";
 

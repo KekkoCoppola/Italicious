@@ -68,7 +68,7 @@
     </div>
     
     <script>
-        // Feather icons replacement
+        // replace delle icone feather
         document.addEventListener('DOMContentLoaded', function() {
             feather.replace();
         });

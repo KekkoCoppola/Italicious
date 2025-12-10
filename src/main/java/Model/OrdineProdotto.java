@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class OrdineProdotto {
-    private int idOrdine;     // FK -> ordine.id
-    private int idProdotto;   // FK -> prodotto.id
-    private BigDecimal prezzo; // DECIMAL(10,2) - prezzo unitario imponibile
-    private BigDecimal iva;    // DECIMAL(5,2)  - percentuale (es. 22.00)
+    private int idOrdine;     
+    private int idProdotto;   
+    private BigDecimal prezzo; 
+    private BigDecimal iva;  
     private int quantita;
 
     public OrdineProdotto() {}
@@ -19,20 +19,16 @@ public class OrdineProdotto {
         this.quantita = quantita;
     }
 
- // --- helpers calcolo riga (prezzi già ivati) ---
     public BigDecimal getTotaleRigaIvato() {
-        // prezzo unitario già ivato × quantità
         return prezzo.multiply(BigDecimal.valueOf(quantita));
     }
 
     public BigDecimal getImponibileRiga() {
-        // imponibile = totale / (1 + iva%)
         BigDecimal moltiplicatore = BigDecimal.ONE.add(iva.divide(BigDecimal.valueOf(100)));
         return getTotaleRigaIvato().divide(moltiplicatore, 2, RoundingMode.HALF_UP);
     }
 
     public BigDecimal getIvaRiga() {
-        // iva = totale - imponibile
         return getTotaleRigaIvato().subtract(getImponibileRiga());
     }
 

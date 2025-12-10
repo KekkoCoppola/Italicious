@@ -69,7 +69,7 @@
 				  <button type="submit" name="cat" value="dolci"   class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition <%= "dolci".equals(cat) ? "bg-red-600 text-white" : "" %>">Dolci</button>
 				  <button type="submit" name="cat" value="oli"     class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition <%= "oli".equals(cat) ? "bg-red-600 text-white" : "" %>">Oli e Aceti</button>
 					<button type="button" 
-				          class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition <%= "formaggi".equals(cat) ? "bg-red-600 text-white" : "" %>" onclick=toggleCartina()>
+				          class="region-filter px-4 py-2 rounded-full border border-gray-300 hover:bg-red-50 transition " onclick=toggleCartina()>
 				    Regione
 				  </button>
 				</form>
@@ -425,6 +425,7 @@
     </main>
 
     <script>
+    //AJAX
     document.addEventListener("DOMContentLoaded", () => {
         const forms = document.querySelectorAll(".aggiungiCarrello");
 
@@ -433,7 +434,7 @@
                 e.preventDefault();
                 const formData = new URLSearchParams(new FormData(form));
                 const dati = Object.fromEntries(formData.entries());
-
+            	<!-- fetch a /catalogo AJAX-->
                 fetch(form.action, {
                     method: "POST",
                     headers: {
@@ -517,6 +518,7 @@
 
       console.log('URL chiamato:', url);
       try {
+    	  //FETCH AJAX PER LA RICERCA
         const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
         if (!res.ok) { show([]); return; }
         const data = await res.json();
@@ -551,8 +553,8 @@
 		  let selected  = null;
 		  let currentRegione = null;
 
-		  // Rendi le regioni focalizzabili da tastiera
-		  //map.querySelectorAll('.region').forEach(p => p.setAttribute('tabindex', '0'));
+		  // Rende le regioni focalizzabili da tastiera
+		  
 
 		  function selectRegion(el) {
 		    if (selected) selected.classList.remove('selected');
@@ -592,7 +594,6 @@
         } else {
           el.classList.toggle('hidden');
         }
-        // opzionale: aggiorna aria-hidden
         el.setAttribute('aria-hidden', el.classList.contains('hidden') ? 'true' : 'false');
         // ritorna lo stato visibile
         return !el.classList.contains('hidden');

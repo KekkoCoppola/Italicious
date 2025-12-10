@@ -12,11 +12,12 @@ import java.io.IOException;
 import java.sql.*;
 
 import java.util.List;
-//@WebServlet("/login")
+
 public class LoginServlet extends HttpServlet {
 	
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+ 
         request.getRequestDispatcher("/Login.jsp").forward(request, response);
     }
 
@@ -30,23 +31,22 @@ public class LoginServlet extends HttpServlet {
 
         Connection conn = null;
         try {
-            conn = DBConnection.getConnection(); // Tua classe DBManager per la connessione al DB
+            conn = DBConnection.getConnection(); 
             UserService userService = new UserService();
 
             String role = userService.loginUser(email, password, conn);
 
             if (role != null) {
-                // Login riuscito, imposta la sessione
+                // Login riuscito
             	
             	
-                HttpSession session = request.getSession(); // Otteniamo la sessione corrente o ne creiamo una nuova
+                HttpSession session = request.getSession(); 
                 
                 Carrello guestCart = (Carrello) session.getAttribute("carrello");
 
                 // 2) somma il guest nel DB dell'utente (se c'è qualcosa)
                 if (guestCart != null && guestCart.getProdotti() != null) {
                     for (ElementoCarrello e : guestCart.getProdotti()) {
-                        // SOMMA: usa proprio il tuo metodo "aggiungiOaggiornaElemento"
                         CarrelloDAO.aggiungiOaggiornaElemento(UserService.getIdByMail(email, role), e.getIdProdotto(), e.getQuantita());
                     }
                 }
@@ -64,11 +64,11 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("role", role); // Salva il ruolo (user o admin)
                 session.setAttribute("userId", UserService.getIdByMail(email, role));
 
-                // Redirigi alla pagina corretta in base al ruolo
+                // Redirigi alla pagina catalogo
                 if ("admin".equals(role)) {
-                    response.sendRedirect("catalogo"); // Dashboard admin
+                    response.sendRedirect("catalogo");
                 } else {
-                    response.sendRedirect("catalogo"); // Dashboard utente
+                    response.sendRedirect("catalogo"); 
                 }
             } else {
                 // Credenziali errate

@@ -462,6 +462,22 @@
 					</div>
             		<%
             	}
+            	}else{
+            		%>
+            		<div id="review-card-<%=p.getId()%>" class="review-card bg-white rounded-xl shadow-md p-6 md:p-8">
+					  <div class="text-center space-y-3">
+					    <div class="flex justify-center">
+					      <i class="fa-solid fa-circle-info text-gray-400 text-3xl"></i>
+					    </div>
+					    <h2 class="text-lg md:text-xl font-semibold text-gray-700">
+					      Effettua L'accesso per recensire
+					    </h2>
+					    <p class="text-sm text-gray-500">
+					      devi effettuare l'accesso per recensire prodotto.
+					    </p>
+					  </div>
+					</div>
+            		<%
             	}
 			%>
         </div>
@@ -516,14 +532,14 @@
     </div>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-	
+	//FORM CHE FA RIFERIMENTO AL PULSANTE AGGIUNGI AL CARRELLO DELLA SCHEDA DETTAGLI
 	const formGrande = document.getElementById("aggiungiAlCarrelloGrande");
 	
 	formGrande.addEventListener("submit",function(e) {
 		e.preventDefault();
 	    const formData = new URLSearchParams(new FormData(formGrande));
 	    const dati = Object.fromEntries(formData.entries());
-		
+	//FETCH A /carrello
 		fetch(formGrande.action, {
 		    method: "POST",
 		    headers: {
@@ -544,7 +560,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		    mostraNotifica("Errore durante l'aggiunta al carrello ❌", "#dc2626");
 		});
 	});
-	
+	//FORM CHE FA RIFERIMENTO AGLI ARTICOLI "ALTRI ARTICOLI DELLA REGIONE X"
 	
 	const forms = document.querySelectorAll(".aggiungiCarrello");
 
@@ -579,7 +595,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 	
-//+ e -
+//TASTI + e -
 const qty = document.getElementById("qty");
   document.querySelectorAll("[data-step]").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -634,9 +650,10 @@ function initReviewCard(root){
         e.preventDefault();
         if (!validateForm()) return;
         const body = new URLSearchParams(new FormData(form));
+        //FETCH A /recensioni
         fetch(form.action, { method: 'POST', body })
           .then(r => r.ok ? r.json() : Promise.reject(r))
-          .then(_ => { form.reset(); /* mostra notifica qui */ })
+          .then(_ => { form.reset(); })
           .catch(console.error);
       }
     });

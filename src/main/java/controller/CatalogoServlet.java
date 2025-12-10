@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-//@WebServlet("/catalogo")
+
 public class CatalogoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -24,6 +24,8 @@ public class CatalogoServlet extends HttpServlet {
             request.getRequestDispatcher("/layout.jsp").forward(request, response);
             return;
     	}
+    	
+    	//AJAX
     	String suggest = request.getParameter("suggest");
     	if(suggest!=null && !suggest.isEmpty()) {
 	    	if ("1".equals(suggest)) {

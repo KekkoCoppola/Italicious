@@ -39,7 +39,7 @@ public class OrdiniAdminServlet extends HttpServlet{
     	try {
 			OrdineDAO.updateSoloStato(id, stato);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
     	request.setAttribute("paginaCorrente", "gestione_ordini");

@@ -10,11 +10,12 @@ import java.util.List;
 
 public class AdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession session = request.getSession(false); 
-    	if (session == null || "user".equals(session.getAttribute("role"))) {
-    	    response.sendRedirect("login");
+    	HttpSession session = request.getSession(false);
+    	if (session == null || !"admin".equals(session.getAttribute("role"))) {
+    	    response.sendRedirect(request.getContextPath() + "/login");
     	    return;
     	}
+
     	String action = request.getParameter("action");
         if (action == null || action.isEmpty()) {
             action = "view";  
@@ -51,11 +52,12 @@ public class AdminServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	HttpSession session = request.getSession(false); // Otteniamo la sessione esistente, se non c'è è null
-    	if (session == null || "user".equals(session.getAttribute("role"))) {
-    	    response.sendRedirect("login");
+    	HttpSession session = request.getSession(false);
+    	if (session == null || !"admin".equals(session.getAttribute("role"))) {
+    	    response.sendRedirect(request.getContextPath() + "/login");
     	    return;
     	}
+
         String action = request.getParameter("action");
 
         if ("add".equals(action)) {

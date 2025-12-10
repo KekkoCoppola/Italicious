@@ -16,9 +16,9 @@ import java.util.Set;
 
 public class AdminAuthFilter implements Filter {
 
-    private Set<String> protectedSet;   // esatte: /admin.jsp
-    private Set<String> prefixSet;      // cartelle: /admin/* (opzionale)
-    private String forbiddenPage;       // es: /403.jsp
+    private Set<String> protectedSet; 
+    private Set<String> prefixSet;     
+
 
     @Override
     public void init(FilterConfig cfg) {
@@ -32,9 +32,9 @@ public class AdminAuthFilter implements Filter {
                   .filter(s -> !s.isEmpty())
                   .forEach(s -> {
                       if (s.endsWith("/*")) {
-                          prefixSet.add(s.substring(0, s.length() - 1)); // tiene "/admin/"
+                          prefixSet.add(s.substring(0, s.length() - 1)); 
                       } else {
-                          protectedSet.add(s); // "/admin.jsp"
+                          protectedSet.add(s);
                       }
                   });
         }
@@ -48,9 +48,9 @@ public class AdminAuthFilter implements Filter {
         HttpServletRequest  req  = (HttpServletRequest) r;
         HttpServletResponse resp = (HttpServletResponse) p;
 
-        String ctx  = req.getContextPath();             // es: /italicious
-        String uri  = req.getRequestURI();              // es: /italicious/admin.jsp
-        String path = uri.substring(ctx.length());      // es: /admin.jsp
+        String ctx  = req.getContextPath();             
+        String uri  = req.getRequestURI();             
+        String path = uri.substring(ctx.length());     
 
         if (!isProtected(path)) {
             chain.doFilter(r, p);

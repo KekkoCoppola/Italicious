@@ -70,7 +70,7 @@ public class UserService {
 
         return updated;
     }
-    
+    // Cambia Password
     public static boolean changePassword(int idUtente,String password,String role) {
         boolean updated = false;
         String query = "UPDATE utente SET password = ? WHERE id = ?";
@@ -93,7 +93,7 @@ public class UserService {
 
         return updated;
     }
-    
+    // Ritorna l'username
     public String getUsername(String email,String password, Connection conn,String role) throws SQLException {
     	String query = "SELECT nome FROM utente WHERE mail = ?";
     	 if (role.equals("admin")) {
@@ -135,7 +135,7 @@ public class UserService {
     }
 
     // Registrazione amministratore
-    private boolean registerAdmin(String nome,String email, String password, Connection conn) throws SQLException {
+    public static boolean registerAdmin(String nome,String email, String password, Connection conn) throws SQLException {
         if (doesUserExist(email, conn, "utente") && doesUserExist(email, conn, "amministratore")) {
             return false; // Username già esistente
         }
@@ -160,7 +160,7 @@ public class UserService {
             return rs.next(); // Se l'utente esiste, torna true
         }
     }
-    
+    // controlla se l'username esiste gia nel db
     public static boolean usernameExistsAcrossTables(Connection conn, String username, int excludeId) throws SQLException {
         final String sql = """
             SELECT 1 FROM utente WHERE nome = ? AND id <> ?
@@ -178,7 +178,7 @@ public class UserService {
             }
         }
     }
-
+    // controlla se l'email esiste gia nel db
     public static boolean emailExistsAcrossTables(Connection conn, String email, int excludeId) throws SQLException {
         final String sql = """
             SELECT 1 FROM utente WHERE mail = ? AND id <> ?
@@ -197,7 +197,7 @@ public class UserService {
         }
     }
 
-    
+    // ritorna l'email dall'id (PK)
     public static int getIdByMail(String email, String role) {
     	String query = "SELECT id FROM utente WHERE mail = ?";
 		if (role.equals("admin")) {
@@ -216,7 +216,7 @@ public class UserService {
         }
 		return -1;
     }
-    
+    // Ritorna un utente dall'id
     public static Utente getUserById(int id,String role) {
     	Utente utente = null;
     	String query = "SELECT id, nome, mail, password, indirizzo, telefono,fatturazione FROM utente WHERE id = ?";

@@ -155,13 +155,10 @@ if (notifica != null && colore!=null) {
 </div>
 
 </div>
-   
-
-
-  <!-- Registrazione -->
 
 </body>
 <script>
+//MOSTRA NASCONDI NELLA PASSWORD
 	var card = document.getElementById("card");
 	var passInput = document.getElementById("password");
 	var showbtn = document.getElementById("showbtn");
@@ -203,6 +200,7 @@ if (notifica != null && colore!=null) {
     
     });
   });
+  //NOTIFICA
   function mostraNotifica(testo, colore = "#333") {
 	  const notifica = document.getElementById("notifica");
 	  notifica.style.backgroundColor = colore;

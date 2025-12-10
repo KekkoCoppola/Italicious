@@ -177,9 +177,6 @@ function scaricaFattura(orderId) {
   }
 
 //MODALE IVA
- // Apri il modale
-
-
  // Chiudi il modale
  cancelBtn.addEventListener('click', () => {
    modal.classList.add('hidden');
@@ -198,7 +195,7 @@ function scaricaFattura(orderId) {
    }
  });
 
- // Conferma → qui puoi gestire lato server il valore
+ // Conferma 
  confirmBtn.addEventListener('click', () => {
    modal.classList.add('hidden');
 

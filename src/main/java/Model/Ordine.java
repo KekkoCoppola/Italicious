@@ -37,30 +37,26 @@ public class Ordine {
         this.stato = StatoOrdine.IN_ELABORAZIONE;
     }
 
-    // --- helpers righe ---
+    // --- utility righe ---
     public void addRiga(OrdineProdotto r){ righe.add(r); }
     public List<OrdineProdotto> getRighe(){ return righe; }
 
     public BigDecimal getTotaleIvato() {
-        // Prezzi già ivati → somma dei totali riga
         return righe.stream()
             .map(OrdineProdotto::getTotaleRigaIvato)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal getTotaleImponibile() {
-        // Somma degli imponibili scorporati da ciascuna riga
         return righe.stream()
             .map(OrdineProdotto::getImponibileRiga)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal getTotaleIva() {
-        // Differenza tra totale ivato e imponibile
         return getTotaleIvato().subtract(getTotaleImponibile());
     }
 
-    // --- getters/setters base ---
     public int getId(){ return id; }
     public void setId(int id){ this.id = id; }
     public LocalDate getDataOrdine(){ return dataOrdine; }

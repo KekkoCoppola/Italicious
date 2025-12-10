@@ -9,6 +9,7 @@ import java.util.List;
 import Model.Recensione;
 
 public class RecensioneDAO {
+    /* AGGIUNGE UNA RECENSIONE */
 	public static int addRecensione(Recensione r) throws SQLException {
         if (r == null) throw new IllegalArgumentException("Recensione nulla");
         if (r.getPunteggio() < 1 || r.getPunteggio() > 5)
@@ -45,6 +46,7 @@ public class RecensioneDAO {
         }
         throw new SQLException("Impossibile ottenere id_feedback");
     }
+    /* AGGIORNA UNA RECENSIONE DAL SUO ID */
 	public boolean updateRecensioneById(int idFeedback, int punteggio, String descrizione) {
         String sql = "UPDATE feedback " +
                      "SET punteggio = ?, descrizione = ?, data_feedback = CURRENT_TIMESTAMP " +
@@ -68,6 +70,7 @@ public class RecensioneDAO {
             return false;
         }
     }
+    /* CANCELLA UNA RECENSIONE DAL SUO ID*/
     public boolean deleteRecensioneById(int idFeedback) {
         String sql = "DELETE FROM feedback WHERE id_feedback = ?";
 
@@ -82,7 +85,7 @@ public class RecensioneDAO {
             return false;
         }
     }
-    
+    /* RITORNA UNA LISTA DI RECENSIONI DI UN PRODOTTO */
     public static List<Recensione> getRecensioniByProdotto(int idProdotto) {
         List<Recensione> lista = new ArrayList<>();
 
@@ -111,7 +114,7 @@ public class RecensioneDAO {
         }
         return lista;
     }
-
+    /* RITORNA UNA LISTA DI RECENSIONI FATTE DALL UTENTE */
     public static List<Recensione> getRecensioniByUtente(int idUtente) {
         List<Recensione> lista = new ArrayList<>();
 
@@ -140,7 +143,7 @@ public class RecensioneDAO {
         }
         return lista;
     }
-    
+    /* CONTA LE RECENSIONI PRESENTI SU UN PRODOTTO */
     public static int countRecensioniByProdotto(int idProdotto) {
     	int count=0;
         String sql = "SELECT COUNT(*) AS c FROM feedback WHERE id_prodotto = ?";
@@ -160,7 +163,7 @@ public class RecensioneDAO {
         }
         return count;
     }
-    
+    /* RITORNA LA MEDIA DEI PUNTEGGI DI UN PRODOTTO */
     public static double getMediaByProdotto(int idProdotto) {
         double media = 0.0;
         String sql = "SELECT ROUND(AVG(punteggio), 1) AS media " +
@@ -181,7 +184,7 @@ public class RecensioneDAO {
         }
         return media;
     }
-    
+    /* RITORNA L'AUTORE DELLA RECENSIONE*/
     public static String getAutore(int idUtente) {
     	String username = null;
         String sql = "SELECT nome FROM utente WHERE id = ?";
@@ -200,7 +203,7 @@ public class RecensioneDAO {
         }
         return username; // null se non trovato
     }
-    
+    /* RITORNA TRUE SE UN UTENTE HA GIA RECENSITO UN PRODOTTO */
     public static boolean haGiaRecensito(int idUtente, int idProdotto) {
         String sql = "SELECT 1 FROM feedback WHERE id_utente = ? AND id_prodotto = ? LIMIT 1";
 
