@@ -167,16 +167,22 @@ Le menti dietro Italicious. Studenti di Informatica presso l'Università degli S
       <a href="https://github.com/KekkoCoppola" title="GitHub">💻 GitHub</a>
     </td>
         <td align="center">
-      <!-- Sostituisci con l'username GitHub del secondo membro -->
-      <img src="https://github.com/ghost.png" width="100px;" alt="" style="border-radius: 50%;"/><br />
-      <sub><b>Membro del Team</b></sub><br />
-      <a href="#" title="GitHub">💻 GitHub</a>
+      <!-- o -->
+      <img src="https://github.com/rosx3.png" width="100px;" alt="" style="border-radius: 50%;"/><br />
+      <sub><b>Rosaria Cervino</b></sub><br />
+      <a href="https://github.com/rosx3" title="GitHub">💻 GitHub</a>
     </td>
         <td align="center">
-      <!-- Sostituisci con l'username GitHub del terzo membro -->
-      <img src="https://github.com/ghost.png" width="100px;" alt="" style="border-radius: 50%;"/><br />
-      <sub><b>Membro del Team</b></sub><br />
-      <a href="#" title="GitHub">💻 GitHub</a>
+      <!--  -->
+      <img src="https://github.com/elesshhhh.png" width="100px;" alt="" style="border-radius: 50%;"/><br />
+      <sub><b>Elena Carlomagno</b></sub><br />
+      <a href="https://github.com/elesshhhh" title="GitHub">💻 GitHub</a>
+    </td>
+            <td align="center">
+      <!-- -->
+      <img src="https://github.com/VincenzoGN.png" width="100px;" alt="" style="border-radius: 50%;"/><br />
+      <sub><b>Vincenzo Nappi</b></sub><br />
+      <a href="https://github.com/VincenzoGN" title="GitHub">💻 GitHub</a>
     </td>
   </tr>
 </table>
