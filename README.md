@@ -1,4 +1,26 @@
-Italicious
+
+# Italicious
+
+<div align="center">
+  <img src="src/main/webapp/img/loghi/logo.png" alt="Italicious Logo" width="400" />
+  
+  <h3>Il gusto dell'italia a portata di click.</h3>
+  
+  <p align="center">
+    <a href="#-descrizione">Descrizione</a> •
+    <a href="#-come-funziona">Come Funziona</a> •
+    <a href="#-installazione">Installazione</a> •
+    <a href="#-struttura">Struttura</a> •
+    <a href="#-risultati">Risultati</a> •
+    <a href="#-limiti">Limiti</a>
+  </p>
+</div>
+
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-App-red)
+![ML](https://img.shields.io/badge/ML-Logistic%20Regression-green)
+
+---
 
 E-commerce di prodotti tipici italiani, navigabili per Regione (homepage con mappa interattiva) e catalogo con filtri/ricerca.
 Stack: Java (JSP/Servlets), Tomcat, JDBC, MySQL, HTML/CSS/JS.
