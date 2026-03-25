@@ -4,7 +4,7 @@
   <h3>Il vero gusto dell'Italia, a portata di click 🍷🍕🍝</h3>
     <p>
     <a href="[https://tecnodeposit.it/](https://kekkocoppola.github.io/Italicious/)">
-      <img src="https://img.shields.io/badge/LIVE_DEMO-TECNODEPOSIT.IT-2ea44f?style=for-the-badge&logo=googlechrome&logoColor=white&labelColor=1a1a1a" alt="Live Demo" />
+      <img src="https://img.shields.io/badge/LIVE_DEMO-ITALICIOUS.IT-2ea44f?style=for-the-badge&logo=googlechrome&logoColor=white&labelColor=1a1a1a" alt="Live Demo" />
     </a>
   </p>
   <p>
