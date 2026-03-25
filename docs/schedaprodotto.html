@@ -58,12 +58,21 @@
                     </button>
                 </div>
             </div>
-            <div class="md:hidden hidden py-4" id="mobile-menu">
-                <a href="index.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Home</a>
-                <a href="chi_siamo.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Chi Siamo</a>
-                <a href="catalogo.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Catalogo</a>
-                <a href="login.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Accedi</a>
-            </div>
+            <!-- Menu mobile (Refined Overlay) -->
+        <div class="md:hidden hidden py-4 absolute top-full left-0 w-full bg-white shadow-2xl rounded-b-xl border-t border-gray-100 z-[1001]" id="mobile-menu">
+            <a href="index.html" class="block py-3 px-6 text-gray-800 hover:bg-green-50 hover:text-green-600 font-medium transition flex items-center">
+                <i class="fas fa-home mr-3 w-5"></i> Home
+            </a>
+            <a href="chi_siamo.html" class="block py-3 px-6 text-gray-800 hover:bg-green-50 hover:text-green-600 font-medium transition flex items-center">
+                <i class="fas fa-info-circle mr-3 w-5"></i> Chi Siamo
+            </a>
+            <a href="catalogo.html" class="block py-3 px-6 text-gray-800 hover:bg-green-50 hover:text-green-600 font-medium transition flex items-center">
+                <i class="fas fa-utensils mr-3 w-5"></i> Catalogo
+            </a>
+            <a href="login.html" class="block py-3 px-6 text-gray-800 hover:bg-green-50 hover:text-green-600 font-medium transition flex items-center">
+                <i class="fas fa-sign-in-alt mr-3 w-5"></i> Accedi
+            </a>
+        </div>
         </div>
     </nav>
 
@@ -404,8 +413,13 @@
     });
 
     document.addEventListener('click', function(e) {
+        // Chiudi menu profilo
         if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target)) {
             profileMenu.classList.remove('show');
+        }
+        // Chiudi menu mobile se clicco fuori
+        if (!mobileBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+            mobileMenu.classList.add('hidden');
         }
     });
 
