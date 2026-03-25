@@ -1,0 +1,7 @@
+# Template per la configurazione del database
+# Rinomina questo file in "config.properties" e inserisci le tue credenziali.
+# NOTA: Assicurati che config.properties sia ignorato da git in modo da non esporre le password.
+
+db.url=jdbc:mysql://localhost:3306/italiciousdb
+db.user=root
+db.password=latuapassword

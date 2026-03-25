@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italicious - Chi Siamo</title>
+    <link rel="icon" type="image/png" href="img/loghi/logo_top.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/home.css">
+    <style>
+        .flag-stripe { height: 8px; }
+        .flag-stripe.green { background-color: #008C45; }
+        .flag-stripe.white { background-color: #F4F5F0; }
+        .flag-stripe.red { background-color: #CD212A; }
+        .profile-link { cursor: pointer; color: #2d3748; transition: color 0.3s ease; font-size: 1.25rem; }
+        .profile-link:hover { color: #38a169; }
+        .popup-menu { display: none; position: absolute; top: 100%; right: 0; background-color: white; border: 1px solid #ccc; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); min-width: 160px; z-index: 1000; }
+        .popup-menu.show { display: block; }
+        .popup-menu a { display: block; padding: 10px 15px; color: #2d3748; text-decoration: none; font-weight: 500; }
+        .popup-menu a:hover { background-color: #e6fffa; color: #38a169; }
+        #notifica { position: fixed; top: 20px; right: 20px; background-color: #333; color: #fff; padding: 12px 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: sans-serif; display: none; z-index: 9999; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans">
+
+    <nav class="backdrop-blur-md bg-white/30 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-1">
+                    <div class="flag-stripe green w-4 h-8 hidden rounded-l md:block"></div>
+                    <div class="flag-stripe white w-4 h-8 hidden md:block"></div>
+                    <div class="flag-stripe red w-4 h-8 rounded-r hidden md:block"></div>
+                    <a href="index.html" class="text-2xl font-bold text-gray-800 hover:text-green-700 transition">
+                        <img src="img/loghi/logo.png" alt="Italicious Logo" class="h-10 object-contain">
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-800 hover:text-green-600 font-medium transition">Home</a>
+                    <a href="chi_siamo.html" class="text-green-600 font-bold transition border-b-2 border-green-600 pb-1">Chi Siamo</a>
+                    <a href="catalogo.html" class="text-gray-800 hover:text-green-600 font-medium transition">Catalogo</a>
+                    <a href="login.html" class="text-gray-800 hover:text-green-600 font-medium transition">Accedi</a>
+                </div>
+                <div class="flex items-center space-x-6 relative">
+                    <a href="carrello.html" class="relative text-gray-800 hover:text-green-600 transition">
+                        <i class="fas fa-shopping-cart text-xl"></i> 
+                        <span id="carrelloBadge" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center" style="display:none;">0</span>
+                    </a>
+                    <a href="#" class="text-gray-800 hover:text-green-600 transition profile-link" id="profileBtn">
+                        <i class="fas fa-user text-xl"></i>
+                    </a>
+                    <div class="popup-menu" id="profileMenu">
+                        <a href="login.html"><i class="fa-solid fa-right-to-bracket"></i> Accedi</a>
+                    </div>
+                    <button class="md:hidden focus:outline-none" id="mobile-menu-button">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="md:hidden hidden py-4" id="mobile-menu">
+                <a href="index.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Home</a>
+                <a href="chi_siamo.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Chi Siamo</a>
+                <a href="catalogo.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Catalogo</a>
+                <a href="login.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Accedi</a>
+            </div>
+        </div>
+    </nav>
+
+<div class="container mx-auto px-4 py-16 flex-1 max-w-4xl text-center">
+    <h1 class="text-4xl md:text-5xl font-extrabold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-green-600 via-gray-700 to-red-600 title-font">
+        La Nostra Storia in Italicious
+    </h1>
+
+    <div class="bg-white p-8 md:p-12 rounded-2xl shadow-xl leading-relaxed text-gray-700 text-lg mb-12 border border-gray-100 relative overflow-hidden text-left">
+        <!-- Decoration SVG -->
+        <svg class="absolute top-0 right-0 -mr-8 -mt-8 text-gray-50 opacity-50 w-64 h-64" fill="currentColor" viewBox="0 0 100 100"><path d="M11 18c3 0 5-2 5-5s-2-5-5-5-5 2-5 5 2 5 5 5zm48 25c3 0 5-2 5-5s-2-5-5-5-5 2-5 5 2 5 5 5zm-43-7c1.5 0 3-1.5 3-3s-1.5-3-3-3-3 1.5-3 3 1.5 3 3 3zm63 31c1.5 0 3-1.5 3-3s-1.5-3-3-3-3 1.5-3 3 1.5 3 3 3z"></path></svg>
+        
+        <p class="mb-6 relative z-10">
+            <strong>Italicious</strong> nasce come un Progetto Universitario per il corso di <em>Tecnologie Software per il Web (TSW)</em> presso l'Università degli Studi di Salerno (UNISA). Il nostro obiettivo è semplice ma ambizioso: creare un portale e-commerce moderno e affidabile dedicato alla promozione e alla vendita delle eccellenze gastronomiche italiane.
+        </p>
+
+        <p class="mb-6 relative z-10">
+            Le tradizioni culinarie del nostro paese sono uniche al mondo. Da Nord a Sud, l'Italia offre una vastissima gamma di prodotti DOP e IGP che spaziano dai formaggi stagionati, ai salumi, fino agli oli extravergini d'oliva e alla pasta. 
+            Con Italicious, vogliamo avvicinare queste tradizioni alle persone, abbattendo le distanze e garantendo sempre la massima qualità e freschezza.
+        </p>
+
+        <p class="relative z-10">
+            Il progetto è stato sviluppato impiegando le moderne tecnologie web orientate all'architettura Java EE (JSP, Servlets, JDBC) e un frontend reattivo curato con Tailwind CSS, mirato ad un'eccellente esperienza utente.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-green-50 rounded-xl p-6 border border-green-100 shadow-sm transition transform hover:-translate-y-1">
+            <i class="fas fa-leaf text-4xl text-green-500 mb-4"></i>
+            <h3 class="text-xl font-bold mb-2 text-gray-800">Eccellenza</h3>
+            <p class="text-gray-600 text-sm">Selezioniamo solo i migliori prodotti locali certificati DOP, IGP e BIO provenienti da tutta Italia.</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 border border-gray-100 shadow-md transition transform hover:-translate-y-1">
+            <i class="fas fa-truck-fast text-4xl text-gray-500 mb-4"></i>
+            <h3 class="text-xl font-bold mb-2 text-gray-800">Rapidità</h3>
+            <p class="text-gray-600 text-sm">Spediamo i prodotti in sicurezza per mantenerne intatta la freschezza fino a casa tua.</p>
+        </div>
+        <div class="bg-red-50 rounded-xl p-6 border border-red-100 shadow-sm transition transform hover:-translate-y-1">
+            <i class="fas fa-heart text-4xl text-red-500 mb-4"></i>
+            <h3 class="text-xl font-bold mb-2 text-gray-800">Passione</h3>
+            <p class="text-gray-600 text-sm">Siamo guidati dall'amore per la tradizione culinaria del nostro fantastico territorio.</p>
+        </div>
+    </div>
+</div>
+
+<footer class="mt-auto bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-4 text-center">
+        <p class="text-gray-400 text-sm">&copy; 2025 Italicious. Mockup per Demo Statica su GitHub Pages.</p>
+    </div>
+</footer>
+
+<script>
+    const profileBtn = document.getElementById('profileBtn');
+    const profileMenu = document.getElementById('profileMenu');
+    const mobileBtn  = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    profileBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        profileMenu.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target)) {
+            profileMenu.classList.remove('show');
+        }
+    });
+
+    mobileBtn.addEventListener('click', function () {
+      mobileMenu.classList.toggle('hidden');
+    });
+</script>
+</body>
+</html>

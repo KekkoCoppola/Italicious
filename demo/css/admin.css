@@ -1,0 +1,230 @@
+@charset "UTF-8";
+/* ==== Stile generale ==== */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f9fafb;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    color: #16a34a;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 14px;
+    color: #444;
+}
+
+/* ==== Pulsanti ==== */
+button, a, input[type="submit"] {
+    display: inline-block;
+    padding: 10px 16px;
+    margin: 5px 0;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+button {
+    background-color: #16a34a;
+    color: white;
+    border: none;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: #15803d;
+}
+
+a {
+    color: #16a34a;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Link azioni tabella */
+a[href*="edit"] {
+    color: #16a34a;
+    font-weight: bold;
+}
+a[href*="edit"]:hover {
+    color: #15803d;
+}
+
+a[href*="delete"] {
+    color: #dc2626;
+    font-weight: bold;
+}
+a[href*="delete"]:hover {
+    color: #b91c1c;
+}
+
+/* ==== Tabella prodotti ==== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+    background-color: #16a34a;
+    color: white;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+tr:hover {
+    background-color: #f3f4f6;
+}
+
+/* ==== Form Modifica Prodotto ==== */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+form label {
+    display: block;
+    font-weight: 600;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    color: #333;
+}
+
+form select,
+form textarea {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+form input[type="text"],
+form input[type="number"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: #16a34a;
+    box-shadow: 0 0 0 2px rgba(22,163,74,0.2);
+}
+
+/* Pulsante submit */
+form button,
+form input[type="submit"] {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #16a34a;
+    color: white;
+    border: none;
+}
+
+form button:hover,
+form input[type="submit"]:hover {
+    background-color: #15803d;
+}
+
+/* ==== Logout ==== */
+a[href*="logout"] {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #dc2626;
+    color: white !important;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+a[href*="logout"]:hover {
+    background-color: #b91c1c;
+}
+
+/* ===================== */
+/* ==== RESPONSIVE  ==== */
+/* ===================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    th, td { padding: 10px 12px; }
+    form { max-width: 640px; }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    body { padding: 12px; }
+    h2 { font-size: 20px; }
+
+    /* Tabella: scroll orizzontale senza rompere layout */
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 8px;
+    }
+
+    /* Bottoni e link a tutta larghezza (comodi al touch) */
+    button,
+    a,
+    input[type="submit"] {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Form full width e padding più compatto */
+    form {
+        max-width: 100%;
+        padding: 16px;
+    }
+}
+
+/* Schermi molto piccoli */
+@media (max-width: 480px) {
+    h2 { font-size: 18px; }
+    th { font-size: 12px; }
+    td { font-size: 13px; }
+    form label { margin-top: 10px; }
+    form { padding: 14px; }
+}

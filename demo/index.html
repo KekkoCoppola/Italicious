@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="it" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <title>Italicious - Prodotti Tipici Italiani</title>
+  <link rel="icon" type="image/png" href="img/loghi/logo_top.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/home.css">
+  <style>
+    .flag-stripe { height: 8px; }
+    .flag-stripe.green { background-color: #008C45; }
+    .flag-stripe.white { background-color: #F4F5F0; }
+    .flag-stripe.red { background-color: #CD212A; }
+    .profile-link { cursor: pointer; color: #2d3748; transition: color 0.3s ease; font-size: 1.25rem; }
+    .profile-link:hover { color: #38a169; }
+    .popup-menu { display: none; position: absolute; top: 100%; right: 0; background-color: white; border: 1px solid #ccc; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); min-width: 160px; z-index: 1000; }
+    .popup-menu.show { display: block; }
+    .popup-menu a { display: block; padding: 10px 15px; color: #2d3748; text-decoration: none; font-weight: 500; }
+    .popup-menu a:hover { background-color: #e6fffa; color: #38a169; }
+    #notifica { position: fixed; top: 20px; right: 20px; background-color: #333; color: #fff; padding: 12px 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: sans-serif; display: none; z-index: 9999; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-gray-50 font-sans">
+  <nav class="backdrop-blur-md bg-white/30 shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+            <div class="flex items-center space-x-1">
+                <div class="flag-stripe green w-4 h-8 hidden rounded-l md:block"></div>
+                <div class="flag-stripe white w-4 h-8 hidden md:block"></div>
+                <div class="flag-stripe red w-4 h-8 rounded-r hidden md:block"></div>
+                <a href="index.html" class="text-2xl font-bold text-gray-800 hover:text-green-700 transition">
+                    <img src="img/loghi/logo.png" alt="Italicious Logo" class="h-10 object-contain">
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-gray-800 hover:text-green-600 font-medium transition">Home</a>
+                <a href="chi_siamo.html" class="text-gray-800 hover:text-green-600 font-medium transition">Chi Siamo</a>
+                <a href="catalogo.html" class="text-gray-800 hover:text-green-600 font-medium transition">Catalogo</a>
+                <a href="login.html" class="text-gray-800 hover:text-green-600 font-medium transition">Accedi</a>
+            </div>
+            <div class="flex items-center space-x-6 relative">
+                <a href="carrello.html" class="relative text-gray-800 hover:text-green-600 transition">
+                    <i class="fas fa-shopping-cart text-xl"></i> 
+                    <span id="carrelloBadge" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center" style="display:none;">0</span>
+                </a>
+                <a href="#" class="text-gray-800 hover:text-green-600 transition profile-link" id="profileBtn">
+                    <i class="fas fa-user text-xl"></i>
+                </a>
+                <div class="popup-menu" id="profileMenu">
+                    <a href="login.html"><i class="fa-solid fa-right-to-bracket"></i> Accedi</a>
+                </div>
+                <button class="md:hidden focus:outline-none" id="mobile-menu-button">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div class="md:hidden hidden py-4" id="mobile-menu">
+            <a href="index.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Home</a>
+            <a href="chi_siamo.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Chi Siamo</a>
+            <a href="catalogo.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Catalogo</a>
+            <a href="login.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Accedi</a>
+        </div>
+    </div>
+  </nav>
+
+  <main class="flex-1">
+    <!-- Hero Section -->
+    <section class="hero-section text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Scopri i Sapori d'Italia</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Autentici prodotti regionali direttamente dalla terra italiana alla tua tavola</p>
+            <a href="catalogo.html" class="bg-white text-red-600 border-2 border-green-600 hover:bg-green-600 hover:text-white font-bold py-3 px-8 rounded-full text-lg transition transform hover:scale-105">
+                Esplora il Catalogo
+            </a>
+        </div>
+    </section>
+
+    <!-- Prodotti in evidenza -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">I Nostri Prodotti in Evidenza</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Prodotto 1 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
+                    <img src="img/mozzarella_bufala.jpg" alt="Mozzarella di Bufala DOP" class="w-full h-48 object-cover cursor-pointer" onclick="window.location.href='schedaprodotto.html?id=1'">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold mb-2">Mozzarella di Bufala DOP</h3>
+                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Campania</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 min-h-[60px]">Fiore all'occhiello della gastronomia campana, dal gusto unico e inconfondibile.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold">&euro;24,90</span>
+                            <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition" onclick="mostraNotifica('Prodotto aggiunto al carrello ✅', '#16a34a')">
+                                <i class="fas fa-cart-plus mr-2"></i>Aggiungi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Prodotto 2 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
+                    <img src="img/tartufo_alba.jpg" alt="Tartufo Bianco d'Alba" class="w-full h-48 object-cover cursor-pointer" onclick="window.location.href='schedaprodotto.html?id=2'">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold mb-2">Tartufo Bianco d'Alba</h3>
+                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Piemonte</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 min-h-[60px]">L'oro bianco delle Langhe, profumo intenso per i tuoi piatti gourmet.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold">&euro;38,50</span>
+                            <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition" onclick="mostraNotifica('Prodotto aggiunto al carrello ✅', '#16a34a')">
+                                <i class="fas fa-cart-plus mr-2"></i>Aggiungi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Prodotto 3 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1">
+                    <img src="img/olio_extravergine_puglia.jpg" alt="Olio Extravergine d'Oliva Biologico" class="w-full h-48 object-cover cursor-pointer" onclick="window.location.href='schedaprodotto.html?id=3'">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold mb-2">Olio EVO Pugliese</h3>
+                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Puglia</span>
+                        </div>
+                        <p class="text-gray-600 mb-4 min-h-[60px]">Olio extravergine di altissima qualita', fruttato ed estratto a freddo.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold">&euro;18,00</span>
+                            <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full transition" onclick="mostraNotifica('Prodotto aggiunto al carrello ✅', '#16a34a')">
+                                <i class="fas fa-cart-plus mr-2"></i>Aggiungi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-10">
+                <a href="catalogo.html" class="bg-white text-green-600 border-2 border-green-600 hover:bg-green-600 hover:text-white font-bold py-3 px-8 rounded-full text-lg transition transform hover:scale-105">
+                    Vedi Tutti i Prodotti
+                </a>
+            </div>
+        </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <div class="flex items-center space-x-2 mb-4">
+                    <img src="img/loghi/logo.png" alt="Italicious Logo" class="h-10 object-contain">
+                </div>
+                <p class="text-gray-400">Portiamo i sapori autentici d'Italia direttamente a casa tua.</p>
+                <div class="flex space-x-4 mt-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold mb-4">Navigazione</h3>
+                <ul class="space-y-2">
+                    <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                    <li><a href="chi_siamo.html" class="text-gray-400 hover:text-white transition">Chi Siamo</a></li>
+                    <li><a href="catalogo.html" class="text-gray-400 hover:text-white transition">Catalogo</a></li>
+                    <li><a href="login.html" class="text-gray-400 hover:text-white transition">Accedi</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold mb-4">Contatti</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="flex items-center"><i class="fas fa-map-marker-alt mr-2"></i>Via Giovanni Paolo II, 132, 84084 Fisciano SA</li>
+                    <li class="flex items-center"><i class="fas fa-phone mr-2"></i> +39 06 1234567</li>
+                    <li class="flex items-center"><i class="fas fa-envelope mr-2"></i> info@italicious.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
+            <p>&copy; 2025 Italicious. Tutti i diritti riservati.</p>
+        </div>
+    </div>
+  </footer>
+
+  <div id="notifica" class="nascosta"></div>
+
+<script>
+    function mostraNotifica(testo, colore = "#333") {
+      const notifica = document.getElementById("notifica");
+      notifica.style.backgroundColor = colore;
+      notifica.innerText = testo;
+      notifica.style.display = "block";
+      setTimeout(() => {
+        notifica.style.display = "none";
+      }, 3000);
+    }
+
+    const profileBtn = document.getElementById('profileBtn');
+    const profileMenu = document.getElementById('profileMenu');
+    const mobileBtn  = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    profileBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        profileMenu.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target)) {
+            profileMenu.classList.remove('show');
+        }
+    });
+
+    mobileBtn.addEventListener('click', function () {
+      mobileMenu.classList.toggle('hidden');
+    });
+</script>
+</body>
+</html>

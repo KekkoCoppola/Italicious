@@ -1,0 +1,56 @@
+<html>
+     <body>
+           <script>
+                   function ControlloDati()
+                   {controllo=true;
+                    var Nome = document.getElementById("1");
+                    var Nickname = document.getElementById("2");
+                    var Codfis = document.getElementById("3");
+                    var Email = document.getElementById("4");
+                    var Password = document.getElementById("5");
+                    if(Nome.value.length ==0) 
+                       { alert("Il campo nome è vuoto!");
+                        stampa=window.open() ;
+                      stampa.document.write("<font color=red>Il campo nome è vuoto!</font color>"); 
+
+                      //stampa.close();  
+                      controllo=false; 
+                        }
+
+                    if(Nickname.value.length ==0) 
+                              {
+                               alert("Il campo nickname è vuoto!");
+                               controllo=false; 
+                               }
+
+                     if(Codfis.value.length ==0)
+                               { 
+                               alert("Il campo codice fiscale è vuoto!");
+                               controllo=false; 
+                               }
+                   
+                      if(Email.value.length ==0) 
+                                {
+                                alert("Il campo email è vuoto!");
+                                controllo=false; 
+                                }
+                      if(Password.value.length ==0) 
+                                {
+                                alert("Il campo password è vuoto!");
+                                controllo=false; 
+                                }
+
+if (controllo) alert("Dati inseriti correttamente.")
+                   }
+           </script>
+           <form>
+                 <h1>VALIDAZIONE DATI DI UN FORM LATO CLIENT</h1>
+                                        Nome: <input name="Nome" type="text" value="" size="40" maxlength="100" id="1"/><br>
+		        Nickname : <input name="Nickname" type="text" value="" size="40" maxlength="100" id="2"/><br>
+		        Codfis : <input name="Codfis" type="text" value="" size="16" maxlength="20" id="3"/><br>
+                                        Email : <input name="Email" type="text" value="" size="40" maxlength="100" id="4"/><br>
+		        Password : <input name="Password" type="password" id="5"/><br>
+		        <input type="button" onclick="ControlloDati()" value="conferma">
+         </form>
+    </body>
+</html>

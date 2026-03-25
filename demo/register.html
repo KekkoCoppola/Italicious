@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italicious - Registrati</title>
+    <link rel="icon" type="image/png" href="img/loghi/logo_top.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen font-sans py-12">
+
+<div class="container mx-auto px-4 max-w-lg w-full">
+    <div class="text-center mb-6">
+        <a href="index.html" class="inline-block">
+            <img src="img/loghi/logo.png" alt="Italicious Logo" class="h-16 object-contain mx-auto">
+        </a>
+        <h2 class="text-3xl font-extrabold text-gray-900 mt-4">Unisciti a noi!</h2>
+        <p class="mt-2 text-sm text-gray-600">
+            Oppure
+            <a href="login.html" class="font-medium text-green-600 hover:text-green-500 transition">
+                accedi al tuo account esistente
+            </a>
+        </p>
+    </div>
+
+    <div class="bg-white py-8 px-6 shadow-xl rounded-xl border border-gray-100 sm:px-10 relative overflow-hidden">
+        <!-- Decoration line -->
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-white to-green-500"></div>
+        
+        <form class="space-y-5" onsubmit="event.preventDefault(); window.location.href='index.html';">
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="nome" class="block text-sm font-medium text-gray-700">Nome</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <input id="nome" name="nome" type="text" autocomplete="given-name" required
+                            class="focus:ring-green-500 focus:border-green-500 block w-full px-4 py-3 sm:text-sm border-gray-300 rounded-lg border bg-gray-50 outline-none transition"
+                            placeholder="Mario">
+                    </div>
+                </div>
+                <div>
+                    <label for="cognome" class="block text-sm font-medium text-gray-700">Cognome</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <input id="cognome" name="cognome" type="text" autocomplete="family-name" required
+                            class="focus:ring-green-500 focus:border-green-500 block w-full px-4 py-3 sm:text-sm border-gray-300 rounded-lg border bg-gray-50 outline-none transition"
+                            placeholder="Rossi">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Indirizzo Email</label>
+                <div class="mt-1 relative rounded-md shadow-sm">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-envelope text-gray-400"></i>
+                    </div>
+                    <input id="email" name="email" type="email" autocomplete="email" required
+                        class="focus:ring-green-500 focus:border-green-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 rounded-lg border bg-gray-50 outline-none transition"
+                        placeholder="mario.rossi@email.com">
+                </div>
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <div class="mt-1 relative rounded-md shadow-sm">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-gray-400"></i>
+                    </div>
+                    <input id="password" name="password" type="password" required
+                        class="focus:ring-green-500 focus:border-green-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 rounded-lg border bg-gray-50 outline-none transition"
+                        placeholder="••••••••">
+                </div>
+            </div>
+
+            <div>
+                <label for="password_confirm" class="block text-sm font-medium text-gray-700">Conferma Password</label>
+                <div class="mt-1 relative rounded-md shadow-sm">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-gray-400"></i>
+                    </div>
+                    <input id="password_confirm" name="password_confirm" type="password" required
+                        class="focus:ring-green-500 focus:border-green-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 rounded-lg border bg-gray-50 outline-none transition"
+                        placeholder="••••••••">
+                </div>
+            </div>
+
+            <div class="flex items-start mt-4">
+                <div class="flex items-center h-5">
+                    <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded cursor-pointer mt-1">
+                </div>
+                <div class="ml-2 text-sm">
+                    <label for="terms" class="font-medium text-gray-700 cursor-pointer">Accetto i <a href="#" class="text-green-600 hover:text-green-500">Termini e Condizioni</a> e la <a href="#" class="text-green-600 hover:text-green-500">Privacy Policy</a>.</label>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit"
+                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-sm font-bold text-white bg-green-600 flex items-center justify-center transition transform hover:-translate-y-0.5 mt-2">
+                    <i class="fas fa-user-plus mr-2"></i> Crea Account
+                </button>
+            </div>
+            
+            <div class="mt-4 text-center text-xs text-gray-500 border-t border-gray-100 pt-4">
+                Pagina statica dimostrativa per GitHub Pages
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

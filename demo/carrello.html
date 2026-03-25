@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italicious - Il tuo Carrello</title>
+    <link rel="icon" type="image/png" href="img/loghi/logo_top.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/home.css">
+    <style>
+        .flag-stripe { height: 8px; }
+        .flag-stripe.green { background-color: #008C45; }
+        .flag-stripe.white { background-color: #F4F5F0; }
+        .flag-stripe.red { background-color: #CD212A; }
+        .profile-link { cursor: pointer; color: #2d3748; transition: color 0.3s ease; font-size: 1.25rem; }
+        .profile-link:hover { color: #38a169; }
+        .popup-menu { display: none; position: absolute; top: 100%; right: 0; background-color: white; border: 1px solid #ccc; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); min-width: 160px; z-index: 1000; }
+        .popup-menu.show { display: block; }
+        .popup-menu a { display: block; padding: 10px 15px; color: #2d3748; text-decoration: none; font-weight: 500; }
+        .popup-menu a:hover { background-color: #e6fffa; color: #38a169; }
+        #notifica { position: fixed; top: 20px; right: 20px; background-color: #333; color: #fff; padding: 12px 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: sans-serif; display: none; z-index: 9999; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans">
+
+    <nav class="backdrop-blur-md bg-white/30 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-1">
+                    <div class="flag-stripe green w-4 h-8 hidden rounded-l md:block"></div>
+                    <div class="flag-stripe white w-4 h-8 hidden md:block"></div>
+                    <div class="flag-stripe red w-4 h-8 rounded-r hidden md:block"></div>
+                    <a href="index.html" class="text-2xl font-bold text-gray-800 hover:text-green-700 transition">
+                        <img src="img/loghi/logo.png" alt="Italicious Logo" class="h-10 object-contain">
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-800 hover:text-green-600 font-medium transition">Home</a>
+                    <a href="chi_siamo.html" class="text-gray-800 hover:text-green-600 font-medium transition">Chi Siamo</a>
+                    <a href="catalogo.html" class="text-gray-800 hover:text-green-600 font-medium transition">Catalogo</a>
+                    <a href="login.html" class="text-gray-800 hover:text-green-600 font-medium transition">Accedi</a>
+                </div>
+                <div class="flex items-center space-x-6 relative">
+                    <a href="carrello.html" class="relative text-green-600 font-bold transition">
+                        <i class="fas fa-shopping-cart text-xl"></i> 
+                        <span id="carrelloBadge" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">2</span>
+                    </a>
+                    <a href="#" class="text-gray-800 hover:text-green-600 transition profile-link" id="profileBtn">
+                        <i class="fas fa-user text-xl"></i>
+                    </a>
+                    <div class="popup-menu" id="profileMenu">
+                        <a href="login.html"><i class="fa-solid fa-right-to-bracket"></i> Accedi</a>
+                    </div>
+                    <button class="md:hidden focus:outline-none" id="mobile-menu-button">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="md:hidden hidden py-4" id="mobile-menu">
+                <a href="index.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Home</a>
+                <a href="chi_siamo.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Chi Siamo</a>
+                <a href="catalogo.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Catalogo</a>
+                <a href="login.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Accedi</a>
+            </div>
+        </div>
+    </nav>
+
+<div class="container mx-auto px-4 py-10 flex-1 max-w-5xl">
+    <h1 class="text-3xl font-bold mb-8 text-center text-gray-900 title-font">Il tuo carrello</h1>
+
+    <div class="overflow-x-auto shadow-lg rounded-xl mb-8">
+        <table class="min-w-full bg-white overflow-hidden text-sm md:text-base">
+            <thead class="bg-gradient-to-r from-red-600 to-red-700 text-white">
+                <tr>
+                    <th class="py-4 px-6 text-left font-semibold tracking-wider">Prodotto</th>
+                    <th class="py-4 px-6 text-center shadow-lg rounded-xl mb-8acking-wider">Prezzo Unitario</th>
+                    <th class="py-4 px-6 text-center font-semibold tracking-wider">Quantita'</th>
+                    <th class="py-4 px-6 text-center font-semibold tracking-wider">Totale</th>
+                </tr>
+            </thead>
+            <tbody id="cart-table-body">
+                <!-- Prodotto Mock 1 -->
+                <tr class="border-b border-gray-100 hover:bg-gray-50 transition" id="row-1">
+                    <td class="py-5 px-6 font-semibold">
+                        <div class="flex items-center">
+                            <img src="img/mozzarella_bufala.jpg" alt="Mozzarella di Bufala" class="w-12 h-12 rounded object-cover mr-4 shadow-sm hidden sm:block">
+                            <a href="schedaprodotto.html" class="text-gray-800 hover:text-green-600 hover:underline transition">Mozzarella di Bufala DOP</a>
+                        </div>
+                    </td>
+                    <td class="py-5 px-6 text-center text-gray-600" id="prezzo-1">24.90 &euro;</td>
+                    <td class="py-5 px-6 text-center">
+                        <div class="flex justify-center items-center gap-1 bg-white border border-gray-200 rounded-lg shadow-sm w-fit mx-auto px-1 py-1">
+                            <button type="button" onclick="aggiornaQuantitaDinamica(1, -1)"
+                                class="w-8 h-8 rounded-md bg-gray-50 hover:bg-red-50 text-gray-600 hover:text-red-500 transition flex items-center justify-center focus:outline-none"
+                                id="btn-meno-1" disabled><i class="fas fa-minus text-xs"></i></button>
+
+                            <span class="font-bold text-gray-800 w-8 text-center" id="quantita-1" data-max="45">1</span>
+
+                            <button type="button" onclick="aggiornaQuantitaDinamica(1, 1)"
+                                class="w-8 h-8 rounded-md bg-gray-50 hover:bg-green-50 text-gray-600 hover:text-green-600 transition flex items-center justify-center focus:outline-none"><i class="fas fa-plus text-xs"></i></button>
+                            <span class="mx-1 text-gray-300">|</span>
+                            <button type="button" onclick="rimuovi(1)"
+                                class="w-8 h-8 text-gray-400 hover:text-red-500 transition flex items-center justify-center focus:outline-none" title="Rimuovi"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </td>
+                    <td class="py-5 px-6 text-center font-bold text-gray-900" id="subtotale-1">
+                        24.90 &euro;
+                    </td>
+                </tr>
+                
+                <!-- Prodotto Mock 2 -->
+                <tr class="border-b border-gray-100 hover:bg-gray-50 transition" id="row-2">
+                    <td class="py-5 px-6 font-semibold">
+                        <div class="flex items-center">
+                            <img src="img/cannolo.jpg" alt="Cannolo Siciliano DOP" class="w-12 h-12 rounded object-cover mr-4 shadow-sm hidden sm:block">
+                            <a href="#" class="text-gray-800 hover:text-green-600 hover:underline transition">Cannolo Siciliano DOP</a>
+                        </div>
+                    </td>
+                    <td class="py-5 px-6 text-center text-gray-600" id="prezzo-2">4.50 &euro;</td>
+                    <td class="py-5 px-6 text-center">
+                        <div class="flex justify-center items-center gap-1 bg-white border border-gray-200 rounded-lg shadow-sm w-fit mx-auto px-1 py-1">
+                            <button type="button" onclick="aggiornaQuantitaDinamica(2, -1)"
+                                class="w-8 h-8 rounded-md bg-gray-50 hover:bg-red-50 text-gray-600 hover:text-red-500 transition flex items-center justify-center focus:outline-none"
+                                id="btn-meno-2"><i class="fas fa-minus text-xs"></i></button>
+
+                            <span class="font-bold text-gray-800 w-8 text-center" id="quantita-2" data-max="100">3</span>
+
+                            <button type="button" onclick="aggiornaQuantitaDinamica(2, 1)"
+                                class="w-8 h-8 rounded-md bg-gray-50 hover:bg-green-50 text-gray-600 hover:text-green-600 transition flex items-center justify-center focus:outline-none"><i class="fas fa-plus text-xs"></i></button>
+                            <span class="mx-1 text-gray-300">|</span>
+                            <button type="button" onclick="rimuovi(2)"
+                                class="w-8 h-8 text-gray-400 hover:text-red-500 transition flex items-center justify-center focus:outline-none" title="Rimuovi"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </td>
+                    <td class="py-5 px-6 text-center font-bold text-gray-900" id="subtotale-2">
+                        13.50 &euro;
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="bg-gray-50 border-t-2 border-gray-200">
+                    <td colspan="3" class="py-5 px-6 text-right font-bold text-gray-700 text-lg uppercase tracking-wider">Totale Ordine:</td>
+                    <td class="py-5 px-6 text-center font-extrabold text-2xl text-green-700" id="totale-generale">38.40 &euro;</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <!-- Empty cart message -->
+    <div id="empty-cart-msg" class="hidden text-center py-16 bg-white rounded-xl shadow-sm border border-gray-100">
+        <i class="fas fa-shopping-basket text-6xl text-gray-300 mb-4"></i>
+        <p class="text-xl text-gray-600 font-medium">Il tuo carrello e' vuoto.</p>
+        <a href="catalogo.html" class="inline-block mt-6 bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-bold shadow-md transition transform hover:-translate-y-0.5">Scopri il Catalogo</a>
+    </div>
+
+    <div class="flex flex-col sm:flex-row justify-between items-center mt-8 gap-4" id="cart-actions">
+        <a href="catalogo.html" class="text-gray-600 hover:text-green-600 font-medium transition flex items-center">
+            <i class="fas fa-arrow-left mr-2"></i> Continua gli acquisti
+        </a>
+        
+        <div class="flex gap-4 w-full sm:w-auto">
+            <button type="button" onclick="svuotaCarrello()" class="border border-red-200 bg-white text-red-600 hover:bg-red-50 px-6 py-3 rounded-lg shadow-sm font-medium transition flex-1 sm:flex-none flex justify-center items-center">
+                <i class="fas fa-trash-alt mr-2"></i>Svuota
+            </button>
+
+            <button type="button" onclick="mostraNotifica('Checkout simulato con successo!', '#16a34a')" id="checkoutBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-lg shadow-md transition transform hover:-translate-y-0.5 flex-1 sm:flex-none flex justify-center items-center">
+                <i class="fas fa-credit-card mr-2"></i>Procedi <span class="hidden sm:inline ml-1">all'acquisto</span>
+            </button>                
+        </div>
+    </div>
+</div>
+
+<div id="notifica" class="nascosta"></div>
+
+<footer class="mt-auto bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-4 text-center">
+        <p class="text-gray-400 text-sm">&copy; 2025 Italicious. Mockup per Demo Statica su GitHub Pages.</p>
+    </div>
+</footer>
+
+<script>
+    function aggiornaQuantitaDinamica(idProdotto, variazione) {
+        const span = document.getElementById("quantita-" + idProdotto);
+        const attuale = parseInt(span.innerText);
+        const nuovaQuantita = attuale + variazione;
+        const max = parseInt(span.dataset.max); 
+        if (nuovaQuantita < 1) return;
+        if (nuovaQuantita > max) return; 
+        
+        span.innerText = nuovaQuantita;
+        
+        const btnMeno = document.getElementById("btn-meno-" + idProdotto);
+        if (nuovaQuantita <= 1) btnMeno.setAttribute("disabled", "disabled");
+        else btnMeno.removeAttribute("disabled");
+
+        const prezzoStr = document.getElementById("prezzo-" + idProdotto).innerText.replace(" €", "").replace(",", ".");
+        const prezzo = parseFloat(prezzoStr);
+        const nuovoSubtotale = prezzo * nuovaQuantita;
+        document.getElementById("subtotale-" + idProdotto).innerText =
+            nuovoSubtotale.toFixed(2) + " €";
+        
+        aggiornaTotaleGenerale();
+    }
+
+    function rimuovi(idProdotto) {
+        const row = document.getElementById("row-" + idProdotto);
+        if(row) {
+            row.remove();
+            aggiornaTotaleGenerale();
+            mostraNotifica("Prodotto rimosso dal carrello", "#333");
+            checkEmptyCart();
+        }
+    }
+
+    function svuotaCarrello() {
+        document.getElementById("cart-table-body").innerHTML = "";
+        aggiornaTotaleGenerale();
+        checkEmptyCart();
+        mostraNotifica("Carrello svuotato", "#333");
+    }
+
+    function checkEmptyCart() {
+        const tableBody = document.getElementById("cart-table-body");
+        if(tableBody.children.length === 0) {
+            document.querySelector("table").parentElement.classList.add("hidden");
+            document.getElementById("cart-actions").querySelector(".flex.gap-4").classList.add("hidden");
+            document.getElementById("cart-actions").classList.replace("justify-between", "justify-center");
+            document.getElementById("empty-cart-msg").classList.remove("hidden");
+            document.getElementById("carrelloBadge").style.display = "none";
+        }
+    }
+
+    function aggiornaTotaleGenerale() {
+        let total = 0.0;
+        let count = 0;
+        document.querySelectorAll("[id^='subtotale-']").forEach(el => {
+            const valore = parseFloat(el.innerText.replace(" €", "").replace(",", "."));
+            if (!isNaN(valore)) {
+                total += valore;
+                count++;
+            }
+        });
+        document.getElementById("totale-generale").innerText = total.toFixed(2) + " €";
+        const badge = document.getElementById("carrelloBadge");
+        badge.innerText = count;
+        if(count === 0) badge.style.display = "none";
+    }
+
+    function mostraNotifica(msg, colore) {
+        const notifica = document.getElementById("notifica");
+        notifica.style.backgroundColor = colore;
+        notifica.innerHTML = `<div class="flex items-center">${msg}</div>`;
+        notifica.style.display = "block";
+        setTimeout(() => {
+            notifica.style.display = "none";
+        }, 3000);
+    }
+    
+    // UI code for profile/mobile menu
+    const profileBtn = document.getElementById('profileBtn');
+    const profileMenu = document.getElementById('profileMenu');
+    const mobileBtn  = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    profileBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        profileMenu.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target)) {
+            profileMenu.classList.remove('show');
+        }
+    });
+
+    mobileBtn.addEventListener('click', function () {
+      mobileMenu.classList.toggle('hidden');
+    });
+</script>
+</body>
+</html>

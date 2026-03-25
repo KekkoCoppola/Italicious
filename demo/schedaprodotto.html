@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italicious - Parmigiano Reggiano DOP 24 Mesi</title>
+    <link rel="icon" type="image/png" href="img/loghi/logo_top.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/schedaProdotto.css">
+    <link rel="stylesheet" href="css/home.css">
+    <style>
+        .flag-stripe { height: 8px; }
+        .flag-stripe.green { background-color: #008C45; }
+        .flag-stripe.white { background-color: #F4F5F0; }
+        .flag-stripe.red { background-color: #CD212A; }
+        .profile-link { cursor: pointer; color: #2d3748; transition: color 0.3s ease; font-size: 1.25rem; }
+        .profile-link:hover { color: #38a169; }
+        .popup-menu { display: none; position: absolute; top: 100%; right: 0; background-color: white; border: 1px solid #ccc; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); min-width: 160px; z-index: 1000; }
+        .popup-menu.show { display: block; }
+        .popup-menu a { display: block; padding: 10px 15px; color: #2d3748; text-decoration: none; font-weight: 500; }
+        .popup-menu a:hover { background-color: #e6fffa; color: #38a169; }
+        #notifica { position: fixed; top: 20px; right: 20px; background-color: #333; color: #fff; padding: 12px 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: sans-serif; display: none; z-index: 9999; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        .tab-button.active { border-bottom-color: #10b981; color: #10b981; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-gray-50 font-sans">
+    <nav class="backdrop-blur-md bg-white/30 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-1">
+                    <div class="flag-stripe green w-4 h-8 hidden rounded-l md:block"></div>
+                    <div class="flag-stripe white w-4 h-8 hidden md:block"></div>
+                    <div class="flag-stripe red w-4 h-8 rounded-r hidden md:block"></div>
+                    <a href="index.html" class="text-2xl font-bold text-gray-800 hover:text-green-700 transition">
+                        <img src="img/loghi/logo.png" alt="Italicious Logo" class="h-10 object-contain">
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-800 hover:text-green-600 font-medium transition">Home</a>
+                    <a href="chi_siamo.html" class="text-gray-800 hover:text-green-600 font-medium transition">Chi Siamo</a>
+                    <a href="catalogo.html" class="text-gray-800 hover:text-green-600 font-medium transition">Catalogo</a>
+                    <a href="login.html" class="text-gray-800 hover:text-green-600 font-medium transition">Accedi</a>
+                </div>
+                <div class="flex items-center space-x-6 relative">
+                    <a href="carrello.html" class="relative text-gray-800 hover:text-green-600 transition">
+                        <i class="fas fa-shopping-cart text-xl"></i> 
+                        <span id="carrelloBadge" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center" style="display:none;">0</span>
+                    </a>
+                    <a href="#" class="text-gray-800 hover:text-green-600 transition profile-link" id="profileBtn">
+                        <i class="fas fa-user text-xl"></i>
+                    </a>
+                    <div class="popup-menu" id="profileMenu">
+                        <a href="login.html"><i class="fa-solid fa-right-to-bracket"></i> Accedi</a>
+                    </div>
+                    <button class="md:hidden focus:outline-none" id="mobile-menu-button">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="md:hidden hidden py-4" id="mobile-menu">
+                <a href="index.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Home</a>
+                <a href="chi_siamo.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Chi Siamo</a>
+                <a href="catalogo.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Catalogo</a>
+                <a href="login.html" class="block py-2 text-gray-800 hover:text-green-600 transition">Accedi</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8 max-w-6xl flex-1">
+        <!-- Breadcrumb -->
+        <nav class="flex mb-6" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="catalogo.html" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600 border border-gray-300 rounded px-2 py-1">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Torna al Catalogo
+                    </a>
+                </li>
+            </ol>
+        </nav>
+
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="md:flex">
+                <!-- IMMAGINE -->
+                <div class="md:w-1/2 p-0">
+                    <div class="relative mb-4 h-full">
+                        <div class="bg-white overflow-hidden h-full flex items-center justify-center">
+                            <img src="img/mozzarella_bufala.jpg" alt="Mozzarella di Bufala DOP" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide shadow">FORMAGGI FRESCHI</span>
+                        </div>
+                        <button type="button" class="absolute top-4 right-4 bg-white p-3 rounded-full shadow-md hover:bg-gray-100 transition" onclick="mostraNotifica('Aggiunto ai preferiti! ❤️', '#e11d48')">
+                            <i class="far fa-heart text-gray-600 text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+        
+                <!-- INFO PRODOTTO -->
+                <div class="md:w-1/2 p-8 lg:p-10 flex flex-col justify-center">
+                    <div class="mb-4">
+                        <div class="flex items-center justify-between">
+                            <h1 class="text-3xl font-bold text-gray-900 leading-tight">Mozzarella di Bufala Campana DOP</h1>
+                        </div>
+                        <div class="flex items-center mt-2">
+                            <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
+                            <span class="text-gray-600 font-medium font-serif">Campania</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center mb-6 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                        <div class="flex items-center">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star-half-alt text-yellow-400"></i>
+                            <span class="text-gray-700 ml-2 font-semibold">4.8</span>
+                            <span class="text-gray-500 ml-1 text-sm underline cursor-pointer">(124 recensioni)</span>
+                        </div>
+                        <span class="mx-4 text-gray-300">|</span>
+                        <div class="flex items-center text-green-600 font-medium">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            <span>Disponibile</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-6 flex space-x-4 items-baseline border-b border-gray-100 pb-6">
+                        <span class="text-4xl font-extrabold text-gray-900">&euro; 24,90</span>
+                        <span class="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">IVA incl. (4%)</span>
+                    </div>
+
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-3 text-gray-800 border-b pb-2 border-gray-100">Descrizione</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Questa Mozzarella di Bufala Campana gode di lavorazione rigorosamente artigianale. La sua consistenza e' elastica, con quel cuore filante e l'inebriante sentore di latte fresco che inonda il palato al primo morso.
+                        </p>
+                    </div>
+
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800 border-b pb-2 border-gray-100">Caratteristiche</h3>
+                        <div class="grid grid-cols-2 gap-4 bg-gray-50 p-4 rounded-lg">
+                            <div class="flex items-center">
+                                <span class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm mr-3">
+                                    <i class="fas fa-weight-hanging text-gray-500"></i>
+                                </span>
+                                <span class="text-gray-700 font-medium">Contenuto: 500g</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm mr-3">
+                                    <i class="fas fa-clock text-gray-500"></i>
+                                </span>
+                                <span class="text-gray-700 font-medium">Stagionatura: 24 mesi</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm mr-3">
+                                    <i class="fas fa-certificate text-green-600"></i>
+                                </span>
+                                <span class="text-gray-700 font-medium text-green-700">Certificazione DOP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                    <form onsubmit="event.preventDefault(); mostraNotifica('Prodotto aggiunto al carrello ✅', '#16a34a');">
+                        <div class="flex items-center mb-6">
+                            <span class="mr-4 text-gray-700 font-medium">Quantita':</span>
+                            <div class="flex border border-gray-300 rounded-lg overflow-hidden shadow-sm">
+                                <button type="button" data-step="-1" class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-4 py-2 transition border-r border-gray-300 focus:outline-none">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input id="qty" name="quantita" type="number" value="1" min="1" max="45" class="w-16 text-center py-2 font-semibold text-gray-800 outline-none appearance-none" inputmode="numeric" readonly>
+                                <button type="button" data-step="1" class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-4 py-2 transition border-l border-gray-300 focus:outline-none">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <span class="ml-4 text-sm text-green-600 font-medium bg-green-50 px-2 py-1 rounded">Disponibili: 45</span>
+                        </div>
+                    
+                        <div class="flex space-x-4">
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-xl flex-1 flex items-center justify-center shadow-lg transition transform hover:-translate-y-0.5">
+                                <i class="fas fa-cart-plus mr-3 text-xl"></i>
+                                <span class="text-lg">Aggiungi al carrello</span>
+                            </button>
+                        </div>
+                        </form>
+                    </div>
+    
+                    <div class="border-t border-gray-100 pt-6 mt-2 grid grid-cols-2 gap-4">
+                        <div class="flex items-center text-sm text-gray-600 bg-blue-50 p-2 rounded">
+                            <i class="fas fa-truck mr-3 text-blue-500 text-lg"></i>
+                            <span>Spedizione <strong>gratuita</strong> &gt; &euro;50</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600 bg-amber-50 p-2 rounded">
+                            <i class="fas fa-shield-alt mr-3 text-amber-500 text-lg"></i>
+                            <span>Acquisto <strong>100%</strong> sicuro</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600 bg-purple-50 p-2 rounded col-span-2">
+                            <i class="fas fa-undo mr-3 text-purple-500 text-lg"></i>
+                            <span>Reso <strong>gratuito</strong> entro 30 giorni</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RECENSIONI -->
+        <div class="mt-12 bg-white rounded-xl shadow-lg border border-gray-100">
+            <div class="border-b border-gray-100 bg-gray-50 rounded-t-xl px-6">
+                <nav class="flex -mb-px">
+                    <button class="py-4 px-2 mr-8 text-center font-bold text-base border-b-2 border-green-500 text-green-600 focus:outline-none">
+                        <i class="fas fa-star mr-2"></i>Recensioni Clienti (124)
+                    </button>
+                </nav>
+            </div>
+            
+            <div class="p-8">
+                <!-- Statistiche veloci (Mock) -->
+                <div class="flex items-center justify-between border-b border-gray-100 pb-8 mb-8 md:w-1/2 mx-auto">
+                    <div class="text-center">
+                        <span class="text-5xl font-bold text-gray-900">4.8</span>
+                        <div class="flex items-center justify-center mt-2 text-yellow-400 text-sm">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">124 recensioni</p>
+                    </div>
+                    <div class="w-2/3 space-y-1">
+                        <div class="flex items-center text-sm"><span class="w-3 text-gray-600">5</span><i class="fas fa-star text-yellow-400 mx-1 text-xs"></i><div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden ml-2"><div class="bg-green-500 h-full" style="width: 85%"></div></div><span class="text-gray-500 ml-2 text-xs">105</span></div>
+                        <div class="flex items-center text-sm"><span class="w-3 text-gray-600">4</span><i class="fas fa-star text-yellow-400 mx-1 text-xs"></i><div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden ml-2"><div class="bg-green-400 h-full" style="width: 12%"></div></div><span class="text-gray-500 ml-2 text-xs">15</span></div>
+                        <div class="flex items-center text-sm"><span class="w-3 text-gray-600">3</span><i class="fas fa-star text-yellow-400 mx-1 text-xs"></i><div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden ml-2"><div class="bg-yellow-400 h-full" style="width: 2%"></div></div><span class="text-gray-500 ml-2 text-xs">3</span></div>
+                        <div class="flex items-center text-sm"><span class="w-3 text-gray-600">2</span><i class="fas fa-star text-yellow-400 mx-1 text-xs"></i><div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden ml-2"><div class="bg-orange-400 h-full" style="width: 1%"></div></div><span class="text-gray-500 ml-2 text-xs">1</span></div>
+                        <div class="flex items-center text-sm"><span class="w-3 text-gray-600">1</span><i class="fas fa-star text-yellow-400 mx-1 text-xs"></i><div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden ml-2"><div class="bg-red-500 h-full" style="width: 0%"></div></div><span class="text-gray-500 ml-2 text-xs">0</span></div>
+                    </div>
+                </div>
+
+                <!-- Lista recensioni mockata -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                      <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 relative">
+                        <div class="absolute top-4 right-4 text-green-500 text-sm font-medium bg-green-50 px-2 py-1 rounded"><i class="fas fa-check-circle mr-1"></i>Acquisto verificato</div>
+                        <div class="flex items-center gap-4 mb-4">
+                          <img class="h-12 w-12 rounded-full border-2 border-white shadow-sm" src="https://ui-avatars.com/api/?name=Mario+Rossi&background=f3f4f6&color=374151&size=64" alt="Avatar">
+                          <div>
+                            <p class="text-base font-bold text-gray-900">Mario Rossi</p>
+                            <div class="flex items-center text-yellow-400 text-xs mt-1">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                          </div>
+                        </div>
+                        <p class="text-gray-700">"Qualita' eccezionale. La mozzarella si scioglie in bocca e ha quel sapore inconfondibile che solo la vera bufala campana possiede. Spedizione rapida e imballaggio perfetto."</p>
+                        <p class="text-xs text-gray-400 mt-4 text-right">15 Marzo 2025</p>
+                      </div>
+
+                      <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 relative">
+                        <div class="absolute top-4 right-4 text-green-500 text-sm font-medium bg-green-50 px-2 py-1 rounded"><i class="fas fa-check-circle mr-1"></i>Acquisto verificato</div>
+                        <div class="flex items-center gap-4 mb-4">
+                          <img class="h-12 w-12 rounded-full border-2 border-white shadow-sm" src="https://ui-avatars.com/api/?name=Giulia+B.&background=f3f4f6&color=374151&size=64" alt="Avatar">
+                          <div>
+                            <p class="text-base font-bold text-gray-900">Giulia B.</p>
+                            <div class="flex items-center text-yellow-400 text-xs mt-1">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                        <p class="text-gray-700">"Ottimo prodotto per fare la spesa in famiglia, buonissimo nelle paste e grattugiato. Arrivato un giorno in ritardo rispetto al previsto ma colpa del corriere. Tutto intatto."</p>
+                        <p class="text-xs text-gray-400 mt-4 text-right">2 Febbraio 2025</p>
+                      </div>
+                  </div>
+
+                  <div class="text-center mb-10">
+                      <button class="border border-gray-300 text-gray-600 bg-white hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm">Visualizza altre recensioni</button>
+                  </div>
+
+                <!-- Form Recensione (Solo Visual - Mock) -->
+                <div class="bg-blue-50 border border-blue-100 rounded-xl p-6 md:p-8 mt-8">
+                  <div class="text-center space-y-3">
+                    <div class="flex justify-center">
+                      <i class="fa-solid fa-lock text-blue-400 text-3xl"></i>
+                    </div>
+                    <h2 class="text-lg md:text-xl font-bold text-gray-800">
+                      Accedi per recensire
+                    </h2>
+                    <p class="text-sm text-gray-600 max-w-md mx-auto">
+                      La scrittura delle recensioni e' riservata agli utenti registrati che hanno regolarmente acquistato il prodotto. <br>
+                      <a href="login.html" class="text-blue-600 font-bold hover:underline mt-2 inline-block">Vai al Login <i class="fas fa-arrow-right text-xs"></i></a>
+                    </p>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="mt-16 mb-8">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 relative inline-block">
+                    Altri prodotti della regione <span class="text-green-700">Campania</span>
+                    <div class="absolute bottom-0 left-0 w-1/3 h-1 bg-green-500 rounded-full mt-2 -mb-2"></div>
+                </h2>
+                <a href="catalogo.html" class="text-sm font-bold text-green-600 hover:text-green-800 transition">Vedi tutti <i class="fas fa-chevron-right ml-1 text-xs"></i></a>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                 <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1 border border-gray-100">
+                    <img src="img/pastiera.jpg" alt="Pastiera" class="w-full h-48 object-cover cursor-pointer hover:opacity-90 transition" onclick="window.location.href='schedaprodotto.html'">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold mb-2 cursor-pointer hover:text-green-600 transition" onclick="window.location.href='schedaprodotto.html'">Pastiera Napoletana</h3>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4 flex-1">Dolce tipico campano, inconfondibile il suo profumo.</p>
+                        <div class="flex justify-between items-center mt-auto border-t border-gray-100 pt-4">
+                            <span class="text-xl font-bold text-gray-900">&euro;28,50</span>
+                            <button type="button" class="bg-gray-100 hover:bg-green-600 text-gray-800 hover:text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-sm" onclick="mostraNotifica('Prodotto aggiunto!', '#16a34a')">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition transform hover:-translate-y-1 border border-gray-100">
+                    <img src="img/limoncello.jpg" alt="Limoncello di Sorrento" class="w-full h-48 object-cover cursor-pointer hover:opacity-90 transition" onclick="window.location.href='schedaprodotto.html'">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold mb-2 cursor-pointer hover:text-green-600 transition" onclick="window.location.href='schedaprodotto.html'">Limoncello</h3>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4 flex-1">Liquore tradizionale, ottimo a fine pasto.</p>
+                        <div class="flex justify-between items-center mt-auto border-t border-gray-100 pt-4">
+                            <span class="text-xl font-bold text-gray-900">&euro;15,00</span>
+                            <button type="button" class="bg-gray-100 hover:bg-green-600 text-gray-800 hover:text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-sm" onclick="mostraNotifica('Prodotto aggiunto!', '#16a34a')">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <!-- Footer -->
+  <footer class="mt-auto bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center space-x-2 mb-6">
+                    <img src="img/loghi/logo.png" alt="Italicious Logo" class="h-12 object-contain bg-white p-1 rounded">
+                </div>
+                <p class="text-gray-400 mb-6 max-w-sm leading-relaxed">Italicious porta l'autenticita' e la tradizione dei migliori prodotti gastronomici italiani direttamente sulla tua tavola. Una selezione accurata curata da esperti del territorio.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-green-600 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-green-600 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-green-600 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-6 text-green-500">Navigazione Rapida</h3>
+                <ul class="space-y-3 font-medium">
+                    <li><a href="index.html" class="text-gray-400 hover:text-white hover:translate-x-1 inline-block transition">Home</a></li>
+                    <li><a href="chi_siamo.html" class="text-gray-400 hover:text-white hover:translate-x-1 inline-block transition">Chi Siamo</a></li>
+                    <li><a href="catalogo.html" class="text-gray-400 hover:text-white hover:translate-x-1 inline-block transition">Il Catalogo</a></li>
+                    <li><a href="login.html" class="text-gray-400 hover:text-white hover:translate-x-1 inline-block transition">Accedi / Registrati</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-6 text-green-500">Hai bisogno d'aiuto?</h3>
+                <ul class="space-y-4 text-gray-400 font-medium">
+                    <li class="flex items-start"><div class="rounded-full bg-gray-800 w-8 h-8 flex items-center justify-center mr-3 mt-0.5"><i class="fas fa-map-marker-alt text-sm"></i></div><span>Via Giovanni Paolo II, 132<br>84084 Fisciano (SA)</span></li>
+                    <li class="flex items-center"><div class="rounded-full bg-gray-800 w-8 h-8 flex items-center justify-center mr-3"><i class="fas fa-phone text-sm"></i></div><span>+39 06 1234567</span></li>
+                    <li class="flex items-center"><div class="rounded-full bg-gray-800 w-8 h-8 flex items-center justify-center mr-3"><i class="fas fa-envelope text-sm"></i></div><span>info@italicious.com</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm font-medium">
+            <p>&copy; 2025 Italicious - Progetto Universitario TSW. Tutti i diritti riservati.</p>
+            <div class="flex items-center mt-4 md:mt-0 space-x-2">
+                <i class="fab fa-cc-visa text-2xl"></i>
+                <i class="fab fa-cc-mastercard text-2xl"></i>
+                <i class="fab fa-cc-paypal text-2xl"></i>
+                <i class="fab fa-cc-apple-pay text-2xl"></i>
+            </div>
+        </div>
+    </div>
+  </footer>
+
+  <div id="notifica" class="nascosta"></div>
+
+<script>
+    function mostraNotifica(testo, colore = "#333") {
+      const notifica = document.getElementById("notifica");
+      notifica.style.backgroundColor = colore;
+      notifica.innerHTML = `<div class="flex items-center">${testo}</div>`;
+      notifica.style.display = "block";
+      setTimeout(() => {
+        notifica.style.display = "none";
+      }, 3000);
+    }
+
+    const profileBtn = document.getElementById('profileBtn');
+    const profileMenu = document.getElementById('profileMenu');
+    const mobileBtn  = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    profileBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        profileMenu.classList.toggle('show');
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target)) {
+            profileMenu.classList.remove('show');
+        }
+    });
+
+    mobileBtn.addEventListener('click', function () {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    //TASTI + e -
+    const qty = document.getElementById("qty");
+    document.querySelectorAll("[data-step]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            let newVal = parseInt(qty.value) + parseInt(btn.dataset.step);
+            if(isNaN(newVal)) newVal = 1;
+            const min = parseInt(qty.min) || 1;
+            const max = parseInt(qty.max) || 9999;
+            if (newVal < min) newVal = min;
+            if (newVal > max) newVal = max;
+            qty.value = newVal;
+        });
+    });
+</script>
+</body>
+</html>
