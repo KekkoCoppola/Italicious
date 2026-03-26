@@ -21,6 +21,7 @@
         .popup-menu a:hover { background-color: #e6fffa; color: #38a169; }
         #notifica { position: fixed; top: 20px; right: 20px; background-color: #333; color: #fff; padding: 12px 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: sans-serif; display: none; z-index: 9999; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
     </style>
+<style>body { padding-bottom: 60px; }</style>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans">
 
@@ -78,105 +79,89 @@
 <div class="container mx-auto px-4 py-10 flex-1 max-w-5xl">
     <h1 class="text-3xl font-bold mb-8 text-center text-gray-900 title-font">Il tuo carrello</h1>
 
-    <div class="overflow-x-auto shadow-lg rounded-xl mb-8">
+    <div class="overflow-x-auto shadow rounded-lg mb-8">
         <table class="min-w-full bg-white overflow-hidden text-sm md:text-base">
-            <thead class="bg-gradient-to-r from-red-600 to-red-700 text-white">
+            <thead class="bg-red-100 text-red-800">
                 <tr>
-                    <th class="py-4 px-6 text-left font-semibold tracking-wider">Prodotto</th>
-                    <th class="py-4 px-6 text-center shadow-lg rounded-xl mb-8acking-wider">Prezzo Unitario</th>
-                    <th class="py-4 px-6 text-center font-semibold tracking-wider">Quantita'</th>
-                    <th class="py-4 px-6 text-center font-semibold tracking-wider">Totale</th>
+                    <th class="py-3 px-6 text-left">Prodotto</th>
+                    <th class="py-3 px-6 text-center">Prezzo Unitario</th>
+                    <th class="py-3 px-6 text-center">Quantità</th>
+                    <th class="py-3 px-6 text-center">Totale</th>
                 </tr>
             </thead>
             <tbody id="cart-table-body">
                 <!-- Prodotto Mock 1 -->
-                <tr class="border-b border-gray-100 hover:bg-gray-50 transition" id="row-1">
-                    <td class="py-5 px-6 font-semibold">
-                        <div class="flex items-center">
-                            <img src="img/mozzarella_bufala.jpg" alt="Mozzarella di Bufala" class="w-12 h-12 rounded object-cover mr-4 shadow-sm hidden sm:block">
-                            <a href="schedaprodotto.html" class="text-gray-800 hover:text-green-600 hover:underline transition">Mozzarella di Bufala DOP</a>
-                        </div>
+                <tr class="border-b hover:bg-gray-50 transition" id="row-1">
+                    <td class="py-4 px-6 font-semibold">
+                        <a href="schedaprodotto.html?id=1" class="text-green-600 hover:underline">Mozzarella di Bufala DOP</a>
                     </td>
-                    <td class="py-5 px-6 text-center text-gray-600" id="prezzo-1">24.90 &euro;</td>
-                    <td class="py-5 px-6 text-center">
-                        <div class="flex justify-center items-center gap-1 bg-white border border-gray-200 rounded-lg shadow-sm w-fit mx-auto px-1 py-1">
+                    <td class="py-4 px-6 text-center" id="prezzo-1">24.90 &euro;</td>
+                    <td class="py-4 px-6 text-center">
+                        <div class="flex justify-center items-center gap-2">
                             <button type="button" onclick="aggiornaQuantitaDinamica(1, -1)"
-                                class="w-8 h-8 rounded-md bg-gray-50 hover:bg-red-50 text-gray-600 hover:text-red-500 transition flex items-center justify-center focus:outline-none"
-                                id="btn-meno-1" disabled><i class="fas fa-minus text-xs"></i></button>
+                                class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700"
+                                id="btn-meno-1" disabled>&minus;</button>
 
-                            <span class="font-bold text-gray-800 w-8 text-center" id="quantita-1" data-max="45">1</span>
+                            <span class="font-medium" id="quantita-1" data-max="45">1</span>
 
                             <button type="button" onclick="aggiornaQuantitaDinamica(1, 1)"
-                                class="w-8 h-8 rounded-md bg-gray-50 hover:bg-green-50 text-gray-600 hover:text-green-600 transition flex items-center justify-center focus:outline-none"><i class="fas fa-plus text-xs"></i></button>
-                            <span class="mx-1 text-gray-300">|</span>
+                                class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700">+</button>
                             <button type="button" onclick="rimuovi(1)"
-                                class="w-8 h-8 text-gray-400 hover:text-red-500 transition flex items-center justify-center focus:outline-none" title="Rimuovi"><i class="fas fa-trash-alt"></i></button>
+                                class="px-2 py-1 text-red-500 hover:text-red-700" title="Rimuovi"><i class="fas fa-trash"></i></button>
                         </div>
                     </td>
-                    <td class="py-5 px-6 text-center font-bold text-gray-900" id="subtotale-1">
+                    <td class="py-4 px-6 text-center font-semibold" id="subtotale-1">
                         24.90 &euro;
                     </td>
                 </tr>
                 
                 <!-- Prodotto Mock 2 -->
-                <tr class="border-b border-gray-100 hover:bg-gray-50 transition" id="row-2">
-                    <td class="py-5 px-6 font-semibold">
-                        <div class="flex items-center">
-                            <img src="img/cannolo.jpg" alt="Cannolo Siciliano DOP" class="w-12 h-12 rounded object-cover mr-4 shadow-sm hidden sm:block">
-                            <a href="#" class="text-gray-800 hover:text-green-600 hover:underline transition">Cannolo Siciliano DOP</a>
-                        </div>
+                <tr class="border-b hover:bg-gray-50 transition" id="row-2">
+                    <td class="py-4 px-6 font-semibold">
+                        <a href="schedaprodotto.html?id=5" class="text-green-600 hover:underline">Cannolo Siciliano DOP</a>
                     </td>
-                    <td class="py-5 px-6 text-center text-gray-600" id="prezzo-2">4.50 &euro;</td>
-                    <td class="py-5 px-6 text-center">
-                        <div class="flex justify-center items-center gap-1 bg-white border border-gray-200 rounded-lg shadow-sm w-fit mx-auto px-1 py-1">
+                    <td class="py-4 px-6 text-center" id="prezzo-2">4.50 &euro;</td>
+                    <td class="py-4 px-6 text-center">
+                        <div class="flex justify-center items-center gap-2">
                             <button type="button" onclick="aggiornaQuantitaDinamica(2, -1)"
-                                class="w-8 h-8 rounded-md bg-gray-50 hover:bg-red-50 text-gray-600 hover:text-red-500 transition flex items-center justify-center focus:outline-none"
-                                id="btn-meno-2"><i class="fas fa-minus text-xs"></i></button>
+                                class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700"
+                                id="btn-meno-2">&minus;</button>
 
-                            <span class="font-bold text-gray-800 w-8 text-center" id="quantita-2" data-max="100">3</span>
+                            <span class="font-medium" id="quantita-2" data-max="100">3</span>
 
                             <button type="button" onclick="aggiornaQuantitaDinamica(2, 1)"
-                                class="w-8 h-8 rounded-md bg-gray-50 hover:bg-green-50 text-gray-600 hover:text-green-600 transition flex items-center justify-center focus:outline-none"><i class="fas fa-plus text-xs"></i></button>
-                            <span class="mx-1 text-gray-300">|</span>
+                                class="px-2 py-1 rounded bg-gray-200 hover:bg-gray-300 text-gray-700">+</button>
                             <button type="button" onclick="rimuovi(2)"
-                                class="w-8 h-8 text-gray-400 hover:text-red-500 transition flex items-center justify-center focus:outline-none" title="Rimuovi"><i class="fas fa-trash-alt"></i></button>
+                                class="px-2 py-1 text-red-500 hover:text-red-700" title="Rimuovi"><i class="fas fa-trash"></i></button>
                         </div>
                     </td>
-                    <td class="py-5 px-6 text-center font-bold text-gray-900" id="subtotale-2">
+                    <td class="py-4 px-6 text-center font-semibold" id="subtotale-2">
                         13.50 &euro;
                     </td>
                 </tr>
             </tbody>
             <tfoot>
-                <tr class="bg-gray-50 border-t-2 border-gray-200">
-                    <td colspan="3" class="py-5 px-6 text-right font-bold text-gray-700 text-lg uppercase tracking-wider">Totale Ordine:</td>
-                    <td class="py-5 px-6 text-center font-extrabold text-2xl text-green-700" id="totale-generale">38.40 &euro;</td>
+                <tr class="bg-red-100 font-bold">
+                    <td colspan="3" class="py-4 px-6 text-right">Totale:</td>
+                    <td class="py-4 px-6 text-center" id="totale-generale">38.40 &euro;</td>
                 </tr>
             </tfoot>
         </table>
     </div>
 
     <!-- Empty cart message -->
-    <div id="empty-cart-msg" class="hidden text-center py-16 bg-white rounded-xl shadow-sm border border-gray-100">
-        <i class="fas fa-shopping-basket text-6xl text-gray-300 mb-4"></i>
-        <p class="text-xl text-gray-600 font-medium">Il tuo carrello e' vuoto.</p>
-        <a href="catalogo.html" class="inline-block mt-6 bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-bold shadow-md transition transform hover:-translate-y-0.5">Scopri il Catalogo</a>
+    <div id="empty-cart-msg" class="hidden text-center py-16">
+        <p class="text-center text-lg text-gray-600">Il carrello &egrave; vuoto.</p>
     </div>
 
-    <div class="flex flex-col sm:flex-row justify-between items-center mt-8 gap-4" id="cart-actions">
-        <a href="catalogo.html" class="text-gray-600 hover:text-green-600 font-medium transition flex items-center">
-            <i class="fas fa-arrow-left mr-2"></i> Continua gli acquisti
-        </a>
-        
-        <div class="flex gap-4 w-full sm:w-auto">
-            <button type="button" onclick="svuotaCarrello()" class="border border-red-200 bg-white text-red-600 hover:bg-red-50 px-6 py-3 rounded-lg shadow-sm font-medium transition flex-1 sm:flex-none flex justify-center items-center">
-                <i class="fas fa-trash-alt mr-2"></i>Svuota
-            </button>
+    <div class="flex justify-center mt-8 gap-4" id="cart-actions">
+        <button type="button" onclick="svuotaCarrello()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow">
+            <i class="fas fa-trash-alt mr-2"></i>Svuota carrello
+        </button>
 
-            <button type="button" onclick="mostraNotifica('Checkout simulato con successo!', '#16a34a')" id="checkoutBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-lg shadow-md transition transform hover:-translate-y-0.5 flex-1 sm:flex-none flex justify-center items-center">
-                <i class="fas fa-credit-card mr-2"></i>Procedi <span class="hidden sm:inline ml-1">all'acquisto</span>
-            </button>                
-        </div>
+        <button type="button" onclick="mostraNotifica('Checkout simulato con successo!', '#16a34a')" id="checkoutBtn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">
+            <i class="fas fa-credit-card mr-2"></i>Procedi all'acquisto
+        </button>                
     </div>
 </div>
 
@@ -292,5 +277,11 @@
       mobileMenu.classList.toggle('hidden');
     });
 </script>
+
+<!-- BANNER DEMO -->
+<div class="fixed bottom-0 left-0 w-full bg-red-600/90 backdrop-blur text-white text-center py-3 z-[10000] font-bold shadow-lg text-sm sm:text-base tracking-wide border-t-4 border-red-700">
+    🚨 AREA DEMO: Questa è una versione dimostrativa statica. I dati sono mockati e le funzionalità limitate. 🚨
+</div>
+<!-- FINE BANNER DEMO -->
 </body>
 </html>

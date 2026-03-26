@@ -21,6 +21,7 @@
         .popup-menu a:hover { background-color: #e6fffa; color: #38a169; }
         #notifica { position: fixed; top: 20px; right: 20px; background-color: #333; color: #fff; padding: 12px 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: sans-serif; display: none; z-index: 9999; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
     </style>
+<style>body { padding-bottom: 60px; }</style>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col font-sans">
 
@@ -75,47 +76,94 @@
         </div>
     </nav>
 
-<div class="container mx-auto px-4 py-16 flex-1 max-w-4xl text-center">
-    <h1 class="text-4xl md:text-5xl font-extrabold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-green-600 via-gray-700 to-red-600 title-font">
-        La Nostra Storia in Italicious
-    </h1>
-
-    <div class="bg-white p-8 md:p-12 rounded-2xl shadow-xl leading-relaxed text-gray-700 text-lg mb-12 border border-gray-100 relative overflow-hidden text-left">
-        <!-- Decoration SVG -->
-        <svg class="absolute top-0 right-0 -mr-8 -mt-8 text-gray-50 opacity-50 w-64 h-64" fill="currentColor" viewBox="0 0 100 100"><path d="M11 18c3 0 5-2 5-5s-2-5-5-5-5 2-5 5 2 5 5 5zm48 25c3 0 5-2 5-5s-2-5-5-5-5 2-5 5 2 5 5 5zm-43-7c1.5 0 3-1.5 3-3s-1.5-3-3-3-3 1.5-3 3 1.5 3 3 3zm63 31c1.5 0 3-1.5 3-3s-1.5-3-3-3-3 1.5-3 3 1.5 3 3 3z"></path></svg>
-        
-        <p class="mb-6 relative z-10">
-            <strong>Italicious</strong> nasce come un Progetto Universitario per il corso di <em>Tecnologie Software per il Web (TSW)</em> presso l'Università degli Studi di Salerno (UNISA). Il nostro obiettivo è semplice ma ambizioso: creare un portale e-commerce moderno e affidabile dedicato alla promozione e alla vendita delle eccellenze gastronomiche italiane.
-        </p>
-
-        <p class="mb-6 relative z-10">
-            Le tradizioni culinarie del nostro paese sono uniche al mondo. Da Nord a Sud, l'Italia offre una vastissima gamma di prodotti DOP e IGP che spaziano dai formaggi stagionati, ai salumi, fino agli oli extravergini d'oliva e alla pasta. 
-            Con Italicious, vogliamo avvicinare queste tradizioni alle persone, abbattendo le distanze e garantendo sempre la massima qualità e freschezza.
-        </p>
-
-        <p class="relative z-10">
-            Il progetto è stato sviluppato impiegando le moderne tecnologie web orientate all'architettura Java EE (JSP, Servlets, JDBC) e un frontend reattivo curato con Tailwind CSS, mirato ad un'eccellente esperienza utente.
-        </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-green-50 rounded-xl p-6 border border-green-100 shadow-sm transition transform hover:-translate-y-1">
-            <i class="fas fa-leaf text-4xl text-green-500 mb-4"></i>
-            <h3 class="text-xl font-bold mb-2 text-gray-800">Eccellenza</h3>
-            <p class="text-gray-600 text-sm">Selezioniamo solo i migliori prodotti locali certificati DOP, IGP e BIO provenienti da tutta Italia.</p>
+<!-- Hero Section -->
+    <section class="hero-section text-white py-16 max-w-full">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">La nostra <span class="text-green-600">passione</span> per l'<span class="text-red-600">Italia</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Scopri la storia dietro Italicious e la nostra missione per portare i sapori autentici della tradizione italiana direttamente a casa tua.</p>
         </div>
-        <div class="bg-white rounded-xl p-6 border border-gray-100 shadow-md transition transform hover:-translate-y-1">
-            <i class="fas fa-truck-fast text-4xl text-gray-500 mb-4"></i>
-            <h3 class="text-xl font-bold mb-2 text-gray-800">Rapidità</h3>
-            <p class="text-gray-600 text-sm">Spediamo i prodotti in sicurezza per mantenerne intatta la freschezza fino a casa tua.</p>
+    </section>
+    <section class="py-16 bg-white w-full">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                    <img src="img/chisiamoimg.webp" 
+                         alt="Italian countryside" 
+                         class="rounded-lg shadow-xl w-full h-auto object-cover">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold title-font mb-6 text-gray-800">
+                        La nostra <span class="text-red-600">storia</span>
+                    </h2>
+                    <p class="text-gray-600 mb-4">
+                        Italicious nasce nel 2015 dall'incontro di quattro amici con una passione comune: 
+                        l'autenticit&agrave; dei prodotti italiani regionali. Dopo anni trascorsi a viaggiare 
+                        per lo Stivale, abbiamo deciso di condividere queste prelibatezze con il mondo.
+                    </p>
+                    <p class="text-gray-600 mb-4">
+                        Partiti da un piccolo magazzino a Bologna, oggi collaboriamo con oltre 200 
+                        piccoli produttori in tutte le 20 regioni italiane, selezionando con cura 
+                        solo i prodotti che rispettano le tradizioni e la qualit&agrave; che l'Italia sa offrire.
+                    </p>
+                    <p class="text-gray-600">
+                        Il nostro nome, Italicious, unisce "Italy" e "delicious", perch&eacute; crediamo che 
+                        la vera essenza dell'Italia sia nella sua straordinaria capacit&agrave; di unire 
+                        bellezza e bont&agrave; in ogni suo angolo.
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="bg-red-50 rounded-xl p-6 border border-red-100 shadow-sm transition transform hover:-translate-y-1">
-            <i class="fas fa-heart text-4xl text-red-500 mb-4"></i>
-            <h3 class="text-xl font-bold mb-2 text-gray-800">Passione</h3>
-            <p class="text-gray-600 text-sm">Siamo guidati dall'amore per la tradizione culinaria del nostro fantastico territorio.</p>
+    </section>
+    <section id="mission" class="py-16 bg-gray-50 flex-1 w-full">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold title-font mb-4 text-gray-800">
+                    La nostra <span class="text-green-600">missione</span>
+                </h2>
+                <div class="w-24 h-1 bg-red-600 mx-auto mb-6"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Valorizzare le eccellenze regionali italiane, sostenere i piccoli produttori e 
+                    diffondere la cultura del buon cibo autentico in tutto il mondo.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-map-marked-alt text-red-600 text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Scoperta del territorio</h3>
+                    <p class="text-gray-600">
+                        Viaggiamo personalmente per scoprire produttori locali che mantengono vivi 
+                        i metodi tradizionali di produzione.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-hand-holding-heart text-green-600 text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Commercio equo</h3>
+                    <p class="text-gray-600">
+                        Paghiamo un prezzo equo ai produttori, sostenendo le economie locali e 
+                        incentivando la qualit&agrave; rispetto alla quantit&agrave;.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-truck text-red-600 text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Consegna attenta</h3>
+                    <p class="text-gray-600">
+                        Imballiamo e spediamo con cura ogni prodotto per garantire che arrivi 
+                        nelle vostre case come se lo aveste acquistato direttamente dal produttore.
+                    </p>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    </section>
 
 <footer class="mt-auto bg-gray-900 text-white py-12">
     <div class="container mx-auto px-4 text-center">
@@ -149,5 +197,11 @@
       mobileMenu.classList.toggle('hidden');
     });
 </script>
+
+<!-- BANNER DEMO -->
+<div class="fixed bottom-0 left-0 w-full bg-red-600/90 backdrop-blur text-white text-center py-3 z-[10000] font-bold shadow-lg text-sm sm:text-base tracking-wide border-t-4 border-red-700">
+    🚨 AREA DEMO: Questa è una versione dimostrativa statica. I dati sono mockati e le funzionalità limitate. 🚨
+</div>
+<!-- FINE BANNER DEMO -->
 </body>
 </html>

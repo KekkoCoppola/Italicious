@@ -23,6 +23,7 @@
         #notifica { position: fixed; top: 20px; right: 20px; background-color: #333; color: #fff; padding: 12px 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); font-family: sans-serif; display: none; z-index: 9999; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         .tab-button.active { border-bottom-color: #10b981; color: #10b981; }
     </style>
+<style>body { padding-bottom: 60px; }</style>
 </head>
 <body class="min-h-screen flex flex-col bg-gray-50 font-sans">
     <nav class="backdrop-blur-md bg-white/30 shadow-md sticky top-0 z-50">
@@ -215,85 +216,65 @@
         </div>
 
         <!-- RECENSIONI -->
-        <div class="mt-12 bg-white rounded-xl shadow-lg border border-gray-100">
-            <div class="border-b border-gray-100 bg-gray-50 rounded-t-xl px-6">
+        <div class="mt-8 bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="border-b border-gray-200">
                 <nav class="flex -mb-px">
-                    <button class="py-4 px-2 mr-8 text-center font-bold text-base border-b-2 border-green-500 text-green-600 focus:outline-none">
-                        <i class="fas fa-star mr-2"></i>Recensioni Clienti (124)
+                    <button class="tab-button py-4 px-6 text-center border-b-2 font-medium text-sm border-transparent text-green-500 ">
+                        <i class="fas fa-star mr-2"></i>Recensioni
                     </button>
                 </nav>
             </div>
-            
-            <div class="p-8">
-                <!-- Statistiche veloci (Mock) -->
-                <div class="flex items-center justify-between border-b border-gray-100 pb-8 mb-8 md:w-1/2 mx-auto">
-                    <div class="text-center">
-                        <span class="text-5xl font-bold text-gray-900">4.8</span>
-                        <div class="flex items-center justify-center mt-2 text-yellow-400 text-sm">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <p class="text-sm text-gray-500 mt-1">124 recensioni</p>
-                    </div>
-                    <div class="w-2/3 space-y-1">
-                        <div class="flex items-center text-sm"><span class="w-3 text-gray-600">5</span><i class="fas fa-star text-yellow-400 mx-1 text-xs"></i><div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden ml-2"><div class="bg-green-500 h-full" style="width: 85%"></div></div><span class="text-gray-500 ml-2 text-xs">105</span></div>
-                        <div class="flex items-center text-sm"><span class="w-3 text-gray-600">4</span><i class="fas fa-star text-yellow-400 mx-1 text-xs"></i><div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden ml-2"><div class="bg-green-400 h-full" style="width: 12%"></div></div><span class="text-gray-500 ml-2 text-xs">15</span></div>
-                        <div class="flex items-center text-sm"><span class="w-3 text-gray-600">3</span><i class="fas fa-star text-yellow-400 mx-1 text-xs"></i><div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden ml-2"><div class="bg-yellow-400 h-full" style="width: 2%"></div></div><span class="text-gray-500 ml-2 text-xs">3</span></div>
-                        <div class="flex items-center text-sm"><span class="w-3 text-gray-600">2</span><i class="fas fa-star text-yellow-400 mx-1 text-xs"></i><div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden ml-2"><div class="bg-orange-400 h-full" style="width: 1%"></div></div><span class="text-gray-500 ml-2 text-xs">1</span></div>
-                        <div class="flex items-center text-sm"><span class="w-3 text-gray-600">1</span><i class="fas fa-star text-yellow-400 mx-1 text-xs"></i><div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden ml-2"><div class="bg-red-500 h-full" style="width: 0%"></div></div><span class="text-gray-500 ml-2 text-xs">0</span></div>
-                    </div>
-                </div>
+            <div class="p-6">
+				  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+				      <div class="review-card bg-gray-50 p-6 rounded-lg shadow-md">
+				        <div class="flex items-center mb-4">
+				          <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=Mario+Rossi&background=E5E7EB&color=374151&size=64" alt="Avatar">
+				          <div class="ml-3">
+				            <p class="text-sm font-medium text-gray-900">Mario Rossi</p>
+				            <div class="flex items-center" title="5/5">
+				                <i class="fas fa-star text-yellow-400"></i>
+				                <i class="fas fa-star text-yellow-400"></i>
+				                <i class="fas fa-star text-yellow-400"></i>
+				                <i class="fas fa-star text-yellow-400"></i>
+				                <i class="fas fa-star text-yellow-400"></i>
+				            </div>
+				          </div>
+				        </div>
+				        <p class="text-gray-600 italic">"Qualita' eccezionale. La mozzarella si scioglie in bocca e ha quel sapore inconfondibile che solo la vera bufala campana possiede. Spedizione rapida e imballaggio perfetto."</p>
+				      </div>
 
-                <!-- Lista recensioni mockata -->
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                      <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 relative">
-                        <div class="absolute top-4 right-4 text-green-500 text-sm font-medium bg-green-50 px-2 py-1 rounded"><i class="fas fa-check-circle mr-1"></i>Acquisto verificato</div>
-                        <div class="flex items-center gap-4 mb-4">
-                          <img class="h-12 w-12 rounded-full border-2 border-white shadow-sm" src="https://ui-avatars.com/api/?name=Mario+Rossi&background=f3f4f6&color=374151&size=64" alt="Avatar">
-                          <div>
-                            <p class="text-base font-bold text-gray-900">Mario Rossi</p>
-                            <div class="flex items-center text-yellow-400 text-xs mt-1">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                          </div>
-                        </div>
-                        <p class="text-gray-700">"Qualita' eccezionale. La mozzarella si scioglie in bocca e ha quel sapore inconfondibile che solo la vera bufala campana possiede. Spedizione rapida e imballaggio perfetto."</p>
-                        <p class="text-xs text-gray-400 mt-4 text-right">15 Marzo 2025</p>
-                      </div>
+				      <div class="review-card bg-gray-50 p-6 rounded-lg shadow-md">
+				        <div class="flex items-center mb-4">
+				          <img class="h-10 w-10 rounded-full" src="https://ui-avatars.com/api/?name=Giulia+B.&background=E5E7EB&color=374151&size=64" alt="Avatar">
+				          <div class="ml-3">
+				            <p class="text-sm font-medium text-gray-900">Giulia B.</p>
+				            <div class="flex items-center" title="4/5">
+				                <i class="fas fa-star text-yellow-400"></i>
+				                <i class="fas fa-star text-yellow-400"></i>
+				                <i class="fas fa-star text-yellow-400"></i>
+				                <i class="fas fa-star text-yellow-400"></i>
+				                <i class="far fa-star text-gray-300"></i>
+				            </div>
+				          </div>
+				        </div>
+				        <p class="text-gray-600 italic">"Ottimo prodotto per fare la spesa in famiglia, buonissimo nelle paste e grattugiato. Arrivato un giorno in ritardo rispetto al previsto ma colpa del corriere. Tutto intatto."</p>
+				      </div>
+				  </div>
+            </div>
 
-                      <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 relative">
-                        <div class="absolute top-4 right-4 text-green-500 text-sm font-medium bg-green-50 px-2 py-1 rounded"><i class="fas fa-check-circle mr-1"></i>Acquisto verificato</div>
-                        <div class="flex items-center gap-4 mb-4">
-                          <img class="h-12 w-12 rounded-full border-2 border-white shadow-sm" src="https://ui-avatars.com/api/?name=Giulia+B.&background=f3f4f6&color=374151&size=64" alt="Avatar">
-                          <div>
-                            <p class="text-base font-bold text-gray-900">Giulia B.</p>
-                            <div class="flex items-center text-yellow-400 text-xs mt-1">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star text-gray-300"></i>
-                            </div>
-                          </div>
-                        </div>
-                        <p class="text-gray-700">"Ottimo prodotto per fare la spesa in famiglia, buonissimo nelle paste e grattugiato. Arrivato un giorno in ritardo rispetto al previsto ma colpa del corriere. Tutto intatto."</p>
-                        <p class="text-xs text-gray-400 mt-4 text-right">2 Febbraio 2025</p>
-                      </div>
-                  </div>
-
-                  <div class="text-center mb-10">
-                      <button class="border border-gray-300 text-gray-600 bg-white hover:bg-gray-50 px-6 py-2 rounded-full text-sm font-medium transition shadow-sm">Visualizza altre recensioni</button>
-                  </div>
-
-                <!-- Form Recensione (Solo Visual - Mock) -->
-                <div class="bg-blue-50 border border-blue-100 rounded-xl p-6 md:p-8 mt-8">
-                  <div class="text-center space-y-3">
+            <div id="review-card-mock" class="review-card bg-white rounded-xl shadow-md p-6 md:p-8">
+                <div class="text-center space-y-3">
                     <div class="flex justify-center">
-                      <i class="fa-solid fa-lock text-blue-400 text-3xl"></i>
+                        <i class="fa-solid fa-circle-info text-gray-400 text-3xl"></i>
                     </div>
-                    <h2 class="text-lg md:text-xl font-bold text-gray-800">
-                      Accedi per recensire
+                    <h2 class="text-lg md:text-xl font-semibold text-gray-700">
+                        Effettua L'accesso per recensire
                     </h2>
-                    <p class="text-sm text-gray-600 max-w-md mx-auto">
-                      La scrittura delle recensioni e' riservata agli utenti registrati che hanno regolarmente acquistato il prodotto. <br>
-                      <a href="login.html" class="text-blue-600 font-bold hover:underline mt-2 inline-block">Vai al Login <i class="fas fa-arrow-right text-xs"></i></a>
+                    <p class="text-sm text-gray-500">
+                        Devi effettuare l'accesso per recensire il prodotto.
+                        <br>
+                        <a href="login.html" class="text-blue-600 font-bold hover:underline mt-2 inline-block">Vai al Login <i class="fas fa-arrow-right text-xs"></i></a>
                     </p>
-                  </div>
                 </div>
             </div>
         </div>
@@ -441,5 +422,11 @@
         });
     });
 </script>
+
+<!-- BANNER DEMO -->
+<div class="fixed bottom-0 left-0 w-full bg-red-600/90 backdrop-blur text-white text-center py-3 z-[10000] font-bold shadow-lg text-sm sm:text-base tracking-wide border-t-4 border-red-700">
+    🚨 AREA DEMO: Questa è una versione dimostrativa statica. I dati sono mockati e le funzionalità limitate. 🚨
+</div>
+<!-- FINE BANNER DEMO -->
 </body>
 </html>

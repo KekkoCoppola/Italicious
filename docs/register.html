@@ -1,112 +1,239 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Italicious - Registrati</title>
-    <link rel="icon" type="image/png" href="img/loghi/logo_top.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registrazione - Italicious</title>
+  <link rel="stylesheet" href="css/Login.css?v=1.0">
+  <link rel="icon" type="image/png" href="img/loghi/logo_top.png">
+<style>body { padding-bottom: 60px; }</style>
 </head>
-<body class="bg-gray-50 flex items-center justify-center min-h-screen font-sans py-12">
+<body>
+  <div id="notifica" class="nascosta"></div> 
+<div id="card" class="card">
+  <input
+    value=""
+    class="blind-check"
+    type="checkbox"
+    id="blind-input"
+    name="blindcheck"
+    hidden=""
+  />
+	<input type="checkbox" id="blind-check" class="blind-check" hidden>
+	
 
-<div class="container mx-auto px-4 max-w-lg w-full">
-    <div class="text-center mb-6">
-        <a href="index.html" class="inline-block">
-            <img src="img/loghi/logo.png" alt="Italicious Logo" class="h-16 object-contain mx-auto">
-        </a>
-        <h2 class="text-3xl font-extrabold text-gray-900 mt-4">Unisciti a noi!</h2>
-        <p class="mt-2 text-sm text-gray-600">
-            Oppure
-            <a href="login.html" class="font-medium text-green-600 hover:text-green-500 transition">
-                accedi al tuo account esistente
-            </a>
-        </p>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    mostraNotifica("", "");
+  });
+</script>
+
+
+  
+
+  <form class="form" onsubmit="event.preventDefault(); window.location.href='login.html';" method="POST">
+    <div class="title">Benvenuto</div>
+
+    <label class="label_input" for="name">Nome</label>
+    <input
+      placeholder="Es. Mario Rossi"
+      spellcheck="false"
+      class="input"
+      type="name"
+      name="name"
+      id="name"
+    />
+    
+    <label class="label_input" for="telefono">Telefono (Opzionale)</label>
+    <input type="tel" name="telefono" id="telefono"
+       class="input"
+       placeholder="Es. +39 333 1234567"
+       pattern="^\+?[0-9\s\-]{7,15}$"
+       >
+    
+    <label class="label_input" for="email">Email</label>
+    <input
+	  placeholder="Es. mariorossi@example.com"
+	  spellcheck="false"
+	  class="input"
+	  type="email"
+	  name="email"
+	  id="email"
+	  required
+	  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+	/>
+
+    <div class="field">
+      <label class="label_input" for="password">Password</label>
+      
+
+    <input
+      spellcheck="false"
+      class="input"
+      type="password"
+      name="password"
+      id="password"
+    />
+    <a href="" class="link-forgot">Password Dimenticata?</a>
+    <button id="showbtn" type="button" onclick="hide()">Mostra</button>
     </div>
+    
+    
+    <button class="submit" type="submit">Registrati</button>
+    
+  </form>
 
-    <div class="bg-white py-8 px-6 shadow-xl rounded-xl border border-gray-100 sm:px-10 relative overflow-hidden">
-        <!-- Decoration line -->
-        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-white to-green-500"></div>
-        
-        <form class="space-y-5" onsubmit="event.preventDefault(); window.location.href='index.html';">
-            
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label for="nome" class="block text-sm font-medium text-gray-700">Nome</label>
-                    <div class="mt-1 relative rounded-md shadow-sm">
-                        <input id="nome" name="nome" type="text" autocomplete="given-name" required
-                            class="focus:ring-green-500 focus:border-green-500 block w-full px-4 py-3 sm:text-sm border-gray-300 rounded-lg border bg-gray-50 outline-none transition"
-                            placeholder="Mario">
-                    </div>
-                </div>
-                <div>
-                    <label for="cognome" class="block text-sm font-medium text-gray-700">Cognome</label>
-                    <div class="mt-1 relative rounded-md shadow-sm">
-                        <input id="cognome" name="cognome" type="text" autocomplete="family-name" required
-                            class="focus:ring-green-500 focus:border-green-500 block w-full px-4 py-3 sm:text-sm border-gray-300 rounded-lg border bg-gray-50 outline-none transition"
-                            placeholder="Rossi">
-                    </div>
-                </div>
-            </div>
 
-            <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Indirizzo Email</label>
-                <div class="mt-1 relative rounded-md shadow-sm">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-envelope text-gray-400"></i>
-                    </div>
-                    <input id="email" name="email" type="email" autocomplete="email" required
-                        class="focus:ring-green-500 focus:border-green-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 rounded-lg border bg-gray-50 outline-none transition"
-                        placeholder="mario.rossi@email.com">
-                </div>
-            </div>
+  <label for="blind-input" class="avatar">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="35"
+      height="35"
+      viewBox="0 0 64 64"
+      id="monkey"
+    >
+      <ellipse cx="53.7" cy="33" rx="8.3" ry="8.2" fill="#89664c"></ellipse>
+      <ellipse cx="53.7" cy="33" rx="5.4" ry="5.4" fill="#ffc5d3"></ellipse>
+      <ellipse cx="10.2" cy="33" rx="8.2" ry="8.2" fill="#89664c"></ellipse>
+      <ellipse cx="10.2" cy="33" rx="5.4" ry="5.4" fill="#ffc5d3"></ellipse>
+      <g fill="#89664c">
+        <path
+          d="m43.4 10.8c1.1-.6 1.9-.9 1.9-.9-3.2-1.1-6-1.8-8.5-2.1 1.3-1 2.1-1.3 2.1-1.3-20.4-2.9-30.1 9-30.1 19.5h46.4c-.7-7.4-4.8-12.4-11.8-15.2"
+        ></path>
+        <path
+          d="m55.3 27.6c0-9.7-10.4-17.6-23.3-17.6s-23.3 7.9-23.3 17.6c0 2.3.6 4.4 1.6 6.4-1 2-1.6 4.2-1.6 6.4 0 9.7 10.4 17.6 23.3 17.6s23.3-7.9 23.3-17.6c0-2.3-.6-4.4-1.6-6.4 1-2 1.6-4.2 1.6-6.4"
+        ></path>
+      </g>
+      <path
+        d="m52 28.2c0-16.9-20-6.1-20-6.1s-20-10.8-20 6.1c0 4.7 2.9 9 7.5 11.7-1.3 1.7-2.1 3.6-2.1 5.7 0 6.1 6.6 11 14.7 11s14.7-4.9 14.7-11c0-2.1-.8-4-2.1-5.7 4.4-2.7 7.3-7 7.3-11.7"
+        fill="#e0ac7e"
+      ></path>
+      <g fill="#3b302a" class="monkey-eye-nose">
+        <path
+          d="m35.1 38.7c0 1.1-.4 2.1-1 2.1-.6 0-1-.9-1-2.1 0-1.1.4-2.1 1-2.1.6.1 1 1 1 2.1"
+        ></path>
+        <path
+          d="m30.9 38.7c0 1.1-.4 2.1-1 2.1-.6 0-1-.9-1-2.1 0-1.1.4-2.1 1-2.1.5.1 1 1 1 2.1"
+        ></path>
+        <ellipse
+          cx="40.7"
+          cy="31.7"
+          rx="3.5"
+          ry="4.5"
+          class="monkey-eye-r"
+        ></ellipse>
+        <ellipse
+          cx="23.3"
+          cy="31.7"
+          rx="3.5"
+          ry="4.5"
+          class="monkey-eye-l"
+        ></ellipse>
+      </g>
+    </svg>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="35"
+      height="35"
+      viewBox="0 0 64 64"
+      id="monkey-hands"
+    >
+      <path
+        fill="#89664C"
+        d="M9.4,32.5L2.1,61.9H14c-1.6-7.7,4-21,4-21L9.4,32.5z"
+      ></path>
+      <path
+        fill="#FFD6BB"
+        d="M15.8,24.8c0,0,4.9-4.5,9.5-3.9c2.3,0.3-7.1,7.6-7.1,7.6s9.7-8.2,11.7-5.6c1.8,2.3-8.9,9.8-8.9,9.8
+	s10-8.1,9.6-4.6c-0.3,3.8-7.9,12.8-12.5,13.8C11.5,43.2,6.3,39,9.8,24.4C11.6,17,13.3,25.2,15.8,24.8"
+      ></path>
+      <path
+        fill="#89664C"
+        d="M54.8,32.5l7.3,29.4H50.2c1.6-7.7-4-21-4-21L54.8,32.5z"
+      ></path>
+      <path
+        fill="#FFD6BB"
+        d="M48.4,24.8c0,0-4.9-4.5-9.5-3.9c-2.3,0.3,7.1,7.6,7.1,7.6s-9.7-8.2-11.7-5.6c-1.8,2.3,8.9,9.8,8.9,9.8
+	s-10-8.1-9.7-4.6c0.4,3.8,8,12.8,12.6,13.8c6.6,1.3,11.8-2.9,8.3-17.5C52.6,17,50.9,25.2,48.4,24.8"
+      ></path>
+    </svg>
+  </label>
+   <p style="text-align: center; color:#fff;">
+    Hai già un account? <a href="login.html">Effettua L'accesso</a>
+  </p>
 
-            <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <div class="mt-1 relative rounded-md shadow-sm">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-lock text-gray-400"></i>
-                    </div>
-                    <input id="password" name="password" type="password" required
-                        class="focus:ring-green-500 focus:border-green-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 rounded-lg border bg-gray-50 outline-none transition"
-                        placeholder="••••••••">
-                </div>
-            </div>
-
-            <div>
-                <label for="password_confirm" class="block text-sm font-medium text-gray-700">Conferma Password</label>
-                <div class="mt-1 relative rounded-md shadow-sm">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-lock text-gray-400"></i>
-                    </div>
-                    <input id="password_confirm" name="password_confirm" type="password" required
-                        class="focus:ring-green-500 focus:border-green-500 block w-full pl-10 py-3 sm:text-sm border-gray-300 rounded-lg border bg-gray-50 outline-none transition"
-                        placeholder="••••••••">
-                </div>
-            </div>
-
-            <div class="flex items-start mt-4">
-                <div class="flex items-center h-5">
-                    <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded cursor-pointer mt-1">
-                </div>
-                <div class="ml-2 text-sm">
-                    <label for="terms" class="font-medium text-gray-700 cursor-pointer">Accetto i <a href="#" class="text-green-600 hover:text-green-500">Termini e Condizioni</a> e la <a href="#" class="text-green-600 hover:text-green-500">Privacy Policy</a>.</label>
-                </div>
-            </div>
-
-            <div>
-                <button type="submit"
-                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-sm font-bold text-white bg-green-600 flex items-center justify-center transition transform hover:-translate-y-0.5 mt-2">
-                    <i class="fas fa-user-plus mr-2"></i> Crea Account
-                </button>
-            </div>
-            
-            <div class="mt-4 text-center text-xs text-gray-500 border-t border-gray-100 pt-4">
-                Pagina statica dimostrativa per GitHub Pages
-            </div>
-        </form>
-    </div>
+  <div class="brand">
+  <a href="index.html">
+    <img src="img/loghi/logo.png" alt="Italicious Logo" class="brand-logo">
+  </a>
 </div>
 
+</div>
+   
+
+
+  <!-- Registrazione -->
+
+
+<!-- BANNER DEMO -->
+<div class="fixed bottom-0 left-0 w-full bg-red-600/90 backdrop-blur text-white text-center py-3 z-[10000] font-bold shadow-lg text-sm sm:text-base tracking-wide border-t-4 border-red-700">
+    🚨 AREA DEMO: Questa è una versione dimostrativa statica. I dati sono mockati e le funzionalità limitate. 🚨
+</div>
+<!-- FINE BANNER DEMO -->
 </body>
+<script>
+	var card = document.getElementById("card");
+	var passInput = document.getElementById("password");
+	var showbtn = document.getElementById("showbtn");
+	var occhi =document.getElementById("blind-check");
+	
+	passInput.addEventListener("focus", () => {
+		  if (passInput.type === "password") {
+		    document.getElementById("blind-check").checked = true;
+		  }
+		});
+	passInput.addEventListener("blur", () => {
+		  if (passInput.type === "password") {
+		    document.getElementById("blind-check").checked = false;
+		  }
+		});
+	
+	function hide(){
+		if (passInput.type === "password") {
+			passInput.type = "text";
+			showbtn.textContent = "Nascondi";
+			occhi.checked=false;
+		    } else {
+		    	passInput.type = "password";
+		    	showbtn.textContent = "Mostra";
+		    	occhi.checked=true;
+		    }
+	}
+	
+	
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggleCheckbox = document.getElementById("blind-input");
+    const passwordInput = document.getElementById("password");
+
+    toggleCheckbox.addEventListener("input", function () {
+    
+      passwordInput.type = this.checked ? "text" : "password";
+      passwordInput.focus();
+      passwordInput.setSelectionRange(passwordInput.value.length, passwordInput.value.length);
+    
+    });
+  });
+  //VALIDAZIONE MAIL
+const emailInput = document.getElementById("email");
+const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+emailInput.addEventListener("input", () => {
+  if (!regex.test(emailInput.value)) {
+    emailInput.classList.add("border-red-500");
+  } else {
+    emailInput.classList.remove("border-red-500");
+  }
+});
+
+</script>
 </html>
